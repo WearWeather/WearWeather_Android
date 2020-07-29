@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wearweather">
 
+    <uses-permission android:name="android.permission.INTERNET"/> // 인터넷 접근 권한 허용
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
