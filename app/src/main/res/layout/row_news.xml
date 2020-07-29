@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:orientation="vertical">
+    <!-- A CardView that contains a TextView -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        card_view:cardCornerRadius="4dp"
+        android:layout_margin="12dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/imageView_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+                <TextView
+                    android:id="@+id/textView_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="text"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:background="#12000000"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold"
+                    android:layout_alignParentBottom="true"
+                    ></TextView>
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/textView_content"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:text="text"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:textSize="15sp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:gravity="left"
+                ></TextView>
+            <TextView
+                android:id="@+id/info_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
