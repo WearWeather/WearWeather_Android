@@ -2,20 +2,25 @@ package com.wearweather;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainWeatherActivity extends AppCompatActivity {
-
-
     private TextView dateNow;
-    private ConstraintLayout mainLayout;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private DrawerLayout drawerLayout;
+    private ImageButton menuButton;
+    private ImageButton searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +28,11 @@ public class MainWeatherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_weather);
 
         /* set Background */
-        mainLayout = (ConstraintLayout)findViewById(R.id.main_weather_background);
+        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_layout);
         dateNow = (TextView)findViewById(R.id.temp_time);
         setBackgroundByTime();
 
-        // pull to refresh
-        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_layout);
+        /* pull to refresh */
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -39,23 +43,51 @@ public class MainWeatherActivity extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-    }
-    private void setBackgroundByTime() {
-        long now = System.currentTimeMillis();
-        Date date = new Date(now);
-        SimpleDateFormat sdfhour = new SimpleDateFormat("HH");
-        SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        String hourText = sdfhour.format(date);
-        String nowText = sdfNow.format(date);
 
+        /* drawer layout */
+        drawerLayout = (DrawerLayout)findViewById(R.id.main_drawer_layout);
+        menuButton = (ImageButton)findViewById(R.id.main_menu_btn);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast toast = Toast.makeText(getApplicationContext(),"button clicked", Toast.LENGTH_SHORT);
+                //toast.show();
+                if(!drawerLayout.isDrawerOpen(Gravity.RIGHT)){
+                    drawerLayout.openDrawer(Gravity.RIGHT);
+                }
+                else {
+                    drawerLayout.closeDrawer(Gravity.RIGHT);
+                }
+            }
+        });
+
+        searchButton = (ImageButton)findViewById(R.id.main_search_btn);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(getApplicationContext(),"search button clicked", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+    }
+
+    private void setBackgroundByTime() {
+        long currentTimeMillis = System.currentTimeMillis();
+        Date date = new Date(currentTimeMillis);
+        SimpleDateFormat sdfHour = new SimpleDateFormat("HH");
+        SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String hourText = sdfHour.format(date);
+
+        String nowText = sdfNow.format(date);
         dateNow.setText(nowText);
 
         int time = Integer.parseInt(hourText);
         if(time >= 0 && time < 12){
-            mainLayout.setBackgroundResource(R.drawable.sunny_morning_background);
+            swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_morning_background);
         }
         else {
-            mainLayout.setBackgroundResource(R.drawable.sunny_afternoon_background);
+            swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_afternoon_background);
         }
     }
 }

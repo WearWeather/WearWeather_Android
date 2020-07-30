@@ -10,4 +10,11 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    
+    <!-- WearWeather String -->
+    
+    <string name="fine_dust">미세먼지</string>
+    <string name="dress_by_temperature">기온별 옷차림</string>
+    <string name="weather_forecast">일기예보</string>
+    <string name="settings">설정</string>
 </resources>
