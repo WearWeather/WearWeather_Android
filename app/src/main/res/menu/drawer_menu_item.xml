@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:icon="@drawable/icon_menu"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="@string/fine_dust"/>
+        <item
+            android:icon="@drawable/icon_menu"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="@string/dress_by_temperature"/>
+        <item
+            android:icon="@drawable/icon_menu"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="@string/weather_forecast"/>
+        <item
+            android:icon="@drawable/icon_menu"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="@string/settings"/>
+    </group>
+</menu>
