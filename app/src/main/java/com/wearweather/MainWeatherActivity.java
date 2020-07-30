@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.view.Gravity;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.tabs.TabLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,6 +24,9 @@ public class MainWeatherActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ImageButton menuButton;
     private ImageButton searchButton;
+    private TabLayout tabLayout;
+    private WeatherPagerAdpater pagerAdpater;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +56,10 @@ public class MainWeatherActivity extends AppCompatActivity {
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast toast = Toast.makeText(getApplicationContext(),"button clicked", Toast.LENGTH_SHORT);
-                //toast.show();
                 if(!drawerLayout.isDrawerOpen(Gravity.RIGHT)){
                     drawerLayout.openDrawer(Gravity.RIGHT);
+                    Toast toast = Toast.makeText(getApplicationContext(),"menu button clicked", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
                 else {
                     drawerLayout.closeDrawer(Gravity.RIGHT);
@@ -70,6 +76,33 @@ public class MainWeatherActivity extends AppCompatActivity {
             }
         });
 
+        /* tab layout */
+        tabLayout = (TabLayout) findViewById(R.id.main_tab_layout);
+        tabLayout.addTab(tabLayout.newTab());
+        tabLayout.addTab(tabLayout.newTab());
+
+        pagerAdpater = new WeatherPagerAdpater(getSupportFragmentManager(),tabLayout.getTabCount());
+        viewPager = (ViewPager) findViewById(R.id.main_tab_viewpager);
+        viewPager.setAdapter(pagerAdpater);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                pagerAdpater.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     private void setBackgroundByTime() {

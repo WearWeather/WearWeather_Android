@@ -8,69 +8,76 @@
     android:background="@android:color/black"
     tools:context=".MainWeatherActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.drawerlayout.widget.DrawerLayout
-            android:id="@+id/main_drawer_layout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.navigation.NavigationView
-                android:id="@+id/nav_view"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:fitsSystemWindows="true"
-                app:menu="@menu/drawer_menu_item" />
-
-        </androidx.drawerlayout.widget.DrawerLayout>
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/main_drawer_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp">
 
         <LinearLayout
-            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:gravity="right"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/temp_time"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="100dp"
-                android:text="현재 시간"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp" />
+                android:layout_margin="20dp"
+                android:gravity="right"
+                android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/main_search_btn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="centerInside"
-                android:src="@drawable/icon_search" />
+                <TextView
+                    android:id="@+id/temp_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="100dp"
+                    android:text="현재 시간"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp" />
 
-            <ImageButton
-                android:id="@+id/main_menu_btn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@android:color/transparent"
-                android:scaleType="centerInside"
-                android:src="@drawable/icon_menu" />
+                <ImageButton
+                    android:id="@+id/main_search_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/icon_search" />
+
+                <ImageButton
+                    android:id="@+id/main_menu_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/icon_menu" />
+
+            </LinearLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/main_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabBackground="@drawable/tab_indicator_dot"
+                app:tabGravity="center"
+                app:tabIndicator="@null"
+                app:tabPaddingStart="6dp"
+                app:tabPaddingEnd="6dp"/>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/main_tab_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
         </LinearLayout>
 
+        <com.google.android.material.navigation.NavigationView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:fitsSystemWindows="true"
+            app:menu="@menu/drawer_menu_item" />
 
+    </androidx.drawerlayout.widget.DrawerLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
