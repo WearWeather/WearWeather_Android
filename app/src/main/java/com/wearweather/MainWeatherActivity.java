@@ -116,11 +116,17 @@ public class MainWeatherActivity extends AppCompatActivity {
         dateNow.setText(nowText);
 
         int time = Integer.parseInt(hourText);
-        if(time >= 0 && time < 12){
+        if(time >= 6 && time < 12){
             swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_morning_background);
         }
-        else {
+        else if(time >= 12 && time < 18){
             swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_afternoon_background);
+        }
+        else if(time >= 18 && time < 20){
+            swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_sunset_background);
+        }
+        else if(time >= 18 && time < 20){
+            swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_night_background);
         }
     }
 }

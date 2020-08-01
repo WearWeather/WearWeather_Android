@@ -7,4 +7,5 @@
     <!--WearWeather Color-->
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorRed">#FF0000</color>
 </resources>
