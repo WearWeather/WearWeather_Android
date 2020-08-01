@@ -13,13 +13,34 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.material.tabs.TabLayout;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+
+import static com.android.volley.Request.*;
+import static com.android.volley.Request.Method.*;
+
 
 public class MainWeatherActivity extends AppCompatActivity {
     private TextView dateNow;
+    TextView current_temp; //현재기온
+    TextView current_location; //현재 위치
+//    private TextView description; //날씨 설명(ex: 맑음, 흐림)
     private SwipeRefreshLayout swipeRefreshLayout;
     private DrawerLayout drawerLayout;
     private ImageButton menuButton;
@@ -49,6 +70,18 @@ public class MainWeatherActivity extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+
+        /* Current Temperature */
+        current_temp = (TextView)findViewById(R.id.temp_now);
+
+        /* Location */
+        current_location = (TextView)findViewById(R.id.region_text);
+
+        /* Weather Description */
+//        description = (TextView)findViewById(R.id.textview);
+
+
+
 
         /* drawer layout */
         drawerLayout = (DrawerLayout)findViewById(R.id.main_drawer_layout);
@@ -103,6 +136,52 @@ public class MainWeatherActivity extends AppCompatActivity {
 
             }
         });
+
+        find_weather();
+    }
+
+    public void find_weather(){
+        String url="api.openweathermap.org/data/2.5/forecast?id=1835848&appid=944b4ec7c3a10a1bbb4a432d14e6f979&units=metric";
+        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try{
+                    JSONObject main_object = response.getJSONObject("main");
+                    JSONArray array=response.getJSONArray("weather");
+                    JSONObject object = array.getJSONObject(0);
+                    String temp = String.valueOf(main_object.getDouble("temp"));
+                    String city = response.getString("name");
+
+                    current_temp.setText(temp);
+                    current_location.setText(city);
+
+//                    Calendar calendar = Calendar.getInstance();
+//                    SimpleDateFormat sdf = new SimpleDateFormat("EEEE-MM-dd");
+//                    String formatted_date = sdf.format(calendar.getTime());
+                    double temp_int = Double.parseDouble(temp);
+                    double centi = (temp_int -32) /1.8000;
+                    centi = Math.round(centi);
+                    int i = (int)centi;
+                    current_temp.setText(String.valueOf(i));
+
+                }catch(JSONException e)
+                {
+                    e.printStackTrace();
+                }
+
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }
+        );
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(jor);
+
+
     }
 
     private void setBackgroundByTime() {
@@ -116,7 +195,10 @@ public class MainWeatherActivity extends AppCompatActivity {
         dateNow.setText(nowText);
 
         int time = Integer.parseInt(hourText);
-        if(time >= 6 && time < 12){
+        if(time >= 0 && time < 6){
+            swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_night_background);
+        }
+        else if(time >= 6 && time < 12){
             swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_morning_background);
         }
         else if(time >= 12 && time < 18){
@@ -125,8 +207,9 @@ public class MainWeatherActivity extends AppCompatActivity {
         else if(time >= 18 && time < 20){
             swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_sunset_background);
         }
-        else if(time >= 18 && time < 20){
+        else if(time >= 18 && time < 24){
             swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_night_background);
         }
     }
+
 }

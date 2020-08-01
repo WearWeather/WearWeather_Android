@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="서울시 강남구"
+            tools:text="없음"
             android:textColor="@color/colorWhite"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -46,10 +46,11 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/temp_now"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="27도"
+                    tools:text="0 °C"
                     android:textColor="@color/colorWhite"
                     android:textSize="40sp"
                     android:textStyle="bold" />
