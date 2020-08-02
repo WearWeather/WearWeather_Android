@@ -17,4 +17,6 @@
     <string name="dress_by_temperature">기온별 옷차림</string>
     <string name="weather_forecast">일기예보</string>
     <string name="settings">설정</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
