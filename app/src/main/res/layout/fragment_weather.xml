@@ -107,7 +107,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/button"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
             <com.google.android.material.tabs.TabLayout
