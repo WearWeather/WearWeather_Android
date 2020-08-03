@@ -12,6 +12,7 @@
     <string name="menu_slideshow">Slideshow</string>
 
     <!-- WearWeather String -->
+    <string name="today_weather">날씨</string>
     <string name="fine_dust">미세먼지</string>
     <string name="dress_by_temperature">기온별 옷차림</string>
     <string name="weather_forecast">일기예보</string>
