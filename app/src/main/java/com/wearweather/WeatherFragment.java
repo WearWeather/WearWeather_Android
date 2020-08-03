@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -48,15 +49,35 @@ public class WeatherFragment extends Fragment {
     public WeatherFragment(){ //tab
 
     }
-    public static WeatherFragment getInstance() {return new WeatherFragment();} //tab
-
-
-
+    public static WeatherFragment getInstance() { return new WeatherFragment(); } //tab
 
     @Override
     public void onCreate(Bundle savedInstanceState){ //api
         super.onCreate(savedInstanceState);
 
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = (View)inflater.inflate(R.layout.fragment_weather, container, false);
+        viewPager = rootView.findViewById(R.id.viewPager); //tab
+        tabLayout = rootView.findViewById(R.id.tabLayout); //tab
+
+
+
+        /*뮤트한거 its for api */
+
+//        setContentView(R.layout.fragment_weather);
+        /* Current Temperature */
+//        current_temp = (TextView)rootView.findViewById(R.id.temp_now);
+//
+//        /* Location */
+//        current_location = (TextView)rootView.findViewById(R.id.region_text);
+//
+//        find_weather();
+
+
+        return rootView;
     }
 
     /*all muted codes for api */
@@ -105,28 +126,7 @@ public class WeatherFragment extends Fragment {
 //
 //    }
 //
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = (View)inflater.inflate(R.layout.fragment_weather, container, false);
-        viewPager = rootView.findViewById(R.id.viewPager); //tab
-        tabLayout = rootView.findViewById(R.id.tabLayout); //tab
 
-
-        /*뮤트한거 its for api */
-
-//        setContentView(R.layout.fragment_weather);
-        /* Current Temperature */
-//        current_temp = (TextView)rootView.findViewById(R.id.temp_now);
-//
-//        /* Location */
-//        current_location = (TextView)rootView.findViewById(R.id.region_text);
-//
-//        find_weather();
-
-
-        return rootView;
-    }
 
 
     //Call onActivity Create Method for tab

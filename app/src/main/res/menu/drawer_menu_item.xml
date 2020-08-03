@@ -4,6 +4,10 @@
         <item
             android:icon="@drawable/icon_menu"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="@string/today_weather"/>
+        <item
+            android:icon="@drawable/icon_menu"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:title="@string/fine_dust"/>
         <item
             android:icon="@drawable/icon_menu"
