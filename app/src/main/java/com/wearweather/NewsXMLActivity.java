@@ -42,8 +42,6 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import okhttp3.OkHttpClient;
-
 public class NewsXMLActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
