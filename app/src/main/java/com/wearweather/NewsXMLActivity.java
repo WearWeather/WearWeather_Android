@@ -4,10 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,11 +25,26 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsActivity extends AppCompatActivity {
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import okhttp3.OkHttpClient;
+
+public class NewsXMLActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -51,7 +72,7 @@ public class NewsActivity extends AppCompatActivity {
     }
     public void getNews(){
         // Instantiate the RequestQueue. 네트워크 통신을 하기 위해서 Queue라는 녀석에 담아서 하나씩 데이터를 빼준다.
-        String url ="여기는 발급받은 api의 Key값";
+        String url =" https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.yonhapnewstv.co.kr%2Fcategory%2Fnews%2Fweather%2Ffeed%2F";
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -61,7 +82,7 @@ public class NewsActivity extends AppCompatActivity {
                         //Log.d("NEWS", response);
                         try {
                             JSONObject jsonObj = new JSONObject(response);
-                            JSONArray arrayArticles = jsonObj.getJSONArray("articles");
+                            JSONArray arrayArticles = jsonObj.getJSONArray("items");
 
                             List<NewsData> news = new ArrayList<>();
 
@@ -70,11 +91,11 @@ public class NewsActivity extends AppCompatActivity {
                                 Log.d("NEWS", obj.toString());
                                 NewsData newsData = new NewsData();
                                 newsData.setTitle(obj.getString("title"));
-                                newsData.setUrlToImage(obj.getString("urlToImage"));
-                                newsData.setContent(obj.getString("content"));
+                                newsData.setUrlToImage(obj.getString("link"));
+                                newsData.setContent(obj.getString("description"));
                                 news.add(newsData);
                             }
-                            mAdapter = new ForecastAdapter(news, NewsActivity.this, new View.OnClickListener() {
+                            mAdapter = new ForecastAdapter(news, NewsXMLActivity.this, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     if(v.getTag() != null){
