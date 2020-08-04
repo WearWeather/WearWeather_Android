@@ -37,8 +37,8 @@
 
             <ImageView
                 android:id="@+id/image_weather"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:src="@drawable/icon_sunny" />
 
             <LinearLayout
@@ -63,19 +63,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp">
 
-
                     <TextView
+                        android:id="@+id/bodily_temp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="체감온도 "
+                        android:text="@string/bodily_temprature"
                         android:textColor="@color/colorWhite"
-                        android:textSize="16sp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="0 °C"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="16sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
 
                     <View
                         android:layout_width="2dp"
@@ -85,18 +80,14 @@
                         android:background="@color/colorWhite" />
 
                     <TextView
+                        android:id="@+id/precipitation_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:text="강수량 "
+                        android:text="@string/precipitation"
                         android:textColor="@color/colorWhite"
-                        android:textSize="16sp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="0 mm"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="16sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -113,6 +104,7 @@
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 app:tabIndicatorColor="@color/colorBlack"
                 app:tabTextColor="@color/colorWhite"
                 app:tabSelectedTextColor="@color/colorBlack"
