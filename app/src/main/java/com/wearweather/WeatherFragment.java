@@ -76,13 +76,16 @@ public class WeatherFragment extends Fragment {
         current_bodily_temp=(TextView)rootView.findViewById(R.id.bodily_temp);
         current_rain=(TextView)rootView.findViewById(R.id.precipitation_text);
 
-        find_weather();
+
+        //find_weather(37.5665,126.9780); //서울
+        find_weather(35.7988,128.5935);               //대구
 
         return rootView;
     }
 
-    public void find_weather(){
+    public void find_weather(double latitude, double longitude){
         String url="http://api.openweathermap.org/data/2.5/forecast?appid=944b4ec7c3a10a1bbb4a432d14e6f979&units=metric&id=1835848";
+        url += "&lat="+String.valueOf(latitude)+"&lon="+String.valueOf(longitude);
 
         JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
