@@ -18,6 +18,10 @@
     <string name="weather_forecast">일기예보</string>
     <string name="settings">설정</string>
     <string name="basic_temperature">0 °C</string>
+    <string name="temperature_unit">°C</string>
+    <string name="bodily_temprature">체감온도</string>
+    <string name="precipitation">강수량</string>
+    <string name="precipitation_unit">mm</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
