@@ -18,19 +18,28 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <FrameLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:gravity="right"
                 android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/main_del_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="left"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/icon_x" />
 
                 <TextView
                     android:id="@+id/temp_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="100dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_gravity="left|center_vertical"
                     android:text="현재 시간"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp" />
@@ -39,7 +48,8 @@
                     android:id="@+id/main_search_btn"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="45dp"
                     android:background="@android:color/transparent"
                     android:scaleType="centerInside"
                     android:src="@drawable/icon_search" />
@@ -48,11 +58,12 @@
                     android:id="@+id/main_menu_btn"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_gravity="right"
                     android:background="@android:color/transparent"
                     android:scaleType="centerInside"
                     android:src="@drawable/icon_menu" />
 
-            </LinearLayout>
+            </FrameLayout>
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/main_tab_layout"
@@ -72,6 +83,7 @@
         </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView
+            android:id="@+id/drawer_nav_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="right"

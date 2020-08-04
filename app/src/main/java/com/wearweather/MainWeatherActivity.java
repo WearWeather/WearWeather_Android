@@ -7,8 +7,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +49,7 @@ public class MainWeatherActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private WeatherPagerAdpater pagerAdpater;
     private ViewPager viewPager;
+    private ImageButton delButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +73,6 @@ public class MainWeatherActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
         /* drawer layout */
         drawerLayout = (DrawerLayout)findViewById(R.id.main_drawer_layout);
         menuButton = (ImageButton)findViewById(R.id.main_menu_btn);
@@ -92,21 +90,14 @@ public class MainWeatherActivity extends AppCompatActivity {
             }
         });
 
-        searchButton = (ImageButton)findViewById(R.id.main_search_btn);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(),"search button clicked", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        });
-
         /* tab layout */
         tabLayout = (TabLayout) findViewById(R.id.main_tab_layout);
-        tabLayout.addTab(tabLayout.newTab());
-        tabLayout.addTab(tabLayout.newTab());
-
         pagerAdpater = new WeatherPagerAdpater(getSupportFragmentManager(),tabLayout.getTabCount());
+        pagerAdpater.initFragment();
+        for(int i=0;i<pagerAdpater.getWeatherFragmentSize();i++){
+            tabLayout.addTab(tabLayout.newTab());
+        }
+
         viewPager = (ViewPager) findViewById(R.id.main_tab_viewpager);
         viewPager.setAdapter(pagerAdpater);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -114,8 +105,9 @@ public class MainWeatherActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
                 pagerAdpater.notifyDataSetChanged();
+                viewPager.setCurrentItem(tab.getPosition());
+                Log.e("SEULGI TAB SELECTED",String.valueOf(tab.getPosition()));
             }
 
             @Override
@@ -129,10 +121,35 @@ public class MainWeatherActivity extends AppCompatActivity {
             }
         });
 
+        searchButton = (ImageButton)findViewById(R.id.main_search_btn);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(getApplicationContext(),"search button clicked", Toast.LENGTH_SHORT);
+                toast.show();
 
+                /* 검색버튼 누르면 프래그먼트 추가 */
+                pagerAdpater.addWeatherFragment();
+                tabLayout.addTab(tabLayout.newTab());
+                //pagerAdpater.notifyDataSetChanged();
+            }
+        });
+
+        delButton = (ImageButton)findViewById(R.id.main_del_btn);
+        delButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(getApplicationContext(),"delete button clicked", Toast.LENGTH_SHORT);
+                toast.show();
+
+                /* 삭제버튼 누르면 프래그먼트 삭제 */
+                Log.e("SEULGI DELETE TAB",String.valueOf(tabLayout.getSelectedTabPosition()));
+                pagerAdpater.deleteWeatherFragment(tabLayout.getSelectedTabPosition());
+                tabLayout.removeTabAt(tabLayout.getSelectedTabPosition());
+                //pagerAdpater.notifyDataSetChanged();
+            }
+        });
     }
-
-
 
     private void setBackgroundByTime() {
         long currentTimeMillis = System.currentTimeMillis();
