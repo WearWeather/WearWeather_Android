@@ -5,8 +5,23 @@ import java.io.Serializable;
 public class NewsData implements Serializable { // 직렬화, 데이터의 구조가 복잡할 때 하나의 데이터 구조로 바꿔서 넘겨줄 때 활용
 
     private String title;
-    private String urlToImage;
+    private String link;
     private String content;
+    private String description;
+    private String pubDate;
+
+    public NewsData() {
+
+    }
+
+    public NewsData(String title, String link, String content, String description, String pubDate) {
+        this.title = title;
+        this.link = link;
+        this.content = content;
+        this.description = description;
+        this.pubDate = pubDate;
+
+    }
 
     public String getTitle() {
         return title;
@@ -16,12 +31,12 @@ public class NewsData implements Serializable { // 직렬화, 데이터의 구�
         this.title = title;
     }
 
-    public String getUrlToImage() {
-        return urlToImage;
+    public String getLink() {
+        return link;
     }
 
-    public void setUrlToImage(String urlToImage) {
-        this.urlToImage = urlToImage;
+    public void setLink(String urlToImage) {
+        this.link = link;
     }
 
     public String getContent() {
@@ -31,4 +46,12 @@ public class NewsData implements Serializable { // 직렬화, 데이터의 구�
     public void setContent(String content) {
         this.content = content;
     }
+
+    public String getPubDate() { return pubDate; }
+
+    public void setPubDate(String pubDate) { this.pubDate = pubDate; }
+
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
 }
