@@ -17,8 +17,10 @@ public class WeatherPagerAdpater extends FragmentStatePagerAdapter {
     }
 
     public void initFragment() {
-        addWeatherFragment();
-        addWeatherFragment();
+        if(getWeatherFragmentSize()==0){
+            addWeatherFragment();
+            addWeatherFragment();
+        }
     }
 
     public void addWeatherFragment() {

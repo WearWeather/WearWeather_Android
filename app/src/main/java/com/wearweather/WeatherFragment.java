@@ -64,7 +64,7 @@ public class WeatherFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = (View)inflater.inflate(R.layout.fragment_weather, container, false);
+        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_weather, container, false);
         viewPager = rootView.findViewById(R.id.viewPager); //tab
         tabLayout = rootView.findViewById(R.id.tabLayout); //tab
 
@@ -77,8 +77,8 @@ public class WeatherFragment extends Fragment {
         current_rain=(TextView)rootView.findViewById(R.id.precipitation_text);
 
 
-        //find_weather(37.5665,126.9780); //서울
-        find_weather(35.7988,128.5935);               //대구
+        find_weather(37.5665,126.9780); //서울
+        //find_weather(35.7988,128.5935);               //대구
 
         return rootView;
     }

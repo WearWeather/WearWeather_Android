@@ -170,6 +170,11 @@ public class MainWeatherActivity extends AppCompatActivity {
 
 
         /* get current location */
+        if (!checkLocationServicesStatus()) {
+            showDialogForLocationServiceSetting();
+        }else {
+            checkRunTimePermission();
+        }
         gpsTracker = new GpsTracker(getApplicationContext());
         double latitude = gpsTracker.getLatitude();
         double longitude = gpsTracker.getLongitude();
