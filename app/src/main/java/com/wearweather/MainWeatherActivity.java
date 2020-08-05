@@ -1,6 +1,7 @@
 package com.wearweather;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -19,6 +20,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -139,20 +142,27 @@ public class MainWeatherActivity extends AppCompatActivity {
             }
         });
 
-        searchButton = (ImageButton)findViewById(R.id.main_search_btn);
-        searchButton.setOnClickListener(new View.OnClickListener() {
+//        searchButton = (ImageButton)findViewById(R.id.main_search_btn);
+//        searchButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast toast = Toast.makeText(getApplicationContext(),"search button clicked", Toast.LENGTH_SHORT);
+//                toast.show();
+//
+//                /* 검색버튼 누르면 프래그먼트 추가 */
+//                pagerAdpater.addWeatherFragment();
+//                tabLayout.addTab(tabLayout.newTab());
+//                //pagerAdpater.notifyDataSetChanged();
+//            }
+//        });
+        ImageButton mainButton = (ImageButton) findViewById(R.id.main_search_btn);
+        mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(),"search button clicked", Toast.LENGTH_SHORT);
-                toast.show();
-
-                /* 검색버튼 누르면 프래그먼트 추가 */
-                pagerAdpater.addWeatherFragment();
-                tabLayout.addTab(tabLayout.newTab());
-                //pagerAdpater.notifyDataSetChanged();
+            public void onClick(View v) {
+                Intent intent = new Intent(MainWeatherActivity.this, MainSearchActivity.class );
+                startActivity( intent);
             }
         });
-
         delButton = (ImageButton)findViewById(R.id.main_del_btn);
         delButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -338,4 +348,23 @@ public class MainWeatherActivity extends AppCompatActivity {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.main_search, menu);
+//        MenuItem item = menu.findItem(R.id.action_search);
+//        SearchView searchView = (SearchView) item.getActionView();
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        });
+//        return super.onCreateOptionsMenu(menu);
+//    }
 }
