@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wearweather">
-
-    <!--인터넷 사용 권한-->
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!--위치 권한-->
+    <!-- 인터넷 사용 권한 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 위치 권한 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".TemperatureClothingActivity3"></activity>
+        <activity android:name=".TemperatureClothingActivity2" />
         <activity android:name=".NewsXMLActivity" />
         <activity
             android:name=".MainWeatherActivity"
