@@ -11,8 +11,5 @@ public class TemperatureClothingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature_clothing);
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
     }
 }
