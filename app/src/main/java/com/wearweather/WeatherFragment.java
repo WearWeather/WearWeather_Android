@@ -77,8 +77,11 @@ public class WeatherFragment extends Fragment {
         current_rain=(TextView)rootView.findViewById(R.id.precipitation_text);
 
 
-        find_weather(37.5665,126.9780); //서울
+        double lat = 37.5665; double lon=126.9780;  //서울
+        find_weather(lat,lon);
         //find_weather(35.7988,128.5935);               //대구
+
+        getKoreanAddressByPoint(lat,lon);
 
         return rootView;
     }
@@ -96,7 +99,7 @@ public class WeatherFragment extends Fragment {
 
                     /* city */
                     String city_name=city_object.getString("name");
-                    region.setText(city_name);
+                    //region.setText(city_name);
 
                     /* weather */
                     JSONObject list_item = list.getJSONObject(0);
@@ -195,5 +198,41 @@ public class WeatherFragment extends Fragment {
         adapter.addFragment(new weekly_tab(), "Weekly");
 
         viewPager.setAdapter(adapter);
+    }
+
+    private void getKoreanAddressByPoint(double latitude, double longitude){
+        String url = "http://api.vworld.kr/req/address?service=address&request=getAddress&key=B1E17D01-6D96-3C75-A170-D4ADE3963DCC&type=both";
+        url += "&point="+String.valueOf(longitude)+","+String.valueOf(latitude);
+
+        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try{
+                    JSONObject res=response.getJSONObject("response");
+                    JSONObject result= res.getJSONArray("result").getJSONObject(0);
+                    JSONObject structure = result.getJSONObject("structure");
+
+                    String level1 = structure.getString("level1");
+                    String level2 = structure.getString("level2");
+                    Log.e("SEULGI ADDRESS API",level2);
+
+                    region.setText(level1+" "+level2);
+
+                }catch(JSONException e)
+                {
+                    e.printStackTrace();
+                }
+
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("SEULGI ADDRESS API",error.toString());
+            }
+        }
+        );
+        RequestQueue queue =  Volley.newRequestQueue(getActivity().getApplicationContext());
+        queue.add(jor);
     }
 }
