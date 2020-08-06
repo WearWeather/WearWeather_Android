@@ -49,10 +49,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class NewsXMLActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    //    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<NewsData> myDataset = new ArrayList<>();
-    //    private RequestQueue queue;
     private ForecastAdapter adapter;
 
     @Override
@@ -61,33 +59,27 @@ public class NewsXMLActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
 
         adapter = new ForecastAdapter(myDataset, this);
         recyclerView.setAdapter(adapter);
 
-        // use a linear layout manager
+        // layout manager
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        // specify an adapter (see also next example)
-        //queue = Volley.newRequestQueue(this);
         getNews();
     }
     public void getNews(){
-        // Instantiate the RequestQueue. 네트워크 통신을 하기 위해서 Queue라는 녀석에 담아서 하나씩 데이터를 빼준다.
 
         try{
-            URL url = new URL("https://www.yonhapnewstv.co.kr/category/news/weather/feed/");
+            URL url = new URL("https://www.yonhapnewstv.co.kr/category/news/weather/feed/"); // 연합뉴스 RSS 피드 사용(xml 문서 형식)
             RssFeedTask task = new RssFeedTask();
             task.execute(url);
         }catch(MalformedURLException e){
             e.printStackTrace();
         }
     }
-
 
     class RssFeedTask extends AsyncTask<URL, Void, String>{
 
@@ -102,7 +94,7 @@ public class NewsXMLActivity extends AppCompatActivity {
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                 XmlPullParser xpp = factory.newPullParser();
 
-                xpp.setInput(is, "UTF-8"); // 날씨 뉴스 xml 인코딩 방식을 utf-8 방식으로 설정
+                xpp.setInput(is, "utf-8"); // 날씨 뉴스 xml 인코딩 방식을 utf-8 방식으로 설정
                 int eventType = xpp.getEventType();
 
                 NewsData item = null;
@@ -110,7 +102,7 @@ public class NewsXMLActivity extends AppCompatActivity {
 
                 while(eventType != XmlPullParser.END_DOCUMENT){ // 반복문으로 반복되는 xml 문서의 구조 파싱
                     switch (eventType){
-                        case XmlPullParser.START_DOCUMENT:
+                        case XmlPullParser.START_DOCUMENT: // xml 문서의 시작을 알림
                             break;
                         case XmlPullParser.START_TAG:
                             tagName = xpp.getName();
@@ -140,7 +132,7 @@ public class NewsXMLActivity extends AppCompatActivity {
                             tagName = xpp.getName();
                             if(tagName.equals("item")){
                                 myDataset.add(item);
-                                item = null;
+                                item = null; // 한 개의 뉴스를 파싱 완료 후 item에 null처리를 하여 다음 item값이 들어갈 수 있도록 설정
                                 publishProgress();
                             }
                             break;
@@ -150,7 +142,7 @@ public class NewsXMLActivity extends AppCompatActivity {
             }catch(IOException | XmlPullParserException e){
                 e.printStackTrace();
             }
-            return "파싱종료";
+            return ""; // 아래 onPostExecute 메소드에 전달해 줄 문자열을 반환하므로 테스트 용도로 활용했음 (파싱에는 영향 X)
         }
 
         @Override
@@ -164,9 +156,9 @@ public class NewsXMLActivity extends AppCompatActivity {
             super.onPostExecute(s);
             // 파싱이 정상적으로 완료되었다면 결과메세지를 아이템의 갯수와 함께 토스트 메세지로 출력(just 확인작업)
 
-            //adapter.notifyDataSetChanged();
+            //adapter.notifyDataSetChanged(); // 리사이클러 뷰의 아이템의 변경 여부를 어댑터에게 전달
 
-            Toast.makeText(NewsXMLActivity.this, s + myDataset.size(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(NewsXMLActivity.this, s + myDataset.size(), Toast.LENGTH_SHORT).show();
         }
     }
 }
