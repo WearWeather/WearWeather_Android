@@ -23,6 +23,8 @@ public class NewsData implements Serializable { // 직렬화, 데이터의 구�
 
     }
 
+    /* xml 피드 주소에서 가져온 뉴스의 제목, 링크, 내용, 발행 일자 등의 정보를 다뤄줄 getter와 setter */
+
     public String getTitle() {
         return title;
     }
@@ -35,7 +37,7 @@ public class NewsData implements Serializable { // 직렬화, 데이터의 구�
         return link;
     }
 
-    public void setLink(String urlToImage) {
+    public void setLink(String link) {
         this.link = link;
     }
 
@@ -47,11 +49,19 @@ public class NewsData implements Serializable { // 직렬화, 데이터의 구�
         this.content = content;
     }
 
-    public String getPubDate() { return pubDate; }
+    public String getPubDate() {
+        return pubDate;
+    }
 
-    public void setPubDate(String pubDate) { this.pubDate = pubDate; }
+    public void setPubDate(String pubDate) {
+        this.pubDate = pubDate;
+    }
 
-    public String getDescription() { return description; }
+    public String getDescription() {
+        return description;
+    }
 
-    public void setDescription(String description) { this.description = description; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
