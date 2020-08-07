@@ -89,23 +89,23 @@ public class NewsXMLActivity extends AppCompatActivity {
     }
 
 
-    class RssFeedTask extends AsyncTask<URL, Void, String>{
+    class RssFeedTask extends AsyncTask<URL, Void, String>{ // 비 동기식 클래스
 
         @Override
-        protected String doInBackground(URL... urls) {
+        protected String doInBackground(URL... urls) { // 여러개의 url을 매개변수로 가질 수 있음
 
-            URL url = urls[0];
+            URL url = urls[0]; // URL 형식의 첫 번째 url을 넣어준다
 
             try{
-                InputStream is = url.openStream();
+                InputStream is = url.openStream(); // 스트림 열고
 
-                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-                XmlPullParser xpp = factory.newPullParser();
+                XmlPullParserFactory factory = XmlPullParserFactory.newInstance(); // XmlPullParserFactory 클래스에서 xml 문서의 인스턴스 값 얻어오기
+                XmlPullParser xpp = factory.newPullParser(); // 얻어온 값을 기반으로 xml 인스턴스 생성
 
-                xpp.setInput(is, "UTF-8"); // 날씨 뉴스 xml 인코딩 방식을 utf-8 방식으로 설정
+                xpp.setInput(is, "utf-8"); // 날씨 뉴스 xml 인코딩 방식을 utf-8 방식으로 설정
                 int eventType = xpp.getEventType();
 
-                NewsData item = null;
+                NewsData item = null; // 하나의 뉴스 정보가 들어갈 NewsData형 객체
                 String tagName = null;
 
                 while(eventType != XmlPullParser.END_DOCUMENT){ // 반복문으로 반복되는 xml 문서의 구조 파싱
@@ -114,7 +114,6 @@ public class NewsXMLActivity extends AppCompatActivity {
                             break;
                         case XmlPullParser.START_TAG:
                             tagName = xpp.getName();
-
                             if(tagName.equals("item")){
                                 item = new NewsData();
                             }else if(tagName.equals("title")){ // xml 파일의 제목 부분 파싱
@@ -164,9 +163,9 @@ public class NewsXMLActivity extends AppCompatActivity {
             super.onPostExecute(s);
             // 파싱이 정상적으로 완료되었다면 결과메세지를 아이템의 갯수와 함께 토스트 메세지로 출력(just 확인작업)
 
-            //adapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
 
-            Toast.makeText(NewsXMLActivity.this, s + myDataset.size(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(NewsXMLActivity.this, s + myDataset.size(), Toast.LENGTH_SHORT).show();
         }
     }
 }
