@@ -9,6 +9,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -351,7 +353,7 @@ public class MainWeatherActivity extends AppCompatActivity {
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.main_search, menu);
+//        getMenuInflater().inflate(R.menu.search_menu, menu);
 //        MenuItem item = menu.findItem(R.id.action_search);
 //        SearchView searchView = (SearchView) item.getActionView();
 //        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -367,4 +369,6 @@ public class MainWeatherActivity extends AppCompatActivity {
 //        });
 //        return super.onCreateOptionsMenu(menu);
 //    }
+
+
 }
