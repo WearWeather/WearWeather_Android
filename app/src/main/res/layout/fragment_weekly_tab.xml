@@ -12,6 +12,7 @@
         android:textAlignment="center"
         android:textSize="30sp"
         android:gravity="center"
+        android:textColor="@color/colorWhite"
         />
 
 </RelativeLayout>
