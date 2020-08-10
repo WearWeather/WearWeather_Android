@@ -1,10 +1,13 @@
 package com.wearweather;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
@@ -20,9 +23,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
+import androidx.fragment.app.FragmentTransaction;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.android.material.tabs.TabLayout;
+import com.wearweather.mainTabFragment.ViewPagerAdapter;
 import com.wearweather.mainTabFragment.daily_tab;
 import com.wearweather.mainTabFragment.hourly_tab;
 import com.wearweather.mainTabFragment.weekly_tab;
@@ -37,6 +41,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 public class WeatherFragment extends Fragment {
 
     private GpsTracker gpsTracker;
@@ -48,25 +53,47 @@ public class WeatherFragment extends Fragment {
     private TextView current_rain;          //강우량
 
 
-    ViewPager viewPager; //tab
-    TabLayout tabLayout;//tab
-
-    public WeatherFragment(){ //tab
-
-    }
-    public static WeatherFragment getInstance() { return new WeatherFragment(); } //tab
+    private ViewPager viewPager; //tab
+    private TabLayout tabLayout;//tab
+    private ViewPagerAdapter adapter;
+//    private FragmentActivity myContext;
+//    public WeatherFragment(){ //tab
+//
+//    }
+//    public static WeatherFragment getInstance() { return new WeatherFragment(); } //tab
 
     @Override
-    public void onCreate(Bundle savedInstanceState){ //api
+    public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+//        viewPager = (ViewPager) getView().findViewById(R.id.viewPager);
+//        tabLayout = (TabLayout) getView().findViewById(R.id.tabLayout);
+//        adapter = new ViewPagerAdapter(getFragmentManager());
+//
+//        //Add Fragment Here
+//        adapter.AddFragment(new hourly_tab(),"Hourly");
+//        adapter.AddFragment(new daily_tab(),"Daily");
+//        adapter.AddFragment(new weekly_tab(),"Weekly");
+//
+//        viewPager.setAdapter(adapter);
+//        tabLayout.setupWithViewPager(viewPager);
+
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_weather, container, false);
         viewPager = rootView.findViewById(R.id.viewPager); //tab
         tabLayout = rootView.findViewById(R.id.tabLayout); //tab
+        adapter = new ViewPagerAdapter(getFragmentManager());
+
+        //Add Fragment Here
+//        adapter.AddFragment(new hourly_tab(),"Hourly");
+//        adapter.AddFragment(new daily_tab(),"Daily");
+//        adapter.AddFragment(new weekly_tab(),"Weekly");
+
+
 
         /* OpenWeatherMap API */
 
@@ -175,6 +202,8 @@ public class WeatherFragment extends Fragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+//                mSelectedPosition = tabLayout.getSelectedTabPosition();
+//                adapter.selectedTab(mSelectedPosition);
 
             }
 
@@ -197,7 +226,9 @@ public class WeatherFragment extends Fragment {
         adapter.addFragment(new daily_tab(), "Daily");
         adapter.addFragment(new weekly_tab(), "Weekly");
 
+
         viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void getKoreanAddressByPoint(double latitude, double longitude){
