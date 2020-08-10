@@ -1,9 +1,11 @@
 package com.wearweather.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -12,6 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -24,9 +27,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.wearweather.NewsXMLActivity;
 import com.wearweather.PreferenceManager;
 import com.wearweather.R;
+import com.wearweather.SettingsActivity;
 import com.wearweather.WeatherPagerAdpater;
 
 import org.json.JSONArray;
@@ -41,6 +47,7 @@ public class MainWeatherFragment extends Fragment {
 
     private DrawerLayout drawerLayout;
     private ImageButton menuButton;
+    private NavigationView navigationView;
     private TextView dateNow;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ImageButton searchButton;
@@ -58,7 +65,7 @@ public class MainWeatherFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main_weather, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_main_weather, container, false);
 
         /* set Background */
         swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_layout);
@@ -77,6 +84,7 @@ public class MainWeatherFragment extends Fragment {
             }
         });
 
+
         /* drawer layout */
         drawerLayout = (DrawerLayout)rootView.findViewById(R.id.main_drawer_layout);
         menuButton = (ImageButton)rootView.findViewById(R.id.main_menu_btn);
@@ -93,6 +101,22 @@ public class MainWeatherFragment extends Fragment {
                 }
             }
         });
+        navigationView = (NavigationView)rootView.findViewById(R.id.drawer_nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_news:
+                        startActivity(new Intent(rootView.getContext(), NewsXMLActivity.class));
+                        break;
+                    case R.id.nav_settings:
+                        startActivity(new Intent(rootView.getContext(), SettingsActivity.class));
+                        break;
+                }
+                return false;
+            }
+        });
+
 
         /* OpenWeatherMap API */
 
@@ -101,13 +125,6 @@ public class MainWeatherFragment extends Fragment {
         current_location = (TextView)rootView.findViewById(R.id.region_text);
         current_bodily_temp=(TextView)rootView.findViewById(R.id.bodily_temp);
         current_rain=(TextView)rootView.findViewById(R.id.precipitation_text);
-
-/*        float lat = PreferenceManager.getFloat(rootView.getContext(),"REGION"+tabPosition+"_LAT");
-        float lon= PreferenceManager.getFloat(rootView.getContext(),"REGION"+tabPosition+"_LON");
-        Log.e("SEULGI FRAG","REGION"+tabPosition+"_LAT "+String.valueOf(tabPosition)+" "+String.valueOf(lat)+" "+String.valueOf(lon));
-
-        find_weather(lat,lon);
-        getKoreanAddressByPoint(lat,lon);*/
 
         displayWeather(rootView.getContext());
 
