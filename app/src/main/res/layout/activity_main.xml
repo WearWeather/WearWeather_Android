@@ -21,7 +21,7 @@
         app:tabBackground="@drawable/tab_indicator_dot"
         app:tabGravity="center"
         app:tabIndicator="@null"
-        app:tabPaddingStart="6dp"
-        app:tabPaddingEnd="6dp"/>
+        app:tabPaddingStart="8dp"
+        app:tabPaddingEnd="8dp"/>
 
 </FrameLayout>

@@ -18,43 +18,34 @@ public class MainTabPagerAdapter extends FragmentStatePagerAdapter {
         super(fm, behavior);
     }
 
-    public void initFragment() {
-        if(getWeatherFragmentSize()==0){
-            addWeatherFragment();
-            addWeatherFragment();
+    public void initFragment(int num) {
+        if(getWeatherFragmentSize()!=num) {
+            for (int i = 0; i < num; i++)
+                addWeatherFragment();
         }
     }
 
     public void addWeatherFragment() {
         weatherFragmentArrayList.add(new MainWeatherFragment());
-        Log.e("SEULGI NOW FRAGMENT",String.valueOf(weatherFragmentArrayList.size()));
+        weatherFragmentArrayList.get(weatherFragmentArrayList.size()-1).setTabPosition(weatherFragmentArrayList.size()-1);
+        Log.e("SEULGI ADD FRAGMENT",String.valueOf(weatherFragmentArrayList.size()));
         notifyDataSetChanged();
     }
+
     public void deleteWeatherFragment(int position){
-        Log.e("SEULGI DELETE FRAGMENT",String.valueOf(position));
         weatherFragmentArrayList.remove(position);
-        Log.e("SEULGI NOW FRAGMENT",String.valueOf(weatherFragmentArrayList.size()));
+        Log.e("SEULGI DELETE FRAGMENT",String.valueOf(weatherFragmentArrayList.size()));
         notifyDataSetChanged();
     }
-    public int getWeatherFragmentSize() {
-        return weatherFragmentArrayList.size();
-    }
+
+    public int getWeatherFragmentSize() { return weatherFragmentArrayList.size(); }
+
+    public MainWeatherFragment getWeatherFragment(int position) { return weatherFragmentArrayList.get(position); }
+
     @NonNull
     @Override
     public Fragment getItem(int position) {
         return weatherFragmentArrayList.get(position);
-        /*
-        switch (position){
-            case 0:
-                WeatherFragment fragment1 = new WeatherFragment();
-                return fragment1;
-            case 1:
-                WeatherFragment fragment2 = new WeatherFragment();
-                return fragment2;
-            default:
-                return null;
-        }
-        */
     }
 
     @Override

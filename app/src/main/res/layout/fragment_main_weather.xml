@@ -31,8 +31,8 @@
 
                     <ImageButton
                         android:id="@+id/main_del_btn"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="left"
                         android:background="@android:color/transparent"
                         android:scaleType="centerInside"
@@ -50,8 +50,8 @@
 
                     <ImageButton
                         android:id="@+id/main_search_btn"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="right"
                         android:layout_marginRight="45dp"
                         android:background="@android:color/transparent"
@@ -60,8 +60,8 @@
 
                     <ImageButton
                         android:id="@+id/main_menu_btn"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="right"
                         android:background="@android:color/transparent"
                         android:scaleType="centerInside"
@@ -81,7 +81,7 @@
                         android:layout_marginTop="10dp"
                         android:text="NULL"
                         android:textColor="@color/colorWhite"
-                        android:textSize="34sp"
+                        android:textSize="30sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
