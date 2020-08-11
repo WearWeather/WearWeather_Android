@@ -6,6 +6,7 @@ import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -29,11 +30,17 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.wearweather.MainSearchActivity;
+import com.wearweather.main.MainActivity;
 import com.wearweather.NewsXMLActivity;
 import com.wearweather.PreferenceManager;
 import com.wearweather.R;
+import com.wearweather.SectionPagerAdapter;
 import com.wearweather.SettingsActivity;
-import com.wearweather.WeatherPagerAdpater;
+import com.wearweather.main.MainTabPagerAdapter;
+import com.wearweather.mainTabFragment.daily_tab;
+import com.wearweather.mainTabFragment.hourly_tab;
+import com.wearweather.mainTabFragment.weekly_tab;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,7 +59,7 @@ public class MainWeatherFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private ImageButton searchButton;
     private TabLayout tabLayout;
-    private WeatherPagerAdpater pagerAdpater;
+    private SectionPagerAdapter pagerAdpater;
     private ViewPager viewPager;
     private ImageButton delButton;
 
@@ -61,6 +68,20 @@ public class MainWeatherFragment extends Fragment {
     private TextView current_location;      //현재 위치
     private TextView current_bodily_temp;   //현재 위치
     private TextView current_rain;          //강우량
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+//        ImageButton mainButton = (ImageButton) getView().findViewById(R.id.main_search_btn);
+//        mainButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(this, MainSearchActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -117,6 +138,9 @@ public class MainWeatherFragment extends Fragment {
             }
         });
 
+        /*3 Tab layout */
+//        viewPager = rootView.findViewById(R.id.viewPager); //tab
+//        tabLayout = rootView.findViewById(R.id.tabLayout); //tab
 
         /* OpenWeatherMap API */
 
@@ -212,6 +236,7 @@ public class MainWeatherFragment extends Fragment {
         queue.add(jor);
     }
 
+
     private void getKoreanAddressByPoint(double latitude, double longitude){
         String url = "http://api.vworld.kr/req/address?service=address&request=getAddress&key=2566C643-E5EC-317E-BBAB-B6064E98ACC2&type=both";
         url += "&point="+String.valueOf(longitude)+","+String.valueOf(latitude);
@@ -258,6 +283,48 @@ public class MainWeatherFragment extends Fragment {
         find_weather(lat,lon);
         getKoreanAddressByPoint(lat,lon);
     }
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) { // all for tab
+//        super.onActivityCreated(savedInstanceState);
+//
+//        setUpViewPager(viewPager);
+//        tabLayout.setupWithViewPager(viewPager);
+//
+//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+////                mSelectedPosition = tabLayout.getSelectedTabPosition();
+////                adapter.selectedTab(mSelectedPosition);
+//                pagerAdpater.notifyDataSetChanged();
+//                viewPager.setCurrentItem(tab.getPosition());
+//                tab = tabLayout.getTabAt(0);
+//                tab.select();
+//
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
+//    }
+
+//    private void setUpViewPager(ViewPager viewPager) { //all for tab
+//        SectionPagerAdapter adapter = new SectionPagerAdapter((getChildFragmentManager()));
+//
+//        adapter.addFragment(new hourly_tab(), "Hourly");
+//        adapter.addFragment(new daily_tab(), "Daily");
+//        adapter.addFragment(new weekly_tab(), "Weekly");
+//
+//
+////        viewPager.setAdapter(adapter);
+////        tabLayout.setupWithViewPager(viewPager);
+//    }
 
     public void setTabPosition(int position) { tabPosition=position; }
 

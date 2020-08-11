@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.wearweather.WeatherFragment;
+import com.wearweather.main.MainWeatherFragment;
 
 import java.util.ArrayList;
 

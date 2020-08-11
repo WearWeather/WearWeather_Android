@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/swipe_layout"
     android:background="@android:color/black"
-    tools:context=".MainWeatherActivity">
+    tools:context=".main.MainActivity">
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/main_drawer_layout"

@@ -155,28 +155,28 @@
                     </LinearLayout>
 
                     <!--시간대별 탭 만들때 사용한 코드-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">-->
 
-                        <com.google.android.material.tabs.TabLayout
-                            android:id="@+id/tabLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            app:tabIndicatorColor="@color/colorBlack"
-                            app:tabTextColor="@color/colorWhite"
-                            app:tabSelectedTextColor="@color/colorBlack"
-                            app:tabTextAppearance="@style/main_tab_text"
-                            app:tabBackground="@android:color/transparent" />
+<!--                        <com.google.android.material.tabs.TabLayout-->
+<!--                            android:id="@+id/tabLayout"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="20dp"-->
+<!--                            app:tabIndicatorColor="@color/colorBlack"-->
+<!--                            app:tabTextColor="@color/colorWhite"-->
+<!--                            app:tabSelectedTextColor="@color/colorBlack"-->
+<!--                            app:tabTextAppearance="@style/main_tab_text"-->
+<!--                            app:tabBackground="@android:color/transparent" />-->
 
-                        <androidx.viewpager.widget.ViewPager
-                            android:id="@+id/viewPager"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-                    </LinearLayout>
+<!--                        <androidx.viewpager.widget.ViewPager-->
+<!--                            android:id="@+id/viewPager"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent" />-->
+<!--                    </LinearLayout>-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
