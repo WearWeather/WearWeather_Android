@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wearweather">
-    <!-- 인터넷 사용 권한 -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 위치 권한 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 인터넷 사용 권한 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 위치 권한 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-
-        <activity
-            android:name=".DustActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-
-        <activity android:name=".TemperatureClothingActivity8"></activity>
+        <activity android:name=".SettingsActivity"></activity>
+        <!-- <activity android:name=".main.MainActivity"></activity> -->
+        <activity android:name=".TemperatureClothingActivity8" />
         <activity android:name=".TemperatureClothingActivity7" />
         <activity android:name=".TemperatureClothingActivity6" />
         <activity android:name=".TemperatureClothingActivity5" />
@@ -27,16 +22,12 @@
         <activity android:name=".TemperatureClothingActivity3" />
         <activity android:name=".TemperatureClothingActivity2" />
         <activity
-            android:name=".NewsClickViewActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".NewsClickViewActivity"/>
         <activity
-            android:name=".NewsXMLActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".NewsXMLActivity"/>
         <activity
-            android:name=".MainWeatherActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-
+            android:name=".main.MainActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
