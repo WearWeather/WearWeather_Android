@@ -3,6 +3,7 @@ package com.wearweather;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.ClipData;
 import android.content.Context;
@@ -48,6 +49,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class NewsXMLActivity extends AppCompatActivity {
 
+    private SwipeRefreshLayout swipeToRefreshNews;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<NewsData> myDataset = new ArrayList<>();
@@ -58,6 +60,8 @@ public class NewsXMLActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        swipeToRefreshNews = (SwipeRefreshLayout) findViewById(R.id.swipeToRefreshNews);
+
 
         recyclerView.setHasFixedSize(true);
 
@@ -67,6 +71,20 @@ public class NewsXMLActivity extends AppCompatActivity {
         // layout manager
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
+
+
+        // 스와이프 기능 리스너.
+        // 1. 모든 뉴스 아이템들을 clear.
+        // 2. ForecastAdapter에게 변경사항 전달.
+        // 3. getNews메서드를 다시 호출하여 피드를 새로고쳐준다.
+        swipeToRefreshNews.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                myDataset.clear();
+                adapter.notifyDataSetChanged();
+                getNews();
+            }
+        });
 
         getNews();
     }
@@ -143,6 +161,7 @@ public class NewsXMLActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             return ""; // 아래 onPostExecute 메소드에 전달해 줄 문자열을 반환하므로 테스트 용도로 활용했음 (파싱에는 영향 X)
+                       // 리턴값이 굳이 필요하지 않아서 메서드 자체를 void형식으로 고쳐봤으나 그렇게 할 시 오류 발생
         }
 
         @Override
@@ -154,6 +173,9 @@ public class NewsXMLActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) { // 문자열 매개변수 s는 doInBackground 메소드의 리턴값
             super.onPostExecute(s);
+
+            swipeToRefreshNews.setRefreshing(false);
+
             // 파싱이 정상적으로 완료되었다면 결과메세지를 아이템의 갯수와 함께 토스트 메세지로 출력(just 확인작업)
 
             //adapter.notifyDataSetChanged(); // 리사이클러 뷰의 아이템의 변경 여부를 어댑터에게 전달
