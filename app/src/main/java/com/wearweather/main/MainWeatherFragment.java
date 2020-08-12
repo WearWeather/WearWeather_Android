@@ -2,6 +2,7 @@ package com.wearweather.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
 
@@ -31,14 +32,19 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.wearweather.DustActivity;
 import com.wearweather.NewsXMLActivity;
 import com.wearweather.PreferenceManager;
 import com.wearweather.R;
 import com.wearweather.SettingsActivity;
+import com.wearweather.TemperatureClothingActivity;
+import com.wearweather.TemperatureClothingActivity2;
 import com.wearweather.WeatherPagerAdpater;
 
 import org.json.JSONArray;
@@ -66,6 +72,7 @@ public class MainWeatherFragment extends Fragment {
     private ViewPager viewPager;
     private ImageButton delButton;
     private RecyclerView recyclerView;
+    private ImageView weathericon;
 
     private TextView region;                //도시
     private TextView current_temp;          //현재기온
@@ -117,12 +124,19 @@ public class MainWeatherFragment extends Fragment {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
+                    case R.id.nav_dust:
+                        startActivity(new Intent(rootView.getContext(), DustActivity.class));
+                        break;
+                    case R.id.nav_clothing:
+                        startActivity(new Intent(rootView.getContext(), TemperatureClothingActivity2.class));
+                        break;
                     case R.id.nav_news:
                         startActivity(new Intent(rootView.getContext(), NewsXMLActivity.class));
                         break;
                     case R.id.nav_settings:
                         startActivity(new Intent(rootView.getContext(), SettingsActivity.class));
                         break;
+                    default: break;
                 }
                 return false;
             }
@@ -159,6 +173,8 @@ public class MainWeatherFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
+        weathericon = (ImageView)rootView.findViewById(R.id.image_weather);
+
         displayWeather(rootView.getContext());
 
         return rootView;
@@ -193,6 +209,8 @@ public class MainWeatherFragment extends Fragment {
     }
 
     public void find_weather(float latitude, float longitude){
+        final String icon="";
+
         String url="http://api.openweathermap.org/data/2.5/forecast?appid=944b4ec7c3a10a1bbb4a432d14e6f979&units=metric&id=1835848";
         url += "&lat="+String.valueOf(latitude)+"&lon="+String.valueOf(longitude);
 
@@ -203,14 +221,11 @@ public class MainWeatherFragment extends Fragment {
                     JSONArray list=response.getJSONArray("list");
                     JSONObject city_object = response.getJSONObject("city");
 
-                    /* city */
-                    String city_name=city_object.getString("name");
-                    //region.setText(city_name);
-
                     /* weather */
                     JSONObject list_item = list.getJSONObject(0);
                     JSONObject main_object = list_item.getJSONObject("main");
                     JSONObject rain_object = list_item.getJSONObject("rain");
+                    JSONArray weather_object = list_item.getJSONArray("weather");
 
                     //기온
                     String temperature = main_object.getString("temp");
@@ -227,13 +242,19 @@ public class MainWeatherFragment extends Fragment {
                     rain_3h = String.valueOf(Math.round(Double.valueOf(rain_3h)*10));
                     current_rain.setText(getString(R.string.precipitation)+" "+rain_3h+getString(R.string.precipitation_unit));
 
+                    //날씨 아이콘
+                    JSONObject weather= weather_object.getJSONObject(0);
+                    String icon2 = weather.getString("icon");
+                    //icon.replaceAll("",weather.getString("icon"));
+                    icon.concat(icon2);
+                    Log.e("SEULGI ICON REQUEST","icon is"+icon2);
+                    Log.e("SEULGI ICON URL","string is"+icon);
+
                 }catch(JSONException e)
                 {
                     e.printStackTrace();
                 }
-
             }
-
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -241,8 +262,29 @@ public class MainWeatherFragment extends Fragment {
             }
         }
         );
+
+        Log.e("SEULGI ICON URL","string is"+icon);
+        String iconurl = "http://openweathermap.org/img/wn/"+icon+"@2x.png";
+        Log.e("SEULGI ICON URL",iconurl);
+        ImageRequest iconjor = new ImageRequest(iconurl, new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap response) {
+                weathericon.setImageBitmap(response);
+                Log.e("SEULGI ICON API",response.toString());
+            }
+        }, 0, 0, null,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("SEULGI ICON API",error.toString());
+                    }
+                });
+
         RequestQueue queue =  Volley.newRequestQueue(getActivity().getApplicationContext());
         queue.add(jor);
+        queue.add(iconjor);
+
+        Log.e("SEULGI TEST",""+icon);
     }
 
     private void getKoreanAddressByPoint(double latitude, double longitude){
