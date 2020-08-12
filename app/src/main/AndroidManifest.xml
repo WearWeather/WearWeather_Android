@@ -13,6 +13,13 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity android:name=".ClothesClickWebView"></activity>
+        <activity android:name=".DustActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".SettingsActivity" /> <!-- <activity android:name=".main.MainActivity"></activity> -->
         <activity android:name=".TemperatureClothingActivity8" />
         <activity android:name=".TemperatureClothingActivity7" />
