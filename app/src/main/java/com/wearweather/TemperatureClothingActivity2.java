@@ -14,24 +14,63 @@ import java.net.URL;
 public class TemperatureClothingActivity2 extends AppCompatActivity {
 
     ViewGroup tokboki, shoes, thickCoat, neat, scarf, leather;
+    String url;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature_clothing2);
 
-        tokboki = (ViewGroup) findViewById(R.id.layout_tokboki);
-
-        tokboki.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener listener = new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
-                String url = "http://store.musinsa.com/app/product/detail/1196926/0";
-
-                Intent intent = new Intent(getApplicationContext(), ClothesClickWebView.class);
-                intent.putExtra("LinkTokboki", url);
-                startActivity(intent);
+                switch (view.getId()){
+                    case R.id.layout_tokboki:
+                        url = "https://store.musinsa.com/app/product/detail/1196926/0";
+                        intent = new Intent(getApplicationContext(), ClothesClickWebView.class);
+                        intent.putExtra("link", url);
+                        startActivity(intent);
+                    case R.id.layout_winterShoes:
+                        url = "https://store.musinsa.com/app/product/detail/1269289/0";
+                        intent = new Intent(getApplicationContext(), ClothesClickWebView.class);
+                        intent.putExtra("link", url);
+                        startActivity(intent);
+                    case R.id.layout_thickCoat:
+                        url = "https://store.musinsa.com/app/product/detail/1180105/0";
+                        intent = new Intent(getApplicationContext(), ClothesClickWebView.class);
+                        intent.putExtra("link", url);
+                        startActivity(intent);
+                    case R.id.layout_neat:
+                        url = "https://store.musinsa.com/app/product/detail/1435001/0";
+                        intent = new Intent(getApplicationContext(), ClothesClickWebView.class);
+                        intent.putExtra("link", url);
+                        startActivity(intent);
+                    case R.id.layout_scarf:
+                        url = "https://store.musinsa.com/app/product/detail/897557/0";
+                        intent = new Intent(getApplicationContext(), ClothesClickWebView.class);
+                        intent.putExtra("link", url);
+                        startActivity(intent);
+                    case R.id.layout_leather:
+                        url = "https://store.musinsa.com/app/product/detail/475009/0";
+                        intent = new Intent(getApplicationContext(), ClothesClickWebView.class);
+                        intent.putExtra("link", url);
+                        startActivity(intent);
+                }
             }
-        });
+        };
+        tokboki = (ViewGroup) findViewById(R.id.layout_tokboki);
+        shoes = (ViewGroup) findViewById(R.id.layout_winterShoes);
+        thickCoat = (ViewGroup) findViewById(R.id.layout_thickCoat);
+        neat = (ViewGroup) findViewById(R.id.layout_neat);
+        scarf = (ViewGroup) findViewById(R.id.layout_scarf);
+        leather = (ViewGroup) findViewById(R.id.layout_leather);
+
+        tokboki.setOnClickListener(listener);
+        shoes.setOnClickListener(listener);
+        thickCoat.setOnClickListener(listener);
+        neat.setOnClickListener(listener);
+        scarf.setOnClickListener(listener);
+        leather.setOnClickListener(listener);
     }
 }
