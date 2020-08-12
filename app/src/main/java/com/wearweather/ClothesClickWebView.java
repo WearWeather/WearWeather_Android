@@ -10,5 +10,7 @@ public class ClothesClickWebView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clothes_click_web_view);
+
+
     }
 }
