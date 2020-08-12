@@ -73,6 +73,7 @@ public class XMLParsingTask extends AsyncTask<String, Void, String> {
 
                         break;
 
+
                     // 시작태그와 종료태그 사이 값을 만나는순간 (JSON으로 치면 key를 넣어서 값을 얻음)
                     case XmlPullParser.TEXT:
                         if (b_dataTime) {
