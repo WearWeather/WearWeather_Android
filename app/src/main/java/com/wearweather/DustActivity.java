@@ -11,7 +11,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -29,8 +29,8 @@ import androidx.core.content.ContextCompat;
 public class DustActivity extends AppCompatActivity {
 
     LinearLayout layout;
-    TextView tvLocation, tvDate, dustPhase, ulDustPoint, ulDustPhase, rayPoint, rayPhase, yellowPoint, yellowPhase;
-    ProgressBar dustPercent;
+    TextView tvLocation, tvDate, dustPercent, dustPhase, ulDustPercent, ulDustPhase, rayPoint, rayPhase, yellowPoint, yellowPhase;
+
 
     private GpsTracker gpsTracker;
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
@@ -42,10 +42,6 @@ public class DustActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dust);
 
-        dustPercent = (ProgressBar) findViewById(R.id.dustPercent);
-        dustPhase = (TextView) findViewById(R.id.dustPhase);
-        ulDustPoint = (TextView) findViewById(R.id.ulDustPoint);
-        ulDustPhase = (TextView) findViewById(R.id.ulDustPhase);
         rayPoint = (TextView) findViewById(R.id.rayPoint);
         rayPhase = (TextView) findViewById(R.id.rayPhase);
         yellowPoint = (TextView) findViewById(R.id.yellowPoint);
@@ -62,7 +58,64 @@ public class DustActivity extends AppCompatActivity {
         /*현재 날짜 설정*/
         tvDate = (TextView) findViewById(R.id.tvDate);
         setDate();
+
+        /*미세먼지, 초미세먼지 농도 설정*/
+        dustPercent = (TextView) findViewById(R.id.dustPercent);
+        dustPhase = (TextView) findViewById(R.id.dustPhase);
+        ulDustPercent = (TextView) findViewById(R.id.ulDustPercent);
+        ulDustPhase = (TextView) findViewById(R.id.ulDustPhase);
+
+
+        setFineDust("종로구");
+
+
     }
+
+    private void setFineDust(String address) {
+
+        //현재 url 종로구
+        String url = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?stationName=%EC%A2%85%EB%A1%9C%EA%B5%AC&dataTerm=month&pageNo=1&numOfRows=10&ServiceKey=xhl67Y2J0Pgav3Pia7oYbh%2BBzg1EclA%2BOq4I%2BssvNRp8vFt55cRnMgSnD9t601fwh7QfbpU61dVcnr9RX5Jw6A%3D%3D&ver=1.3";
+        String resultText = null;
+        try {
+            resultText = new XMLParsingTask(DustActivity.this, url).execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        String[] array = resultText.split("_");
+        // text_dust_0.setText(array[0] + "시간"); // date, 시간
+//        text_dust_1.setText(array[1] + "㎍/m³"); // pm10Value, 미세먼지
+//        text_dust_2.setText(array[2] + "㎍/m³"); // pm25Value, 초미세먼지
+        dustPercent.setText(array[1] + "㎍/m³");
+        setPhase(array[1],"dust");
+        ulDustPercent.setText(array[2] + "㎍/m³");
+        setPhase(array[2],"uldust");
+
+
+    }
+
+    private void setPhase(String point,String field) {
+        int percent = Integer.parseInt(point);
+        if (field.equals("dust")) {
+            if (percent >=0 && percent<=30) point="좋음";
+            else if(percent >30 && percent<=80) point= "보통";
+            else if(percent >80 && percent<=150) point=  "나쁨";
+            else point= "매우나쁨";
+
+            dustPhase.setText(point);
+        }
+        if (field.equals("uldust")) {
+            if (percent >=0 && percent<=15) point="좋음";
+            else if(percent >15 && percent<=35) point= "보통";
+            else if(percent >35 && percent<=75) point=  "나쁨";
+            else point= "매우나쁨";
+
+            ulDustPhase.setText(point);
+        }
+    }
+
 
     private void setLocation() {
 
@@ -103,7 +156,8 @@ public class DustActivity extends AppCompatActivity {
         String currentDate = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일", Locale.KOREAN).format(currentTime);
         tvDate.setText(currentDate);
     }
-    public String getCurrentAddress( double latitude, double longitude) {
+
+    public String getCurrentAddress(double latitude, double longitude) {
 
         //지오코더... GPS를 주소로 변환
         Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
@@ -128,7 +182,7 @@ public class DustActivity extends AppCompatActivity {
         }
 
         Address address = addresses.get(0);
-        return address.getAddressLine(0).toString()+"\n";
+        return address.getAddressLine(0).toString() + "\n";
     }
 
 
@@ -178,7 +232,8 @@ public class DustActivity extends AppCompatActivity {
                 break;
         }
     }
-    void checkRunTimePermission(){
+
+    void checkRunTimePermission() {
 
         //런타임 퍼미션 처리
         // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
@@ -216,6 +271,7 @@ public class DustActivity extends AppCompatActivity {
             }
         }
     }
+
     public boolean checkLocationServicesStatus() {
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 

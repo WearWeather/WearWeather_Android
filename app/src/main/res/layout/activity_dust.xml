@@ -33,9 +33,12 @@
             android:text="날짜"
             android:paddingBottom="25dp" />
 
-        <ProgressBar
+        <TextView
             android:id="@+id/dustPercent"
             android:progress="30"
+            android:textSize="30dp"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:paddingBottom="10dp" />
@@ -70,8 +73,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20"
-                android:id="@+id/ulDustPoint" />
+                android:text="X"
+                android:id="@+id/ulDustPercent" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -95,7 +98,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="6"
+                android:text="X"
                 android:id="@+id/rayPoint" />
 
             <TextView
@@ -120,7 +123,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="38"
+                android:text="X"
                 android:id="@+id/yellowPoint" />
 
             <TextView
