@@ -19,16 +19,13 @@
         <activity android:name=".TemperatureClothingActivity6" />
         <activity android:name=".TemperatureClothingActivity5" />
         <activity android:name=".TemperatureClothingActivity4" />
-        <activity android:name=".TemperatureClothingActivity3" >
-
-        </activity>
+        <activity android:name=".TemperatureClothingActivity3" />
         <activity android:name=".TemperatureClothingActivity2" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".NewsClickViewActivity" />
         <activity android:name=".NewsXMLActivity" />
