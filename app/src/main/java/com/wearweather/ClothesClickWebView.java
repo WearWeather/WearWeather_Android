@@ -3,32 +3,33 @@ package com.wearweather;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.webkit.WebChromeClient;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 
 public class ClothesClickWebView extends AppCompatActivity {
 
     WebView webView;
-
+    Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clothes_click_web_view);
 
-        webView = (WebView) findViewById(R.id.webView_shoppingMall);
+        button = findViewById(R.id.button);
+        webView = findViewById(R.id.webView_shoppingMall);
+        
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                webView.setWebViewClient(new WebViewClient());
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://store.musinsa.com/app/product/detail/859061/0"));
+                startActivity(intent);
 
-
-        Intent intent = getIntent();
-        String link = intent.getStringExtra("LinkTokboki");
-
-        webView.getSettings().setJavaScriptEnabled(true);
-
-        webView.setWebViewClient(new WebViewClient());
-        webView.setWebChromeClient(new WebChromeClient());
-        webView.loadUrl(link);
-
-
+            }
+        });
     }
 }
