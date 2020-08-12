@@ -11,8 +11,6 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-
-
 public class TemperatureClothingActivity extends AppCompatActivity {
 
     @Override

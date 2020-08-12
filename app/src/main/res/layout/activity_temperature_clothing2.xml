@@ -87,6 +87,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_leather"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -110,6 +111,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_thickCoat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -140,6 +142,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/layout_neat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -162,6 +165,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_winterShoes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -184,6 +188,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_scarf"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
