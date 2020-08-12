@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ClothesClickWebView">
 
     <WebView
+        android:id="@+id/webview_clothing"
         android:layout_width="409dp"
         android:layout_height="729dp" />
 </LinearLayout>
