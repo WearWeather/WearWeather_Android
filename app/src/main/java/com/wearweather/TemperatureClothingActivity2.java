@@ -28,7 +28,7 @@ public class TemperatureClothingActivity2 extends AppCompatActivity {
 
                 String url = "http://store.musinsa.com/app/product/detail/1196926/0";
 
-                Intent intent = new Intent(getApplicationContext() , ClothesClickWebView.class);
+                Intent intent = new Intent(getApplicationContext(), ClothesClickWebView.class);
                 intent.putExtra("LinkTokboki", url);
                 startActivity(intent);
             }

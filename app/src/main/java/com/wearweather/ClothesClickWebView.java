@@ -28,7 +28,6 @@ public class ClothesClickWebView extends AppCompatActivity {
                 webView.setWebViewClient(new WebViewClient());
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://store.musinsa.com/app/product/detail/859061/0"));
                 startActivity(intent);
-
             }
         });
     }
