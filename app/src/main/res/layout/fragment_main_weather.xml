@@ -154,35 +154,18 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <!--시간대별 탭 만들때 사용한 코드-->
-                    <LinearLayout
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/hourly_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
-
-                        <com.google.android.material.tabs.TabLayout
-                            android:id="@+id/tabLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            app:tabIndicatorColor="@color/colorBlack"
-                            app:tabTextColor="@color/colorWhite"
-                            app:tabSelectedTextColor="@color/colorBlack"
-                            app:tabTextAppearance="@style/main_tab_text"
-                            app:tabBackground="@android:color/transparent" />
-
-                        <androidx.viewpager.widget.ViewPager
-                            android:id="@+id/viewPager"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-                    </LinearLayout>
+                        android:layout_marginTop="30dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
             </LinearLayout>
-
         </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.navigation.NavigationView
