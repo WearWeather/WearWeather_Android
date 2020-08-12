@@ -47,8 +47,10 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MainWeatherFragment extends Fragment {
     private int tabPosition;
@@ -137,9 +139,15 @@ public class MainWeatherFragment extends Fragment {
 
         /* HOULRY recyclerview */
         //임시 데이터
+        Calendar calendar = Calendar.getInstance();
+        Date day = calendar.getTime();
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        Date tomorrow = calendar.getTime();
+
+
         List<HourlyItem> hourlyItemList = new ArrayList<>();
-        hourlyItemList.add(new HourlyItem("월요일",1,"27","27"));
-        hourlyItemList.add(new HourlyItem("화요일",1,"27","27"));
+        hourlyItemList.add(new HourlyItem(new SimpleDateFormat("EEEE", Locale.KOREAN).format(day.getTime()),1,"27","27"));
+        hourlyItemList.add(new HourlyItem(new SimpleDateFormat("EEEE", Locale.KOREAN).format(tomorrow.getTime()),1,"27","27"));
         hourlyItemList.add(new HourlyItem("수요일",1,"27","27"));
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.hourly_recycler);
