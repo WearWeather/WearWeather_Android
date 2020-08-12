@@ -8,6 +8,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
@@ -18,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +46,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MainWeatherFragment extends Fragment {
     private int tabPosition;
@@ -55,6 +63,7 @@ public class MainWeatherFragment extends Fragment {
     private WeatherPagerAdpater pagerAdpater;
     private ViewPager viewPager;
     private ImageButton delButton;
+    private RecyclerView recyclerView;
 
     private TextView region;                //도시
     private TextView current_temp;          //현재기온
@@ -119,12 +128,28 @@ public class MainWeatherFragment extends Fragment {
 
 
         /* OpenWeatherMap API */
-
         region=(TextView)rootView.findViewById(R.id.region_text);
         current_temp = (TextView)rootView.findViewById(R.id.temp_now);
         current_location = (TextView)rootView.findViewById(R.id.region_text);
         current_bodily_temp=(TextView)rootView.findViewById(R.id.bodily_temp);
         current_rain=(TextView)rootView.findViewById(R.id.precipitation_text);
+
+
+        /* HOULRY recyclerview */
+        //임시 데이터
+        List<HourlyItem> hourlyItemList = new ArrayList<>();
+        hourlyItemList.add(new HourlyItem("월요일",1,"27","27"));
+        hourlyItemList.add(new HourlyItem("화요일",1,"27","27"));
+        hourlyItemList.add(new HourlyItem("수요일",1,"27","27"));
+
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.hourly_recycler);
+        LinearLayoutManager layoutManager= new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+        HourlyItemAdapter adapter;
+        adapter = new HourlyItemAdapter(getActivity(),hourlyItemList);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
         displayWeather(rootView.getContext());
 
@@ -262,4 +287,73 @@ public class MainWeatherFragment extends Fragment {
     public void setTabPosition(int position) { tabPosition=position; }
 
     public int getTabPosition() { return tabPosition; }
+
+    private class TabPagerAdapter extends FragmentStatePagerAdapter {
+        List<Fragment> fragmentList;
+
+        public TabPagerAdapter(@NonNull FragmentManager fm, List<Fragment> fragmentList) {
+            super(fm);
+            this.fragmentList = fragmentList;
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentList.size();
+        }
+    }
+
+    private class HourlyItemAdapter extends RecyclerView.Adapter<MainWeatherFragment.HourlyItemAdapter.ViewHolder>{
+        List<HourlyItem> hourlyItems;
+        Context context;
+
+        public HourlyItemAdapter(Context context, List<HourlyItem> hourlyItems) {
+            this.hourlyItems = hourlyItems;
+            this.context=context;
+        }
+
+        @NonNull
+        @Override
+        public MainWeatherFragment.HourlyItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_hourly, parent,false);
+
+            return new MainWeatherFragment.HourlyItemAdapter.ViewHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull MainWeatherFragment.HourlyItemAdapter.ViewHolder holder, int position) {
+
+            HourlyItem item = hourlyItems.get(position);
+            holder.yoil.setText(item.getDays());
+            holder.low.setText(item.getLow_temp());
+            holder.high.setText(item.getHigh_temp());
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return hourlyItems.size();
+        }
+
+        private class ViewHolder extends RecyclerView.ViewHolder{
+            TextView yoil;
+            TextView low;
+            TextView high;
+            ImageView image;
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+
+                yoil=(TextView) itemView.findViewById(R.id.yoil_hourly);
+                low=(TextView)itemView.findViewById(R.id.hourly_low_temp);
+                high=(TextView)itemView.findViewById(R.id.hourly_high_temp);
+                image=(ImageView)itemView.findViewById(R.id.hourly_image);
+            }
+        }
+    }
 }
