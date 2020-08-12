@@ -3,6 +3,7 @@ package com.wearweather;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.ClipData;
 import android.content.Context;
@@ -48,6 +49,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class NewsXMLActivity extends AppCompatActivity {
 
+    private SwipeRefreshLayout swipeToRefreshNews;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<NewsData> myDataset = new ArrayList<>();
@@ -58,6 +60,8 @@ public class NewsXMLActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        swipeToRefreshNews = (SwipeRefreshLayout) findViewById(R.id.swipeToRefreshNews);
+
 
         recyclerView.setHasFixedSize(true);
 
@@ -68,14 +72,28 @@ public class NewsXMLActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        getNews(); // xml 파싱 수행
+
+        // 스와이프 기능 리스너.
+        // 1. 모든 뉴스 아이템들을 clear.
+        // 2. ForecastAdapter에게 변경사항 전달.
+        // 3. getNews메서드를 다시 호출하여 피드를 새로고쳐준다.
+        swipeToRefreshNews.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                myDataset.clear();
+                adapter.notifyDataSetChanged();
+                getNews();
+            }
+        });
+
+        getNews();
     }
     public void getNews(){
 
         try{
             URL url = new URL("https://www.yonhapnewstv.co.kr/category/news/weather/feed/"); // 연합뉴스 RSS 피드 사용(xml 문서 형식)
-            RssFeedTask task = new RssFeedTask(); // xml 피드를 파싱하기위해 구현된 비 동기식 RssFeedTask 클래스의 객체
-            task.execute(url); //
+            RssFeedTask task = new RssFeedTask();
+            task.execute(url);
         }catch(MalformedURLException e){
             e.printStackTrace();
         }
@@ -86,18 +104,18 @@ public class NewsXMLActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(URL... urls) {
 
-            URL url = urls[0]; // doInBackground메서드에서 받은 url들 중에 첫 번째 값을 선택
+            URL url = urls[0];
 
             try{
-                InputStream is = url.openStream(); // 스트림 열기
+                InputStream is = url.openStream();
 
-                XmlPullParserFactory factory = XmlPullParserFactory.newInstance(); // 받아온 xml피드의 인스턴스 획득
-                XmlPullParser xpp = factory.newPullParser(); // xml 피드의
+                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                XmlPullParser xpp = factory.newPullParser();
 
-                xpp.setInput(is, "utf-8"); // 날씨 뉴스 xml 인코딩 방식을 utf-8로 설정
+                xpp.setInput(is, "utf-8"); // 날씨 뉴스 xml 인코딩 방식을 utf-8 방식으로 설정
                 int eventType = xpp.getEventType();
 
-                NewsData item = null; // 한 개의 뉴스 아이템이 저장될  비어있는 item 객체
+                NewsData item = null;
                 String tagName = null;
 
                 while(eventType != XmlPullParser.END_DOCUMENT){ // 반복문으로 반복되는 xml 문서의 구조 파싱
@@ -130,30 +148,34 @@ public class NewsXMLActivity extends AppCompatActivity {
                             break;
                         case XmlPullParser.END_TAG:
                             tagName = xpp.getName();
-                            if(tagName.equals("item")){ // 마지막 태그인지 확인
-                                myDataset.add(item); // NewsData클래스 ArrayList에 아이템 하나 추가
+                            if(tagName.equals("item")){
+                                myDataset.add(item);
                                 item = null; // 한 개의 뉴스를 파싱 완료 후 item에 null처리를 하여 다음 item값이 들어갈 수 있도록 설정
-                                publishProgress(); // 간단히 아래에 정의 되어있는 onProgressUpdate 메소드 호출한다고 생각하면 됨
+                                publishProgress();
                             }
                             break;
                     }
-                    eventType = xpp.next(); // 다음 아이템으로 커서(?) 이동
+                    eventType = xpp.next();
                 }
             }catch(IOException | XmlPullParserException e){
                 e.printStackTrace();
             }
             return ""; // 아래 onPostExecute 메소드에 전달해 줄 문자열을 반환하므로 테스트 용도로 활용했음 (파싱에는 영향 X)
+                       // 리턴값이 굳이 필요하지 않아서 메서드 자체를 void형식으로 고쳐봤으나 그렇게 할 시 오류 발생
         }
 
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            adapter.notifyItemInserted(myDataset.size()); // 뉴스의 피드 정보가 업데이트 되는 즉시 어댑터에게 알림
+            adapter.notifyItemInserted(myDataset.size());
         }
 
         @Override
         protected void onPostExecute(String s) { // 문자열 매개변수 s는 doInBackground 메소드의 리턴값
             super.onPostExecute(s);
+
+            swipeToRefreshNews.setRefreshing(false);
+
             // 파싱이 정상적으로 완료되었다면 결과메세지를 아이템의 갯수와 함께 토스트 메세지로 출력(just 확인작업)
 
             //adapter.notifyDataSetChanged(); // 리사이클러 뷰의 아이템의 변경 여부를 어댑터에게 전달

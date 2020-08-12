@@ -47,7 +47,7 @@ public class ForecastAdapter extends RecyclerView.Adapter {
 
         NewsData item = items.get(position);
         vh.txtTitle.setText(item.getTitle());
-        vh.txtDate.setText(item.getPubDate());
+        vh.txtDate.setText(item.getPubDate().substring(0,17)); // subString함수 사용하여 날짜를 요일, 일, 월, 년도 까지만 보이게 설정
         vh.txtDiscription.setText(item.getDescription());
     }
 
