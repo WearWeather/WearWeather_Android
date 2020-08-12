@@ -1,5 +1,5 @@
 package com.wearweather;
-
+/* 21°C ~ 23°C 이하 일 경우 추천해주는 액티비티 */
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;

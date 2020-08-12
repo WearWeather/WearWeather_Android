@@ -64,6 +64,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/layout_tokboki"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -72,7 +73,7 @@
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="163dp"
                     app:srcCompat="@drawable/kjh_thickcoat2" />
 
                 <TextView

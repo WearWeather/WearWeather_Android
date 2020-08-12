@@ -44,6 +44,7 @@ public class ForecastAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         VH vh = (VH)holder;
+
         NewsData item = items.get(position);
         vh.txtTitle.setText(item.getTitle());
         vh.txtDate.setText(item.getPubDate().substring(0,17)); // subString함수 사용하여 날짜를 요일, 일, 월, 년도 까지만 보이게 설정
@@ -58,7 +59,6 @@ public class ForecastAdapter extends RecyclerView.Adapter {
     class VH extends RecyclerView.ViewHolder{ // 커스텀 뷰 홀더 클래스
 
         TextView txtTitle, txtDiscription, txtDate;
-        public View rootView;
 
         public VH(@NonNull View v) {
             super(v);
@@ -66,10 +66,9 @@ public class ForecastAdapter extends RecyclerView.Adapter {
             txtTitle = v.findViewById(R.id.textView_title);
             txtDiscription = v.findViewById(R.id.info_text);
             txtDate = v.findViewById(R.id.txtDate);
-            rootView = v;
             v.setClickable(true); // 1. 레이아웃을 클릭 가능한 상태로
             v.setEnabled(true); // 2. 활성화
-            v.setOnClickListener(new View.OnClickListener() {
+            v.setOnClickListener(new View.OnClickListener() { // 클릭 리스너 할당
                 @Override
                 public void onClick(View view) {
                     String link = items.get(getLayoutPosition()).getLink();
