@@ -68,14 +68,14 @@ public class NewsXMLActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        getNews();
+        getNews(); // xml 파싱 수행
     }
     public void getNews(){
 
         try{
             URL url = new URL("https://www.yonhapnewstv.co.kr/category/news/weather/feed/"); // 연합뉴스 RSS 피드 사용(xml 문서 형식)
-            RssFeedTask task = new RssFeedTask();
-            task.execute(url);
+            RssFeedTask task = new RssFeedTask(); // xml 피드를 파싱하기위해 구현된 비 동기식 RssFeedTask 클래스의 객체
+            task.execute(url); //
         }catch(MalformedURLException e){
             e.printStackTrace();
         }
@@ -86,18 +86,18 @@ public class NewsXMLActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(URL... urls) {
 
-            URL url = urls[0];
+            URL url = urls[0]; // doInBackground메서드에서 받은 url들 중에 첫 번째 값을 선택
 
             try{
-                InputStream is = url.openStream();
+                InputStream is = url.openStream(); // 스트림 열기
 
-                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-                XmlPullParser xpp = factory.newPullParser();
+                XmlPullParserFactory factory = XmlPullParserFactory.newInstance(); // 받아온 xml피드의 인스턴스 획득
+                XmlPullParser xpp = factory.newPullParser(); // xml 피드의
 
-                xpp.setInput(is, "utf-8"); // 날씨 뉴스 xml 인코딩 방식을 utf-8 방식으로 설정
+                xpp.setInput(is, "utf-8"); // 날씨 뉴스 xml 인코딩 방식을 utf-8로 설정
                 int eventType = xpp.getEventType();
 
-                NewsData item = null;
+                NewsData item = null; // 한 개의 뉴스 아이템이 저장될  비어있는 item 객체
                 String tagName = null;
 
                 while(eventType != XmlPullParser.END_DOCUMENT){ // 반복문으로 반복되는 xml 문서의 구조 파싱
@@ -130,14 +130,14 @@ public class NewsXMLActivity extends AppCompatActivity {
                             break;
                         case XmlPullParser.END_TAG:
                             tagName = xpp.getName();
-                            if(tagName.equals("item")){
-                                myDataset.add(item);
+                            if(tagName.equals("item")){ // 마지막 태그인지 확인
+                                myDataset.add(item); // NewsData클래스 ArrayList에 아이템 하나 추가
                                 item = null; // 한 개의 뉴스를 파싱 완료 후 item에 null처리를 하여 다음 item값이 들어갈 수 있도록 설정
-                                publishProgress();
+                                publishProgress(); // 간단히 아래에 정의 되어있는 onProgressUpdate 메소드 호출한다고 생각하면 됨
                             }
                             break;
                     }
-                    eventType = xpp.next();
+                    eventType = xpp.next(); // 다음 아이템으로 커서(?) 이동
                 }
             }catch(IOException | XmlPullParserException e){
                 e.printStackTrace();
@@ -148,7 +148,7 @@ public class NewsXMLActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            adapter.notifyItemInserted(myDataset.size());
+            adapter.notifyItemInserted(myDataset.size()); // 뉴스의 피드 정보가 업데이트 되는 즉시 어댑터에게 알림
         }
 
         @Override
