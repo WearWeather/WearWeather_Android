@@ -22,13 +22,6 @@ public class TemperatureClothingActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature_clothing2);
 
-        tokboki = (ViewGroup) findViewById(R.id.layout_tokboki);
-        shoes = (ViewGroup) findViewById(R.id.layout_winterShoes);
-        thickCoat = (ViewGroup) findViewById(R.id.layout_thickCoat);
-        neat = (ViewGroup) findViewById(R.id.layout_neat);
-        scarf = (ViewGroup) findViewById(R.id.layout_scarf);
-        leather = (ViewGroup) findViewById(R.id.layout_leather);
-
         View.OnClickListener listener = new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -66,5 +59,18 @@ public class TemperatureClothingActivity2 extends AppCompatActivity {
                 }
             }
         };
+        tokboki = (ViewGroup) findViewById(R.id.layout_tokboki);
+        shoes = (ViewGroup) findViewById(R.id.layout_winterShoes);
+        thickCoat = (ViewGroup) findViewById(R.id.layout_thickCoat);
+        neat = (ViewGroup) findViewById(R.id.layout_neat);
+        scarf = (ViewGroup) findViewById(R.id.layout_scarf);
+        leather = (ViewGroup) findViewById(R.id.layout_leather);
+
+        tokboki.setOnClickListener(listener);
+        shoes.setOnClickListener(listener);
+        thickCoat.setOnClickListener(listener);
+        neat.setOnClickListener(listener);
+        scarf.setOnClickListener(listener);
+        leather.setOnClickListener(listener);
     }
 }
