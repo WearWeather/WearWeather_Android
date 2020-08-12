@@ -24,7 +24,7 @@ public class TemperatureClothingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getApplicationContext(), ClothesClickWebView.class);
-                intent.putExtra("link", "https://store.musinsa.com/app/product/detail/859061/0");
+                intent.putExtra("link", "https://store.musinsa.com/app/product/detail/1515905/0");
                 startActivity(intent);
             }
         });
