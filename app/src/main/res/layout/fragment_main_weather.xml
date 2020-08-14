@@ -29,14 +29,14 @@
                     android:layout_margin="20dp"
                     android:orientation="horizontal">
 
-                    <ImageButton
+<!--                    <ImageButton
                         android:id="@+id/main_del_btn"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="left"
                         android:background="@android:color/transparent"
                         android:scaleType="centerInside"
-                        android:src="@drawable/icon_x" />
+                        android:src="@drawable/icon_x" />-->
 
                     <TextView
                         android:id="@+id/temp_time"
@@ -48,7 +48,7 @@
                         android:textColor="@color/colorWhite"
                         android:textSize="18sp" />
 
-                    <ImageButton
+<!--                    <ImageButton
                         android:id="@+id/main_search_btn"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
@@ -56,7 +56,7 @@
                         android:layout_marginRight="45dp"
                         android:background="@android:color/transparent"
                         android:scaleType="centerInside"
-                        android:src="@drawable/icon_search" />
+                        android:src="@drawable/icon_search" />-->
 
                     <ImageButton
                         android:id="@+id/main_menu_btn"
@@ -98,15 +98,16 @@
 
                         <ImageView
                             android:id="@+id/image_weather"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:scaleType="fitCenter"
                             android:src="@drawable/icon_sunny" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="40dp"
+                            android:layout_marginLeft="20dp"
                             android:orientation="vertical">
 
                             <TextView

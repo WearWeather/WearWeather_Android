@@ -80,6 +80,8 @@ public class MainWeatherFragment extends Fragment {
     private TextView current_bodily_temp;   //현재 위치
     private TextView current_rain;          //강우량
 
+    String testicon;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -209,10 +211,9 @@ public class MainWeatherFragment extends Fragment {
     }
 
     public void find_weather(float latitude, float longitude){
-        final String icon="";
-
         String url="http://api.openweathermap.org/data/2.5/forecast?appid=944b4ec7c3a10a1bbb4a432d14e6f979&units=metric&id=1835848";
         url += "&lat="+String.valueOf(latitude)+"&lon="+String.valueOf(longitude);
+        Log.e("SEULGI WEATHER API URL", url);
 
         JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -244,11 +245,23 @@ public class MainWeatherFragment extends Fragment {
 
                     //날씨 아이콘
                     JSONObject weather= weather_object.getJSONObject(0);
-                    String icon2 = weather.getString("icon");
-                    //icon.replaceAll("",weather.getString("icon"));
-                    icon.concat(icon2);
-                    Log.e("SEULGI ICON REQUEST","icon is"+icon2);
-                    Log.e("SEULGI ICON URL","string is"+icon);
+                    String icon = weather.getString("icon");
+                    String iconurl = "http://openweathermap.org/img/wn/"+icon+"@2x.png";
+                    Log.e("SEULGI ICON URL",iconurl);
+                    ImageRequest iconjor = new ImageRequest(iconurl, new Response.Listener<Bitmap>() {
+                        @Override
+                        public void onResponse(Bitmap response) {
+                            weathericon.setImageBitmap(response);
+                        }
+                    }, 0, 0, null,
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.e("SEULGI ICON API",error.toString());
+                                }
+                            });
+                    RequestQueue queue2 =  Volley.newRequestQueue(getActivity().getApplicationContext());
+                    queue2.add(iconjor);
 
                 }catch(JSONException e)
                 {
@@ -263,28 +276,9 @@ public class MainWeatherFragment extends Fragment {
         }
         );
 
-        Log.e("SEULGI ICON URL","string is"+icon);
-        String iconurl = "http://openweathermap.org/img/wn/"+icon+"@2x.png";
-        Log.e("SEULGI ICON URL",iconurl);
-        ImageRequest iconjor = new ImageRequest(iconurl, new Response.Listener<Bitmap>() {
-            @Override
-            public void onResponse(Bitmap response) {
-                weathericon.setImageBitmap(response);
-                Log.e("SEULGI ICON API",response.toString());
-            }
-        }, 0, 0, null,
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("SEULGI ICON API",error.toString());
-                    }
-                });
-
         RequestQueue queue =  Volley.newRequestQueue(getActivity().getApplicationContext());
         queue.add(jor);
-        queue.add(iconjor);
 
-        Log.e("SEULGI TEST",""+icon);
     }
 
     private void getKoreanAddressByPoint(double latitude, double longitude){
