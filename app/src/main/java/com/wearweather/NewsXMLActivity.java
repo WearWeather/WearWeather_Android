@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -62,7 +63,6 @@ public class NewsXMLActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         swipeToRefreshNews = (SwipeRefreshLayout) findViewById(R.id.swipeToRefreshNews);
 
-
         recyclerView.setHasFixedSize(true);
 
         adapter = new ForecastAdapter(myDataset, this);
@@ -71,7 +71,6 @@ public class NewsXMLActivity extends AppCompatActivity {
         // layout manager
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-
 
         // 스와이프 기능 리스너.
         // 1. 모든 뉴스 아이템들을 clear.

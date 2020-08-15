@@ -5,9 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="120dp"
     android:orientation="vertical"
-    android:descendantFocusability="blocksDescendants">
+    android:descendantFocusability="blocksDescendants"
+    >
+
+
+
     <!-- A CardView that contains a TextView -->
     <androidx.cardview.widget.CardView
+        android:layout_weight="9"
         android:id="@+id/card_view"
         android:layout_gravity="center"
         android:layout_width="match_parent"
@@ -15,6 +20,23 @@
         card_view:cardCornerRadius="9dp"
         android:layout_margin="10dp">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/yonhab_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/yonhap_news_image"
+                android:alpha="0.2"
+                >
+
+
+            </ImageView>
+
+        </LinearLayout>
 
 
 
