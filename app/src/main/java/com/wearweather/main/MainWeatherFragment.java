@@ -165,12 +165,38 @@ public class MainWeatherFragment extends Fragment {
         current_rain=(TextView)rootView.findViewById(R.id.precipitation_text);
 
 
-        /* HOULRY recyclerview */
-        //임시 데이터
+        /* Hourly recyclerview */
+
+//        Calendar calendar_h = Calendar.getInstance();
+        int num_h = 6;
+        int i_h=0;
+        List<HourlyItem> hourlyItemList = new ArrayList<>();
+        //Calling the day of week after the current day
+        while(i_h<num_h){
+//            calendar_h.add(Calendar.DAY_OF_YEAR, 1);
+//            Date day = calendar_h.getTime();
+//            hourlyItemList.add(new HourlyItem(new SimpleDateFormat("HH", Locale.KOREAN).format(day.getTime()),1,"27","27"));
+            String currentTime = new SimpleDateFormat("HH", Locale.getDefault()).format(new Date());
+            i_h++;
+        }
+
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.hourly_recycler);
+        LinearLayoutManager layoutManager_h= new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager_h);
+
+        HourlyItemAdapter adapter_h;
+        adapter_h = new HourlyItemAdapter(getActivity(),hourlyItemList);
+        recyclerView.setAdapter(adapter_h);
+        adapter_h.notifyDataSetChanged();
+
+
+        /* Daily recyclerview */
+
         Calendar calendar = Calendar.getInstance();
-        int num = 7;
+        int num = 6;
         int i=0;
         List<DailyItem> dailyItemList = new ArrayList<>();
+        //Calling the day of week after the current day
         while(i<num){
             calendar.add(Calendar.DAY_OF_YEAR, 1);
             Date day = calendar.getTime();
@@ -186,6 +212,8 @@ public class MainWeatherFragment extends Fragment {
         adapter = new DailyItemAdapter(getActivity(),dailyItemList);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+
 
 
         /* 날씨 보여주기 */
@@ -370,6 +398,54 @@ public class MainWeatherFragment extends Fragment {
         }
     }
 
+    //For Hourly Adapter
+    private class HourlyItemAdapter extends RecyclerView.Adapter<MainWeatherFragment.HourlyItemAdapter.ViewHolder>{
+        List<HourlyItem> hourlyItems;
+        Context context;
+
+        public HourlyItemAdapter(Context context, List<HourlyItem> hourlyItems) {
+            this.hourlyItems = hourlyItems;
+            this.context=context;
+        }
+
+        @NonNull
+        @Override
+        public MainWeatherFragment.HourlyItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_hourly, parent,false);
+
+            return new MainWeatherFragment.HourlyItemAdapter.ViewHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull MainWeatherFragment.HourlyItemAdapter.ViewHolder holder, int position) {
+
+            HourlyItem item = hourlyItems.get(position);
+            holder.time_h.setText(item.getDays());
+            holder.temp_h.setText(item.getTemp_hourly());
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return hourlyItems.size();
+        }
+
+        private class ViewHolder extends RecyclerView.ViewHolder{
+            TextView time_h;
+            TextView temp_h;
+            ImageView image;
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+
+                time_h=(TextView) itemView.findViewById(R.id.time_hourly);
+                temp_h=(TextView)itemView.findViewById(R.id.temp_hourly);
+                image=(ImageView)itemView.findViewById(R.id.hourly_image);
+            }
+        }
+    }
+
+    //For Daily Adapter
     private class DailyItemAdapter extends RecyclerView.Adapter<MainWeatherFragment.DailyItemAdapter.ViewHolder>{
         List<DailyItem> dailyItems;
         Context context;
