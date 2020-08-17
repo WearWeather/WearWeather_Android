@@ -8,7 +8,7 @@
     android:padding="15dp">
 
     <TextView
-        android:id="@+id/yoil_hourly"
+        android:id="@+id/time_daily"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="요일"
@@ -20,14 +20,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/hourly_image"
+        android:id="@+id/daily_image"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
         android:src="@drawable/icon_sunny"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout7"
-        app:layout_constraintStart_toEndOf="@+id/yoil_hourly"
+        app:layout_constraintStart_toEndOf="@+id/time_daily"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
@@ -40,7 +40,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/hourly_low_temp"
+            android:id="@+id/daily_low_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Low"
@@ -55,7 +55,7 @@
             android:background="@color/colorWhite" />
 
         <TextView
-            android:id="@+id/hourly_high_temp"
+            android:id="@+id/daily_high_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"

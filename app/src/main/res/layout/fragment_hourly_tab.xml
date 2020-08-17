@@ -27,7 +27,7 @@
             android:orientation="horizontal"
             android:padding="4dp">
             <TextView
-                android:id="@+id/yoil_day"
+                android:id="@+id/layout_hourly"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"

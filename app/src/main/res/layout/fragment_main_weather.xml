@@ -163,11 +163,11 @@
                         android:layout_marginTop="30dp"
                         android:layout_marginBottom="10dp"
                         android:background="@color/colorWhite"
-                        app:layout_constraintBottom_toTopOf="@+id/hourly_recycler"
+                        app:layout_constraintBottom_toTopOf="@+id/daily_recycler"
                         app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/hourly_recycler"
+                        android:id="@+id/daily_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"

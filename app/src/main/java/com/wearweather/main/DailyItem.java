@@ -1,15 +1,15 @@
 package com.wearweather.main;
 
-public class HourlyItem {
+public class DailyItem {
     private String Days;
     private int Weather_photo;
     private String Low_temp;
     private String High_temp;
 
-    public HourlyItem() {
+    public DailyItem() {
     }
 
-    public HourlyItem(String days, int weather_photo, String low_temp, String high_temp) {
+    public DailyItem(String days, int weather_photo, String low_temp, String high_temp) {
         Days = days;
         Weather_photo = weather_photo;
         Low_temp = low_temp;
