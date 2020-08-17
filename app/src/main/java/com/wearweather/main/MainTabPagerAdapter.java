@@ -19,6 +19,7 @@ public class MainTabPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     public void initFragment(int num) {
+        Log.e("SEULGI",String.valueOf(num));
         if(getWeatherFragmentSize()!=num) {
             for (int i = 0; i < num; i++)
                 addWeatherFragment();

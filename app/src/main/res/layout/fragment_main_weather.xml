@@ -38,7 +38,7 @@
                         android:scaleType="centerInside"
                         android:src="@drawable/icon_x" />-->
 
-                    <TextView
+<!--                    <TextView
                         android:id="@+id/temp_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
                         android:layout_gravity="left|center_vertical"
                         android:text="현재 시간"
                         android:textColor="@color/colorWhite"
-                        android:textSize="18sp" />
+                        android:textSize="18sp" />-->
 
 <!--                    <ImageButton
                         android:id="@+id/main_search_btn"
@@ -78,10 +78,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
                         android:text="NULL"
                         android:textColor="@color/colorWhite"
-                        android:textSize="30sp"
+                        android:textSize="34sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +90,7 @@
                         android:id="@+id/linearLayout3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="15dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/region_text">
@@ -101,7 +100,7 @@
                             android:layout_width="120dp"
                             android:layout_height="120dp"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/icon_sunny" />
+                            android:src="@android:color/transparent" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
