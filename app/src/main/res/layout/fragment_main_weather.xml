@@ -162,20 +162,21 @@
                         android:layout_marginTop="30dp"
                         android:layout_marginBottom="10dp"
                         android:background="@color/colorWhite"
-                        app:layout_constraintBottom_toTopOf="@+id/daily_recycler"
+                        app:layout_constraintBottom_toTopOf="@+id/hourly_recycler"
                         app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/hourly_recycler"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginTop="30dp"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-                        app:layout_constraintVertical_bias="1.0" />
+                        android:orientation="horizontal"
+
+                         />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/daily_recycler"
@@ -183,11 +184,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-                        app:layout_constraintVertical_bias="1.0" />
+                         />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>

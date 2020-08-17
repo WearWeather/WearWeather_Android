@@ -197,17 +197,23 @@ public class MainWeatherFragment extends Fragment {
         int num_h = 6;
         int i_h=0;
         List<HourlyItem> hourlyItemList = new ArrayList<>();
+        long currentTimeMillis = System.currentTimeMillis();
+        Date date = new Date(currentTimeMillis);
+//        SimpleDateFormat sdfHour = new SimpleDateFormat("HH");
+//        String hourText = sdfHour.format(date);
+//        int time = Integer.parseInt(hourText);
         //Calling the day of week after the current day
         while(i_h<num_h){
+            hourlyItemList.add(new HourlyItem(new SimpleDateFormat("HH", Locale.KOREAN).format(date.getTime()),1,"27"));
 //            calendar_h.add(Calendar.DAY_OF_YEAR, 1);
 //            Date day = calendar_h.getTime();
 //            hourlyItemList.add(new HourlyItem(new SimpleDateFormat("HH", Locale.KOREAN).format(day.getTime()),1,"27","27"));
-            String currentTime = new SimpleDateFormat("HH", Locale.getDefault()).format(new Date());
+//            String currentTime = new SimpleDateFormat("HH", Locale.getDefault()).format(new Date());
             i_h++;
         }
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.hourly_recycler);
-        LinearLayoutManager layoutManager_h= new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager_h= new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(layoutManager_h);
 
         HourlyItemAdapter adapter_h;
