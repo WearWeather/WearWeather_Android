@@ -1,6 +1,7 @@
 package com.wearweather.main;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -55,6 +56,12 @@ import com.wearweather.R;
 import com.wearweather.SettingsActivity;
 import com.wearweather.TemperatureClothingActivity;
 import com.wearweather.TemperatureClothingActivity2;
+import com.wearweather.TemperatureClothingActivity3;
+import com.wearweather.TemperatureClothingActivity4;
+import com.wearweather.TemperatureClothingActivity5;
+import com.wearweather.TemperatureClothingActivity6;
+import com.wearweather.TemperatureClothingActivity7;
+import com.wearweather.TemperatureClothingActivity8;
 import com.wearweather.WeatherPagerAdpater;
 
 import org.json.JSONArray;
@@ -91,6 +98,13 @@ public class MainWeatherFragment extends Fragment {
     private TextView current_location;      //현재 위치
     private TextView current_bodily_temp;   //현재 위치
     private TextView current_rain;          //강우량
+
+    private String temp_extra;
+    private final Class [] clothingClasses = {
+            TemperatureClothingActivity.class,TemperatureClothingActivity2.class, TemperatureClothingActivity3.class,
+            TemperatureClothingActivity4.class, TemperatureClothingActivity5.class, TemperatureClothingActivity6.class,
+            TemperatureClothingActivity7.class, TemperatureClothingActivity8.class};
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -137,12 +151,24 @@ public class MainWeatherFragment extends Fragment {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int temperature = Integer.parseInt(temp_extra);
+                int index;
+
+                if(temperature<=4) index = 0;
+                else if(temperature<=9) index = 1;
+                else if(temperature<=13) index = 2;
+                else if(temperature<=17) index = 3;
+                else if(temperature<=20) index = 4;
+                else if(temperature<=23) index = 5;
+                else if(temperature<=27) index = 6;
+                else index = 7;
+
                 switch (item.getItemId()){
                     case R.id.nav_dust:
                         startActivity(new Intent(rootView.getContext(), DustActivity.class));
                         break;
                     case R.id.nav_clothing:
-                        startActivity(new Intent(rootView.getContext(), TemperatureClothingActivity2.class));
+                        startActivity(new Intent(rootView.getContext(), clothingClasses[index]));
                         break;
                     case R.id.nav_news:
                         startActivity(new Intent(rootView.getContext(), NewsXMLActivity.class));
@@ -242,6 +268,7 @@ public class MainWeatherFragment extends Fragment {
                     //기온
                     String temperature = main_object.getString("temp");
                     temperature = String.valueOf(Math.round(Double.valueOf(temperature)));
+                    temp_extra = temperature;
                     current_temp.setText(temperature+getString(R.string.temperature_unit));
 
                     //체감온도
