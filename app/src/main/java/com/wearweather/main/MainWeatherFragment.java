@@ -152,7 +152,7 @@ public class MainWeatherFragment extends Fragment {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int temperature = Integer.parseInt(temp_extra);
-                int index;
+                int index=0;
 
                 if(temperature<=4) index = 0;
                 else if(temperature<=9) index = 1;
