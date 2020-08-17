@@ -98,6 +98,12 @@ public class MainWeatherFragment extends Fragment {
     private TextView current_location;      //현재 위치
     private TextView current_bodily_temp;   //현재 위치
     private TextView current_rain;          //강우량
+    private TextView current_desc;          //설명
+    private String temperature;
+    private String bodily_temperature;
+    private String rain_3h;
+    private String level1;
+    private String level2;
 
     private String temp_extra;
     private final Class [] clothingClasses = {
@@ -110,7 +116,18 @@ public class MainWeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main_weather, container, false);
+
+        /* OpenWeatherMap API */
+        region=(TextView)rootView.findViewById(R.id.region_text);
+        current_temp = (TextView)rootView.findViewById(R.id.temp_now);
+        current_location = (TextView)rootView.findViewById(R.id.region_text);
+        current_bodily_temp=(TextView)rootView.findViewById(R.id.bodily_temp);
+        current_rain=(TextView)rootView.findViewById(R.id.precipitation_text);
+        current_desc=(TextView)rootView.findViewById(R.id.weather_description);
         weathericon = (ImageView)rootView.findViewById(R.id.image_weather);
+
+        /* 날씨 보여주기 */
+        displayWeather(rootView.getContext());
 
         /* set Background */
         swipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_layout);
@@ -139,8 +156,8 @@ public class MainWeatherFragment extends Fragment {
             public void onClick(View view) {
                 if(!drawerLayout.isDrawerOpen(Gravity.RIGHT)){
                     drawerLayout.openDrawer(Gravity.RIGHT);
-                    Toast toast = Toast.makeText(getContext(),"menu button clicked", Toast.LENGTH_SHORT);
-                    toast.show();
+                    //Toast toast = Toast.makeText(getContext(),"menu button clicked", Toast.LENGTH_SHORT);
+                    //toast.show();
                 }
                 else {
                     drawerLayout.closeDrawer(Gravity.RIGHT);
@@ -148,6 +165,7 @@ public class MainWeatherFragment extends Fragment {
             }
         });
         navigationView = (NavigationView)rootView.findViewById(R.id.drawer_nav_view);
+        navigationView.addHeaderView((View)inflater.inflate(R.layout.drawer_header,container,false));
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -168,7 +186,9 @@ public class MainWeatherFragment extends Fragment {
                         startActivity(new Intent(rootView.getContext(), DustActivity.class));
                         break;
                     case R.id.nav_clothing:
-                        startActivity(new Intent(rootView.getContext(), clothingClasses[index]));
+                        startActivity(new Intent(rootView.getContext(), clothingClasses[index])
+                        .putExtra("temperature",temperature)
+                        .putExtra("city",level1+" "+level2));
                         break;
                     case R.id.nav_news:
                         startActivity(new Intent(rootView.getContext(), NewsXMLActivity.class));
@@ -176,19 +196,15 @@ public class MainWeatherFragment extends Fragment {
                     case R.id.nav_settings:
                         startActivity(new Intent(rootView.getContext(), SettingsActivity.class));
                         break;
-                    default: break;
+                    default:
+                        break;
                 }
+                drawerLayout.closeDrawer(Gravity.RIGHT);
                 return false;
             }
         });
 
 
-        /* OpenWeatherMap API */
-        region=(TextView)rootView.findViewById(R.id.region_text);
-        current_temp = (TextView)rootView.findViewById(R.id.temp_now);
-        current_location = (TextView)rootView.findViewById(R.id.region_text);
-        current_bodily_temp=(TextView)rootView.findViewById(R.id.bodily_temp);
-        current_rain=(TextView)rootView.findViewById(R.id.precipitation_text);
 
 
         /* Hourly recyclerview */
@@ -204,7 +220,8 @@ public class MainWeatherFragment extends Fragment {
 //        int time = Integer.parseInt(hourText);
         //Calling the day of week after the current day
         while(i_h<num_h){
-            hourlyItemList.add(new HourlyItem(new SimpleDateFormat("HH", Locale.KOREAN).format(date.getTime()),1,"27"));
+            //hourlyItemList.add(new HourlyItem(new SimpleDateFormat("HH", Locale.KOREAN).format(date.getTime()),1,"27"));
+            hourlyItemList.add(new HourlyItem("오후 1시",1,"27"));
 //            calendar_h.add(Calendar.DAY_OF_YEAR, 1);
 //            Date day = calendar_h.getTime();
 //            hourlyItemList.add(new HourlyItem(new SimpleDateFormat("HH", Locale.KOREAN).format(day.getTime()),1,"27","27"));
@@ -248,10 +265,15 @@ public class MainWeatherFragment extends Fragment {
 
 
 
-        /* 날씨 보여주기 */
-        displayWeather(rootView.getContext());
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        displayWeather(rootView.getContext());
+
     }
 
     private void setBackgroundByTime() {
@@ -283,7 +305,7 @@ public class MainWeatherFragment extends Fragment {
     }
 
     public void find_weather(float latitude, float longitude){
-        String url="http://api.openweathermap.org/data/2.5/forecast?appid=944b4ec7c3a10a1bbb4a432d14e6f979&units=metric&id=1835848";
+        String url="http://api.openweathermap.org/data/2.5/forecast?appid=944b4ec7c3a10a1bbb4a432d14e6f979&units=metric&id=1835848&lang=kr";
         url += "&lat="+String.valueOf(latitude)+"&lon="+String.valueOf(longitude);
         Log.e("SEULGI WEATHER API URL", url);
 
@@ -300,13 +322,13 @@ public class MainWeatherFragment extends Fragment {
                     JSONArray weather_object = list_item.getJSONArray("weather");
 
                     //기온
-                    String temperature = main_object.getString("temp");
+                    temperature = main_object.getString("temp");
                     temperature = String.valueOf(Math.round(Double.valueOf(temperature)));
                     temp_extra = temperature;
                     current_temp.setText(temperature+getString(R.string.temperature_unit));
 
                     //체감온도
-                    String bodily_temperature = main_object.getString("feels_like");
+                    bodily_temperature = main_object.getString("feels_like");
                     bodily_temperature = String.valueOf(Math.round(Double.valueOf(bodily_temperature)));
                     current_bodily_temp.setText(getString(R.string.bodily_temprature)+" "+bodily_temperature+getString(R.string.temperature_unit));
 
@@ -315,13 +337,16 @@ public class MainWeatherFragment extends Fragment {
                     String main = weather.getString("main");
                     if(main.equals("Rain")){
                         JSONObject rain_object = list_item.getJSONObject("rain");
-                        String rain_3h = rain_object.getString("3h");
+                        rain_3h = rain_object.getString("3h");
                         rain_3h = String.valueOf(Math.round(Double.valueOf(rain_3h)*10));
                         current_rain.setText(getString(R.string.precipitation)+" "+rain_3h+getString(R.string.precipitation_unit));
                     }
                     else {
                         current_rain.setText(getString(R.string.precipitation)+" "+"0"+getString(R.string.precipitation_unit));
                     }
+
+                    String description = weather.getString("description");
+                    current_desc.setText(description);
 
                     //날씨 아이콘
                     String icon = weather.getString("icon");
@@ -372,8 +397,8 @@ public class MainWeatherFragment extends Fragment {
                     JSONObject result= res.getJSONArray("result").getJSONObject(0);
                     JSONObject structure = result.getJSONObject("structure");
 
-                    String level1 = structure.getString("level1");
-                    String level2 = structure.getString("level2");
+                    level1 = structure.getString("level1");
+                    level2 = structure.getString("level2");
                     Log.e("SEULGI ADDRESS API",level2);
 
                     region.setText(level1+" "+level2);

@@ -57,12 +57,19 @@ public class MainActivity extends AppCompatActivity {
         double latitude = gpsTracker.getLatitude();
         double longitude = gpsTracker.getLongitude();
 
-        PreferenceManager.setFloat(this,"LATITUDE",(float)latitude);
-        PreferenceManager.setFloat(this,"LONGITUDE",(float)longitude);
+        if(PreferenceManager.getFloat(this, "LATITUDE")==-1F){
+            PreferenceManager.setFloat(this,"LATITUDE",(float)latitude);
+        }
+        if(PreferenceManager.getFloat(this, "LONGITUDE")==-1F){
+            PreferenceManager.setFloat(this,"LONGITUDE",(float)longitude);
+        }
+
+//        PreferenceManager.setFloat(this,"LATITUDE",(float)latitude);
+//        PreferenceManager.setFloat(this,"LONGITUDE",(float)longitude);
 
         String address = getCurrentAddress(latitude, longitude);
 
-        Toast.makeText(MainActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude+" 주소="+address, Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
 
 
 
