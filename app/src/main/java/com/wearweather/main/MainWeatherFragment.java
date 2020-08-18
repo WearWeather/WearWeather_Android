@@ -67,6 +67,7 @@ import com.wearweather.WeatherPagerAdpater;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -93,6 +94,7 @@ public class MainWeatherFragment extends Fragment {
     private RecyclerView recyclerView;
     private ImageView weathericon;
 
+
     private TextView region;                //도시
     private TextView current_temp;          //현재기온
     private TextView current_location;      //현재 위치
@@ -101,6 +103,11 @@ public class MainWeatherFragment extends Fragment {
     private TextView current_desc;          //설명
     private String temperature;
     private String bodily_temperature;
+    private TextView lowTempDaily;
+    private TextView highTempDaily;
+    private ImageView imageDaily;
+    private String dailyLow;
+    private String dailyHigh;
     private String rain_3h;
     private String level1;
     private String level2;
@@ -125,6 +132,9 @@ public class MainWeatherFragment extends Fragment {
         current_rain=(TextView)rootView.findViewById(R.id.precipitation_text);
         current_desc=(TextView)rootView.findViewById(R.id.weather_description);
         weathericon = (ImageView)rootView.findViewById(R.id.image_weather);
+        lowTempDaily =(TextView)rootView.findViewById(R.id.daily_low_temp);
+        highTempDaily =(TextView)rootView.findViewById(R.id.daily_high_temp);
+        imageDaily = (ImageView)rootView.findViewById(R.id.daily_image);
 
         /* 날씨 보여주기 */
         displayWeather(rootView.getContext());
@@ -209,23 +219,22 @@ public class MainWeatherFragment extends Fragment {
 
         /* Hourly recyclerview */
 
-//        Calendar calendar_h = Calendar.getInstance();
+        Calendar calendar_h = Calendar.getInstance();
         int num_h = 6;
         int i_h=0;
         List<HourlyItem> hourlyItemList = new ArrayList<>();
-        long currentTimeMillis = System.currentTimeMillis();
-        Date date = new Date(currentTimeMillis);
-//        SimpleDateFormat sdfHour = new SimpleDateFormat("HH");
-//        String hourText = sdfHour.format(date);
-//        int time = Integer.parseInt(hourText);
-        //Calling the day of week after the current day
+        int isAMorPM = calendar_h.get(Calendar.AM_PM);
+
+        //Calling the time after the current time
         while(i_h<num_h){
-            //hourlyItemList.add(new HourlyItem(new SimpleDateFormat("HH", Locale.KOREAN).format(date.getTime()),1,"27"));
-            hourlyItemList.add(new HourlyItem("오후 1시",1,"27"));
-//            calendar_h.add(Calendar.DAY_OF_YEAR, 1);
-//            Date day = calendar_h.getTime();
-//            hourlyItemList.add(new HourlyItem(new SimpleDateFormat("HH", Locale.KOREAN).format(day.getTime()),1,"27","27"));
-//            String currentTime = new SimpleDateFormat("HH", Locale.getDefault()).format(new Date());
+            calendar_h.add(Calendar.HOUR_OF_DAY, 2);
+            Date day = calendar_h.getTime();
+            if(isAMorPM == Calendar.AM){
+                hourlyItemList.add(new HourlyItem("오전 "+ new SimpleDateFormat("hh", Locale.KOREAN).format(day.getTime())+"시",1,"27"));
+            }
+            else if(isAMorPM == Calendar.PM){
+                hourlyItemList.add(new HourlyItem("오후 "+ new SimpleDateFormat("hh", Locale.KOREAN).format(day.getTime())+"시",1,"27"));
+            }
             i_h++;
         }
 
@@ -261,10 +270,6 @@ public class MainWeatherFragment extends Fragment {
         adapter = new DailyItemAdapter(getActivity(),dailyItemList);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
-
-
-
 
         return rootView;
     }
@@ -321,6 +326,7 @@ public class MainWeatherFragment extends Fragment {
                     JSONObject main_object = list_item.getJSONObject("main");
                     JSONArray weather_object = list_item.getJSONArray("weather");
 
+
                     //기온
                     temperature = main_object.getString("temp");
                     temperature = String.valueOf(Math.round(Double.valueOf(temperature)));
@@ -331,6 +337,15 @@ public class MainWeatherFragment extends Fragment {
                     bodily_temperature = main_object.getString("feels_like");
                     bodily_temperature = String.valueOf(Math.round(Double.valueOf(bodily_temperature)));
                     current_bodily_temp.setText(getString(R.string.bodily_temprature)+" "+bodily_temperature+getString(R.string.temperature_unit));
+
+//                    //Daily
+//                    dailyLow= main_object.getString("temp_min");
+//                    dailyLow = String.valueOf(Math.round(Double.valueOf(dailyLow)));
+//                    lowTempDaily.setText(dailyLow+getString(R.string.temperature_unit));
+//
+//                    dailyHigh= main_object.getString("temp_max");
+//                    dailyHigh = String.valueOf(Math.round(Double.valueOf(dailyHigh)));
+//                    highTempDaily.setText(dailyHigh+getString(R.string.temperature_unit));
 
                     //강우량
                     JSONObject weather= weather_object.getJSONObject(0);
@@ -356,6 +371,8 @@ public class MainWeatherFragment extends Fragment {
                         @Override
                         public void onResponse(Bitmap response) {
                             weathericon.setImageBitmap(response);
+//                            imageDaily.setImageBitmap(response);
+
                         }
                     }, 0, 0, null,
                             new Response.ErrorListener() {
@@ -364,8 +381,10 @@ public class MainWeatherFragment extends Fragment {
                                     Log.e("SEULGI ICON API",error.toString());
                                 }
                             });
+
                     RequestQueue queue2 =  Volley.newRequestQueue(getActivity().getApplicationContext());
                     queue2.add(iconjor);
+
 
                 }catch(JSONException e)
                 {
@@ -384,7 +403,88 @@ public class MainWeatherFragment extends Fragment {
         queue.add(jor);
 
     }
-
+//    public void find_future_weather(float latitude, float longitude) {
+//        int i;
+//        String url="http://api.openweathermap.org/data/2.5/forecast?appid=944b4ec7c3a10a1bbb4a432d14e6f979&units=metric&id=1835848&lang=kr";
+//        url += "&lat="+String.valueOf(latitude)+"&lon="+String.valueOf(longitude);
+//
+//        try {
+//            JSONObject reader = new JSONObject(result);
+//
+//            final String code = reader.optString("cod");
+//            if ("404".equals(code)) {
+//                if (longTermWeather == null) {
+//                    longTermWeather = new ArrayList<>();
+//                    longTermTodayWeather = new ArrayList<>();
+//                    longTermTomorrowWeather = new ArrayList<>();
+//                }
+//                return ParseResult.CITY_NOT_FOUND;
+//            }
+//
+//            longTermWeather = new ArrayList<>();
+//            longTermTodayWeather = new ArrayList<>();
+//            longTermTomorrowWeather = new ArrayList<>();
+//
+//            JSONArray list = reader.getJSONArray("list");
+//            for (i = 0; i < list.length(); i++) {
+//                Weather weather = new Weather();
+//
+//                JSONObject listItem = list.getJSONObject(i);
+//                JSONObject main = listItem.getJSONObject("main");
+//
+//                weather.setDate(listItem.getString("dt"));
+//                weather.setTemperature(main.getString("temp"));
+//                weather.setDescription(listItem.optJSONArray("weather").getJSONObject(0).getString("description"));
+//                JSONObject windObj = listItem.optJSONObject("wind");
+//                if (windObj != null) {
+//                    weather.setWind(windObj.getString("speed"));
+//                    weather.setWindDirectionDegree(windObj.getDouble("deg"));
+//                }
+//                weather.setPressure(main.getString("pressure"));
+//                weather.setHumidity(main.getString("humidity"));
+//
+//                JSONObject rainObj = listItem.optJSONObject("rain");
+//                String rain = "";
+//                if (rainObj != null) {
+//                    rain = getRainString(rainObj);
+//                } else {
+//                    JSONObject snowObj = listItem.optJSONObject("snow");
+//                    if (snowObj != null) {
+//                        rain = getRainString(snowObj);
+//                    } else {
+//                        rain = "0";
+//                    }
+//                }
+//                weather.setRain(rain);
+//
+//                final String idString = listItem.optJSONArray("weather").getJSONObject(0).getString("id");
+//                weather.setId(idString);
+//
+//                final String dateMsString = listItem.getString("dt") + "000";
+//                Calendar cal = Calendar.getInstance();
+//                cal.setTimeInMillis(Long.parseLong(dateMsString));
+//                weather.setIcon(setWeatherIcon(Integer.parseInt(idString), cal.get(Calendar.HOUR_OF_DAY)));
+//
+//                Calendar today = Calendar.getInstance();
+//                if (cal.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)) {
+//                    longTermTodayWeather.add(weather);
+//                } else if (cal.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR) + 1) {
+//                    longTermTomorrowWeather.add(weather);
+//                } else {
+//                    longTermWeather.add(weather);
+//                }
+//            }
+//            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).edit();
+//            editor.putString("lastLongterm", result);
+//            editor.commit();
+//        } catch (JSONException e) {
+//            Log.e("JSONException Data", result);
+//            e.printStackTrace();
+//            return ParseResult.JSON_EXCEPTION;
+//        }
+//
+//        return ParseResult.OK;
+//    }
     private void getKoreanAddressByPoint(double latitude, double longitude){
         String url = "http://api.vworld.kr/req/address?service=address&request=getAddress&key=2566C643-E5EC-317E-BBAB-B6064E98ACC2&type=both";
         url += "&point="+String.valueOf(longitude)+","+String.valueOf(latitude);
@@ -476,6 +576,7 @@ public class MainWeatherFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MainWeatherFragment.HourlyItemAdapter.ViewHolder holder, int position) {
+
 
             HourlyItem item = hourlyItems.get(position);
             holder.time_h.setText(item.getDays());
