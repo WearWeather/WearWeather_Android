@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +30,8 @@ import androidx.core.content.ContextCompat;
 public class DustActivity extends AppCompatActivity {
 
     LinearLayout layout;
-    TextView tvLocation, tvDate, dustPercent, dustPhase, ulDustPercent, ulDustPhase, rayPoint, rayPhase, yellowPoint, yellowPhase;
+    ProgressBar progressBar;
+    TextView tvLocation, tvDate, dustPercent, dustPhase, ulDustPercent, ulDustPhase, rayPoint, rayPhase, o3Percent, o3Phase;
 
 
     private GpsTracker gpsTracker;
@@ -44,8 +46,6 @@ public class DustActivity extends AppCompatActivity {
 
         rayPoint = (TextView) findViewById(R.id.rayPoint);
         rayPhase = (TextView) findViewById(R.id.rayPhase);
-        yellowPoint = (TextView) findViewById(R.id.yellowPoint);
-        yellowPhase = (TextView) findViewById(R.id.yellowPhase);
 
         /*현재 위치 설정*/
         tvLocation = (TextView) findViewById(R.id.tvLocation);
@@ -59,19 +59,23 @@ public class DustActivity extends AppCompatActivity {
         tvDate = (TextView) findViewById(R.id.tvDate);
         setDate();
 
-        /*미세먼지, 초미세먼지 농도 설정*/
+        /*미세먼지, 초미세먼지, 오존 농도 설정*/
         dustPercent = (TextView) findViewById(R.id.dustPercent);
         dustPhase = (TextView) findViewById(R.id.dustPhase);
         ulDustPercent = (TextView) findViewById(R.id.ulDustPercent);
         ulDustPhase = (TextView) findViewById(R.id.ulDustPhase);
+        o3Percent = (TextView) findViewById(R.id.o3Percent);
+        o3Phase = (TextView) findViewById(R.id.o3Phase);
+        progressBar=(ProgressBar)findViewById(R.id.progressBar);
 
 
-        setFineDust("종로구");
+        setAtmosphere("종로구");
 
 
     }
 
-    private void setFineDust(String address) {
+
+    private void setAtmosphere(String address) {
 
         //현재 url 종로구
         String url = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?stationName=%EC%A2%85%EB%A1%9C%EA%B5%AC&dataTerm=month&pageNo=1&numOfRows=10&ServiceKey=xhl67Y2J0Pgav3Pia7oYbh%2BBzg1EclA%2BOq4I%2BssvNRp8vFt55cRnMgSnD9t601fwh7QfbpU61dVcnr9RX5Jw6A%3D%3D&ver=1.3";
@@ -85,37 +89,42 @@ public class DustActivity extends AppCompatActivity {
         }
 
         String[] array = resultText.split("_");
-        // text_dust_0.setText(array[0] + "시간"); // date, 시간
-//        text_dust_1.setText(array[1] + "㎍/m³"); // pm10Value, 미세먼지
-//        text_dust_2.setText(array[2] + "㎍/m³"); // pm25Value, 초미세먼지
-        dustPercent.setText(array[1] + "㎍/m³");
-        setPhase(array[1],"dust");
-        ulDustPercent.setText(array[2] + "㎍/m³");
-        setPhase(array[2],"uldust");
-
+        dustPercent.setText(array[2] + "㎍/m³");
+        setPhase(array[2], "dust");
+        ulDustPercent.setText(array[3] + "㎍/m³");
+        setPhase(array[3], "uldust");
+        o3Percent.setText(array[1]);
+        setPhase(array[1], "o3");
 
     }
 
-    private void setPhase(String point,String field) {
-        int percent = Integer.parseInt(point);
+    private void setPhase(String point, String field) {
+        double percent = Double.parseDouble(point);
+
         if (field.equals("dust")) {
-            if (percent >=0 && percent<=30) point="좋음";
-            else if(percent >30 && percent<=80) point= "보통";
-            else if(percent >80 && percent<=150) point=  "나쁨";
-            else point= "매우나쁨";
+            if (percent >= 0 && percent <= 30) point = "좋음";
+            else if (percent > 30 && percent <= 80) point = "보통";
+            else if (percent > 80 && percent <= 150) point = "나쁨";
+            else point = "매우나쁨";
 
             dustPhase.setText(point);
-        }
-        if (field.equals("uldust")) {
-            if (percent >=0 && percent<=15) point="좋음";
-            else if(percent >15 && percent<=35) point= "보통";
-            else if(percent >35 && percent<=75) point=  "나쁨";
-            else point= "매우나쁨";
+        } else if (field.equals("uldust")) {
+            if (percent >= 0 && percent <= 15) point = "좋음";
+            else if (percent > 15 && percent <= 35) point = "보통";
+            else if (percent > 35 && percent <= 75) point = "나쁨";
+            else point = "매우나쁨";
 
             ulDustPhase.setText(point);
+        } else if (field.equals("o3")) {
+            if (percent >= 0 && percent <= 0.030) point = "좋음";
+            else if (percent > 0.030 && percent <= 0.090) point = "보통";
+            else if (percent > 0.090 && percent <= 0.150) point = "나쁨";
+            else point = "매우나쁨";
+
+
+            o3Phase.setText(point);
         }
     }
-
 
     private void setLocation() {
 
@@ -184,7 +193,6 @@ public class DustActivity extends AppCompatActivity {
         Address address = addresses.get(0);
         return address.getAddressLine(0).toString() + "\n";
     }
-
 
     //GPS 활성화를 위한 메소드
     private void showDialogForLocationServiceSetting() {
