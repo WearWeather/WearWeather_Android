@@ -8,25 +8,30 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/linearLayout5"
+        android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="265dp"
+        android:layout_marginBottom="9dp"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/textView9"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical" />
+            android:text="TextView"
+            android:textSize="30sp" />
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/imageView7"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical" />
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
     </LinearLayout>
 
     <LinearLayout
@@ -34,8 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2">
 
         <TextView
             android:id="@+id/textView"
@@ -54,8 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout6">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -222,13 +225,12 @@
 
         <Button
             android:id="@+id/button"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="WearWeather"
             android:drawableTop="@drawable/icon_home"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:textColor="#000000"
-            />
+            android:text="WearWeather"
+            android:textColor="#000000" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
