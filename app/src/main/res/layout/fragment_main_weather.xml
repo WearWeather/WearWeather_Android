@@ -29,16 +29,16 @@
                     android:layout_margin="20dp"
                     android:orientation="horizontal">
 
-                    <ImageButton
+<!--                    <ImageButton
                         android:id="@+id/main_del_btn"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="left"
                         android:background="@android:color/transparent"
                         android:scaleType="centerInside"
-                        android:src="@drawable/icon_x" />
+                        android:src="@drawable/icon_x" />-->
 
-                    <TextView
+<!--                    <TextView
                         android:id="@+id/temp_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -46,9 +46,9 @@
                         android:layout_gravity="left|center_vertical"
                         android:text="현재 시간"
                         android:textColor="@color/colorWhite"
-                        android:textSize="18sp" />
+                        android:textSize="18sp" />-->
 
-                    <ImageButton
+<!--                    <ImageButton
                         android:id="@+id/main_search_btn"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
@@ -56,7 +56,7 @@
                         android:layout_marginRight="45dp"
                         android:background="@android:color/transparent"
                         android:scaleType="centerInside"
-                        android:src="@drawable/icon_search" />
+                        android:src="@drawable/icon_search" />-->
 
                     <ImageButton
                         android:id="@+id/main_menu_btn"
@@ -78,35 +78,48 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:text="NULL"
+                        android:text=" "
                         android:textColor="@color/colorWhite"
-                        android:textSize="30sp"
+                        android:textSize="32sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <TextView
+                        android:id="@+id/weather_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text=" "
+                        android:textColor="@color/colorWhite"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_margin="15dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/region_text" />
+
                     <LinearLayout
                         android:id="@+id/linearLayout3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/region_text">
+                        app:layout_constraintTop_toBottomOf="@+id/weather_description">
 
                         <ImageView
                             android:id="@+id/image_weather"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:src="@drawable/icon_sunny" />
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:scaleType="fitCenter"
+                            android:src="@android:color/transparent" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="40dp"
+                            android:layout_marginLeft="20dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -131,7 +144,7 @@
                                     android:text="@string/bodily_temprature"
                                     android:textColor="@color/colorWhite"
                                     android:textSize="14sp"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
 
                                 <View
                                     android:layout_width="2dp"
@@ -148,21 +161,102 @@
                                     android:text="@string/precipitation"
                                     android:textColor="@color/colorWhite"
                                     android:textSize="14sp"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
 
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/hourly_recycler"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+                        android:padding="10dp"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_centerInParent="true"
+                            android:background="@color/colorWhite"
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="시간별 예보"
+                            android:textSize="17sp"
+                            android:paddingBottom="3dp"
+                            android:textStyle="bold"
+                            android:paddingLeft="10dp"
+
+                            android:textColor="@color/colorWhite"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_centerInParent="true"
+                            android:background="@color/colorWhite"
+                            />
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/hourly_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_centerInParent="true"
+                            android:background="@color/colorWhite"
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="일별 예보"
+
+                            android:textSize="17sp"
+                            android:paddingBottom="3dp"
+                            android:textStyle="bold"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/colorWhite"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_centerInParent="true"
+                            android:background="@color/colorWhite"
+                            />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/daily_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_centerInParent="true"
+                            android:background="@color/colorWhite"
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="주별 예보"
+
+                            android:textSize="17sp"
+                            android:paddingBottom="3dp"
+                            android:textStyle="bold"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/colorWhite"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_centerInParent="true"
+                            android:background="@color/colorWhite"
+                            />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/weekly_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>

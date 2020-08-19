@@ -3,17 +3,15 @@ package com.wearweather.main;
 public class HourlyItem {
     private String Days;
     private int Weather_photo;
-    private String Low_temp;
-    private String High_temp;
+    private String Temp_hourly;
 
     public HourlyItem() {
     }
 
-    public HourlyItem(String days, int weather_photo, String low_temp, String high_temp) {
+    public HourlyItem(String days, int weather_photo, String temp_hourly) {
         Days = days;
         Weather_photo = weather_photo;
-        Low_temp = low_temp;
-        High_temp = high_temp;
+        Temp_hourly = temp_hourly;
     }
     //getter
 
@@ -25,29 +23,21 @@ public class HourlyItem {
         return Weather_photo;
     }
 
-    public String getLow_temp() {
-        return Low_temp;
+    public String getTemp_hourly() {
+        return Temp_hourly;
     }
 
-    public String getHigh_temp() {
-        return High_temp;
-    }
-
-    //Setter
+    //setter
 
     public void setDays(String days) {
         Days = days;
     }
 
     public void setWeather_photo(int weather_photo) {
-        Weather_photo= weather_photo;
+        Weather_photo = weather_photo;
     }
 
-    public void setLow_temp(String low_temp) {
-        Low_temp = low_temp;
-    }
-
-    public void setHigh_temp(String high_temp) {
-        High_temp = high_temp;
+    public void setTemp_hourly(String temp_hourly) {
+        Temp_hourly = temp_hourly;
     }
 }

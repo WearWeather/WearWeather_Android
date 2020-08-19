@@ -8,44 +8,4 @@
     android:orientation="vertical"
     tools:context=".mainTabFragment.hourly_tab">
 
-    <androidx.cardview.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="8dp"
-    app:cardUseCompatPadding="true">
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="8dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="4dp">
-            <TextView
-                android:id="@+id/yoil_day"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:gravity="left"
-                android:textColor="@color/colorWhite"
-                android:text="월요일">
-
-            </TextView>
-
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginLeft="100dp"
-                android:src="@drawable/icon_sunny">
-
-            </ImageView>
-
-        </LinearLayout>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
 </RelativeLayout>
