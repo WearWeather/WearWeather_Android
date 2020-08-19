@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,13 @@ public class TemperatureClothingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature_clothing);
 
+
+        TextView tx9 = (TextView)findViewById(R.id.textView9);
+        Intent intent = getIntent(); /*데이터 수신*/
+
+        String name = intent.getStringExtra("temperature");
+
+        tx9.setText(name);
 
         LinearLayout layout1 = (LinearLayout) findViewById(R.id.layout1);
         layout1.setOnClickListener(new View.OnClickListener() {

@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class TemperatureClothingActivity8 extends AppCompatActivity {
+    TextView tx9;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,6 +18,13 @@ public class TemperatureClothingActivity8 extends AppCompatActivity {
         setContentView(R.layout.activity_temperature_clothing8);
 
         LinearLayout layout1 = (LinearLayout) findViewById(R.id.layout1);
+        tx9 = (TextView)findViewById(R.id.textView9);
+        Intent intent = getIntent(); /* 데이터 수신 */
+
+        String name = intent.getStringExtra("temperature");
+
+        tx9.setText(name + "°C");
+
         layout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

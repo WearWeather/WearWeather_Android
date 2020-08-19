@@ -235,27 +235,58 @@
                             android:layout_centerInParent="true"
                             android:background="@color/colorWhite"
                             />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="주별 예보"
 
-                            android:textSize="17sp"
-                            android:paddingBottom="3dp"
-                            android:textStyle="bold"
-                            android:paddingLeft="10dp"
-                            android:textColor="@color/colorWhite"/>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_centerInParent="true"
-                            android:background="@color/colorWhite"
-                            />
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/weekly_recycler"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="60dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="일출 오전 00:00"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorWhite"
+                                android:textAlignment="center"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="일몰 오후 00:00"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorWhite"
+                                android:textAlignment="center"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="습도 00%"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorWhite"
+                                android:textAlignment="center"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="기압 0000hPa"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorWhite"
+                                android:textAlignment="center"/>
+                        </LinearLayout>
+
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
