@@ -14,7 +14,6 @@ public class TemperatureClothingActivity3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature_clothing3);
 
-
         LinearLayout layout1 = (LinearLayout) findViewById(R.id.layout1);
         layout1.setOnClickListener(new View.OnClickListener() {
             @Override
