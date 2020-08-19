@@ -208,7 +208,7 @@ public class MainWeatherFragment extends Fragment {
                         break;
                     case R.id.nav_clothing:
                         startActivity(new Intent(rootView.getContext(), clothingClasses[index])
-                        .putExtra("temperature",temperature)
+                        .putExtra("temperature",temp_extra)
                         .putExtra("city",level1+" "+level2));
                         break;
                     case R.id.nav_news:
