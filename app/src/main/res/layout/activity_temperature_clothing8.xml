@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
-        android:layout_height="265dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="9dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            tools:srcCompat="@tools:sample/avatars" />
     </LinearLayout>
 
     <LinearLayout
@@ -110,7 +110,7 @@
                     android:gravity="center"
                     android:text="반바지"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                    android:textSize="20dp" />
 
             </LinearLayout>
 
@@ -134,7 +134,7 @@
                     android:gravity="center"
                     android:text="티셔츠"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                    android:textSize="20dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -165,7 +165,7 @@
                     android:gravity="center"
                     android:text="얇은 긴바지"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                    android:textSize="20dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -188,7 +188,7 @@
                     android:gravity="center"
                     android:text="원피스"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                    android:textSize="20dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -211,7 +211,7 @@
                     android:gravity="center"
                     android:text="샌들"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                    android:textSize="20dp" />
             </LinearLayout>
         </LinearLayout>
 
