@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.wearweather.WeatherFragment;
-
 import java.util.ArrayList;
 
 public class MainTabPagerAdapter extends FragmentStatePagerAdapter {
