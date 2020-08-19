@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="190dp"
         android:layout_marginBottom="9dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
@@ -24,13 +24,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center_horizontal|center_vertical"
             android:text="TextView"
-            android:textSize="30sp" />
+            android:textSize="65sp" />
 
         <ImageView
             android:id="@+id/imageView7"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             tools:srcCompat="@tools:sample/avatars" />
     </LinearLayout>
@@ -83,7 +84,7 @@
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="민소매"
                     android:textColor="#FFFFFF"
@@ -110,7 +111,7 @@
                     android:gravity="center"
                     android:text="반바지"
                     android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -134,7 +135,7 @@
                     android:gravity="center"
                     android:text="티셔츠"
                     android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -165,7 +166,7 @@
                     android:gravity="center"
                     android:text="얇은 긴바지"
                     android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -188,7 +189,7 @@
                     android:gravity="center"
                     android:text="원피스"
                     android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -211,7 +212,7 @@
                     android:gravity="center"
                     android:text="샌들"
                     android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
             </LinearLayout>
         </LinearLayout>
 
