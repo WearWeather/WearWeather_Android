@@ -62,7 +62,6 @@ import com.wearweather.TemperatureClothingActivity5;
 import com.wearweather.TemperatureClothingActivity6;
 import com.wearweather.TemperatureClothingActivity7;
 import com.wearweather.TemperatureClothingActivity8;
-import com.wearweather.WeatherPagerAdpater;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -88,7 +87,6 @@ public class MainWeatherFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private ImageButton searchButton;
     private TabLayout tabLayout;
-    private WeatherPagerAdpater pagerAdpater;
     private ViewPager viewPager;
     private ImageButton delButton;
     private RecyclerView recyclerView;
@@ -199,6 +197,7 @@ public class MainWeatherFragment extends Fragment {
                         startActivity(new Intent(rootView.getContext(), clothingClasses[index])
                         .putExtra("temperature",temp_extra)
                         .putExtra("city",level1+" "+level2));
+                        Log.e("SEULGI INTENT",temp_extra);
                         break;
                     case R.id.nav_news:
                         startActivity(new Intent(rootView.getContext(), NewsXMLActivity.class));
@@ -483,6 +482,7 @@ public class MainWeatherFragment extends Fragment {
         String url = "http://api.vworld.kr/req/address?service=address&request=getAddress&key=2566C643-E5EC-317E-BBAB-B6064E98ACC2&type=both";
         url += "&point="+String.valueOf(longitude)+","+String.valueOf(latitude);
 
+        Log.e("SEULGI ADDRESS API URL",url);
         JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -553,7 +553,7 @@ public class MainWeatherFragment extends Fragment {
         float lon = PreferenceManager.getFloat(context,"LONGITUDE");
 
         find_weather(lat,lon);
-        //getKoreanAddressByPoint(lat,lon);
+        getKoreanAddressByPoint(lat,lon);
 
 
         String address = getCurrentAddress(lat, lon);
