@@ -23,7 +23,6 @@
     <string name="precipitation">강수량</string>
     <string name="precipitation_unit">mm</string>
 
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
