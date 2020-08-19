@@ -173,43 +173,89 @@
                         android:padding="10dp"
                         android:orientation="vertical"
                         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
-
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_centerInParent="true"
-                            android:background="@color/colorWhite"/>
+                            android:background="@color/colorWhite"
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="시간별 예보"
+                            android:textSize="17sp"
+                            android:paddingBottom="3dp"
+                            android:textStyle="bold"
+                            android:paddingLeft="10dp"
+
+                            android:textColor="@color/colorWhite"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_centerInParent="true"
+                            android:background="@color/colorWhite"
+                            />
+
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/hourly_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"/>
-
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_centerInParent="true"
-                            android:background="@color/colorWhite"/>
+                            android:background="@color/colorWhite"
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="일별 예보"
+
+                            android:textSize="17sp"
+                            android:paddingBottom="3dp"
+                            android:textStyle="bold"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/colorWhite"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_centerInParent="true"
+                            android:background="@color/colorWhite"
+                            />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/daily_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
-
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_centerInParent="true"
-                            android:background="@color/colorWhite"/>
-
+                            android:background="@color/colorWhite"
+                            />
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="200dp"
-                            android:gravity="center"
-                            android:text="스크롤뷰 확인용"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="50sp"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="주별 예보"
+
+                            android:textSize="17sp"
+                            android:paddingBottom="3dp"
+                            android:textStyle="bold"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/colorWhite"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_centerInParent="true"
+                            android:background="@color/colorWhite"
+                            />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/weekly_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
