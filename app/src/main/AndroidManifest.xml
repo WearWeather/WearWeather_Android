@@ -30,6 +30,7 @@
         <activity android:name=".TemperatureClothingActivity2" >
 
         </activity>
+        <activity android:name=".TemperatureClothingActivity" />
         <activity android:name=".NewsClickViewActivity" />
         <activity android:name=".NewsXMLActivity" >
 
