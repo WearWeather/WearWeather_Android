@@ -521,6 +521,36 @@ public class MainWeatherFragment extends Fragment {
         queue.add(jor);
     }
 
+    public String getCurrentAddress( double latitude, double longitude) {
+
+        //지오코더... GPS를 주소로 변환
+        Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+
+        List<Address> addresses;
+
+        try {
+
+            addresses = geocoder.getFromLocation(
+                    latitude,
+                    longitude,
+                    7);
+        } catch (IOException ioException) {
+            //네트워크 문제
+            Toast.makeText(getContext(), "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
+            return "지오코더 서비스 사용불가";
+        } catch (IllegalArgumentException illegalArgumentException) {
+            Toast.makeText(getContext(), "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
+            return "잘못된 GPS 좌표";
+        }
+        if (addresses == null || addresses.size() == 0) {
+            Toast.makeText(getContext(), "주소 미발견", Toast.LENGTH_LONG).show();
+            return "주소 미발견";
+        }
+
+        Address address = addresses.get(0);
+        return address.getAddressLine(0).toString()+"\n";
+    }
+
     public void displayWeather(Context context) {
         //String region_lat = "REGION"+String.valueOf(tabPosition+1)+"_LAT";
         //String region_lon = "REGION"+String.valueOf(tabPosition+1)+"_LON";
@@ -529,7 +559,25 @@ public class MainWeatherFragment extends Fragment {
         float lon = PreferenceManager.getFloat(context,"LONGITUDE");
 
         find_weather(lat,lon);
-        getKoreanAddressByPoint(lat,lon);
+        //getKoreanAddressByPoint(lat,lon);
+
+
+        String address = getCurrentAddress(lat, lon);
+        int space_cnt=0,s_ind=0,e_ind=0;
+        for(int i = 0; i < address.length(); i++){
+            if(address.charAt(i) == ' '){
+                if(space_cnt==0)
+                    s_ind= i;
+                if(space_cnt==2)
+                    e_ind=i;
+                space_cnt++;
+            }
+            if(space_cnt==3)
+                break;
+        }
+        address = address.substring(s_ind,e_ind);
+
+        region.setText(address);
     }
 
     public void setTabPosition(int position) { tabPosition=position; }
