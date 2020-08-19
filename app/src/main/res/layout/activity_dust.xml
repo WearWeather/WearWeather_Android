@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8.5"
+        android:layout_weight="9"
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
@@ -20,9 +20,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="현재위치"
+            android:textColor="#FFFFFF"
             android:paddingTop="50dp"
             android:paddingBottom="5dp"
-            android:textSize="40dp" />
+            android:textSize="20dp" />
 
 
         <TextView
@@ -31,28 +32,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="날짜"
+            android:textColor="#FFFFFF"
             android:paddingBottom="25dp" />
 
-        <TextView
-            android:id="@+id/dustPercent"
-            android:visibility="gone"
-            android:textSize="30dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:paddingBottom="10dp" />
-        <ProgressBar
+
+        <com.wearweather.CircleProgressBar
             android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scrollbarStyle="insideOverlay" />
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            />
+
+<!--            android:scaleX="5"-->
+<!--            android:scaleY="5"-->
+<!--            android:layout_marginTop="50dp"-->
+
 
         <TextView
             android:id="@+id/dustPhase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="미세먼지농도"
+            android:layout_marginTop="5dp"
+            android:textColor="#FFFFFF"
             android:textSize="18dp" />
     </LinearLayout>
 
@@ -60,7 +62,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="2.5"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -73,17 +75,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
                 android:text="초미세먼지" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
                 android:text="X"
                 android:id="@+id/ulDustPercent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
                 android:text="보통"
                 android:id="@+id/ulDustPhase" />
         </LinearLayout>
@@ -98,19 +103,22 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="자외선" />
+                android:textColor="#FFFFFF"
+                android:text="일산화탄소농도" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="X"
-                android:id="@+id/rayPoint" />
+                android:textColor="#FFFFFF"
+                android:id="@+id/coPoint" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="보통"
-                android:id="@+id/rayPhase" />
+                android:textColor="#FFFFFF"
+                android:id="@+id/coPhase" />
         </LinearLayout>
 
         <LinearLayout
@@ -123,18 +131,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="오존" />
+                android:text="오존"
+                android:textColor="#FFFFFF"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="X"
+                android:textColor="#FFFFFF"
                 android:id="@+id/o3Percent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="나쁨"
+                android:textColor="#FFFFFF"
                 android:id="@+id/o3Phase" />
         </LinearLayout>
     </LinearLayout>

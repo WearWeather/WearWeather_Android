@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -30,8 +32,8 @@ import androidx.core.content.ContextCompat;
 public class DustActivity extends AppCompatActivity {
 
     LinearLayout layout;
-    ProgressBar progressBar;
-    TextView tvLocation, tvDate, dustPercent, dustPhase, ulDustPercent, ulDustPhase, rayPoint, rayPhase, o3Percent, o3Phase;
+    CircleProgressBar progressBar;
+    TextView tvLocation, tvDate, dustPercent, dustPhase, ulDustPercent, ulDustPhase, coPoint, coPhase, o3Percent, o3Phase;
 
 
     private GpsTracker gpsTracker;
@@ -39,13 +41,12 @@ public class DustActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dust);
 
-        rayPoint = (TextView) findViewById(R.id.rayPoint);
-        rayPhase = (TextView) findViewById(R.id.rayPhase);
 
         /*현재 위치 설정*/
         tvLocation = (TextView) findViewById(R.id.tvLocation);
@@ -59,22 +60,22 @@ public class DustActivity extends AppCompatActivity {
         tvDate = (TextView) findViewById(R.id.tvDate);
         setDate();
 
-        /*미세먼지, 초미세먼지, 오존 농도 설정*/
-        dustPercent = (TextView) findViewById(R.id.dustPercent);
+        /*미세먼지, 초미세먼지, 일산화탄소 농도, 오존 농도 설정*/
+//        dustPercent = (TextView) findViewById(R.id.dustPercent);
         dustPhase = (TextView) findViewById(R.id.dustPhase);
         ulDustPercent = (TextView) findViewById(R.id.ulDustPercent);
         ulDustPhase = (TextView) findViewById(R.id.ulDustPhase);
         o3Percent = (TextView) findViewById(R.id.o3Percent);
         o3Phase = (TextView) findViewById(R.id.o3Phase);
-        progressBar=(ProgressBar)findViewById(R.id.progressBar);
-
+        coPoint = (TextView) findViewById(R.id.coPoint);
+        coPhase = (TextView) findViewById(R.id.coPhase);
 
         setAtmosphere("종로구");
-
-
+//        progressBar=(ProgressBar)findViewById(R.id.progressBar);
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void setAtmosphere(String address) {
 
         //현재 url 종로구
@@ -89,12 +90,17 @@ public class DustActivity extends AppCompatActivity {
         }
 
         String[] array = resultText.split("_");
-        dustPercent.setText(array[2] + "㎍/m³");
+
+
+        progressBar = new CircleProgressBar(DustActivity.this);
+//        int progress=Integer.parseInt(array[2]);
+//        progressBar.setProgress(progress,true);
         setPhase(array[2], "dust");
         ulDustPercent.setText(array[3] + "㎍/m³");
-        setPhase(array[3], "uldust");
+        setPhase(array[3], "co");
         o3Percent.setText(array[1]);
         setPhase(array[1], "o3");
+        coPoint.setText(array[4]);
 
     }
 
@@ -108,7 +114,7 @@ public class DustActivity extends AppCompatActivity {
             else point = "매우나쁨";
 
             dustPhase.setText(point);
-        } else if (field.equals("uldust")) {
+        } else if (field.equals("co")) {
             if (percent >= 0 && percent <= 15) point = "좋음";
             else if (percent > 15 && percent <= 35) point = "보통";
             else if (percent > 35 && percent <= 75) point = "나쁨";

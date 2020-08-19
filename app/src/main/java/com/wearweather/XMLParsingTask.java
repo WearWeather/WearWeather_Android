@@ -38,6 +38,7 @@ public class XMLParsingTask extends AsyncTask<String, Void, String> {
             boolean b_pm10Value = false;
             boolean b_pm25Value = false;
             boolean b_o3Value=false;
+            boolean b_coValue=false;
 
             URL url = new URL(requestUrl);
             InputStream is = url.openStream();
@@ -72,6 +73,8 @@ public class XMLParsingTask extends AsyncTask<String, Void, String> {
                             b_pm25Value = true;
                         if (parser.getName().equals("o3Value"))
                             b_o3Value = true;
+                        if (parser.getName().equals("coValue"))
+                            b_coValue = true;
                         // TODO : 만약 더 많은 value을 원한다면, 이어서 기술
 
                         break;
@@ -93,6 +96,10 @@ public class XMLParsingTask extends AsyncTask<String, Void, String> {
                         else if (b_o3Value) {
                             receiveMsg = receiveMsg + parser.getText().trim() + "_";
                             b_o3Value = false;
+                        }
+                        else if (b_coValue) {
+                            receiveMsg = receiveMsg + parser.getText().trim() + "_";
+                            b_coValue = false;
                         }
                         break;
                     // 종료태그를 만나는순간 (JSON으로 치면, value 찾음)
