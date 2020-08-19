@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
-        android:layout_height="229dp"
+        android:layout_height="190dp"
         android:layout_marginBottom="9dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
@@ -24,15 +24,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center_horizontal|center_vertical"
             android:text="TextView"
-            android:textSize="30sp" />
+            android:textSize="65sp" />
 
         <ImageView
             android:id="@+id/imageView7"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            tools:srcCompat="@tools:sample/avatars" />
     </LinearLayout>
 
     <LinearLayout
