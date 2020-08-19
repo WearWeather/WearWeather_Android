@@ -310,7 +310,7 @@ public class MainWeatherFragment extends Fragment {
     }
 
     public void find_weather(float latitude, float longitude){
-        String url="http://api.openweathermap.org/data/2.5/forecast?appid=944b4ec7c3a10a1bbb4a432d14e6f979&units=metric&id=1835848&lang=kr";
+        String url="http://api.openweathermap.org/data/2.5/weather?appid=944b4ec7c3a10a1bbb4a432d14e6f979&units=metric&id=1835848&lang=kr";
         url += "&lat="+String.valueOf(latitude)+"&lon="+String.valueOf(longitude);
         Log.e("SEULGI WEATHER API URL", url);
 
@@ -318,14 +318,8 @@ public class MainWeatherFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 try{
-                    JSONArray list=response.getJSONArray("list");
-                    JSONObject city_object = response.getJSONObject("city");
-
-                    /* weather */
-                    JSONObject list_item = list.getJSONObject(0);
-                    JSONObject main_object = list_item.getJSONObject("main");
-                    JSONArray weather_object = list_item.getJSONArray("weather");
-
+                    JSONObject main_object = response.getJSONObject("main");
+                    JSONArray weather_object = response.getJSONArray("weather");
 
                     //기온
                     temperature = main_object.getString("temp");
@@ -351,7 +345,7 @@ public class MainWeatherFragment extends Fragment {
                     JSONObject weather= weather_object.getJSONObject(0);
                     String main = weather.getString("main");
                     if(main.equals("Rain")){
-                        JSONObject rain_object = list_item.getJSONObject("rain");
+                        JSONObject rain_object = response.getJSONObject("rain");
                         rain_3h = rain_object.getString("3h");
                         rain_3h = String.valueOf(Math.round(Double.valueOf(rain_3h)*10));
                         current_rain.setText(getString(R.string.precipitation)+" "+rain_3h+getString(R.string.precipitation_unit));
