@@ -256,6 +256,25 @@
                             android:id="@+id/weekly_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="일출"
+                            android:textSize="20sp"
+                            android:textColor="@color/colorWhite"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="일몰"
+                            android:textSize="20sp"
+                            android:textColor="@color/colorWhite"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="습도"
+                            android:textSize="20sp"
+                            android:textColor="@color/colorWhite"/>
+
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
