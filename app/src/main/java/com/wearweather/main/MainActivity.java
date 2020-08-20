@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         /* Initiate Shared Preference */
-        initSharedPreference();
+        //initSharedPreference();
 
         /*GPS Tracker*/
         if (!checkLocationServicesStatus()) {

@@ -173,22 +173,7 @@
                         android:padding="10dp"
                         android:orientation="vertical"
                         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_centerInParent="true"
-                            android:background="@color/colorWhite"
-                            />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="시간별 예보"
-                            android:textSize="17sp"
-                            android:paddingBottom="3dp"
-                            android:textStyle="bold"
-                            android:paddingLeft="10dp"
 
-                            android:textColor="@color/colorWhite"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
@@ -202,22 +187,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"/>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_centerInParent="true"
-                            android:background="@color/colorWhite"
-                            />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="일별 예보"
-
-                            android:textSize="17sp"
-                            android:paddingBottom="3dp"
-                            android:textStyle="bold"
-                            android:paddingLeft="10dp"
-                            android:textColor="@color/colorWhite"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
@@ -239,53 +208,171 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
                             android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="일출 오전 00:00"
-                                android:textSize="24sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/colorWhite"
-                                android:textAlignment="center"/>
-                            <TextView
-                                android:layout_width="wrap_content"
+                                android:paddingHorizontal="15dp"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left|center"
+                                    android:text="@string/temperature_max"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/colorWhite"/>
+                                <TextView
+                                    android:id="@+id/temp_max"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="27"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorWhite"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="일몰 오후 00:00"
-                                android:textSize="24sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/colorWhite"
-                                android:textAlignment="center"/>
+                                android:paddingHorizontal="15dp"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left|center"
+                                    android:text="@string/temperature_min"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/colorWhite"/>
+                                <TextView
+                                    android:id="@+id/temp_min"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="27"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorWhite"/>
+                            </LinearLayout>
                         </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="@color/colorWhite"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
                             android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="습도 00%"
-                                android:textSize="24sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/colorWhite"
-                                android:textAlignment="center"/>
-                            <TextView
-                                android:layout_width="wrap_content"
+                                android:paddingHorizontal="15dp"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left|center"
+                                    android:text="@string/pressure"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/colorWhite"/>
+                                <TextView
+                                    android:id="@+id/pressure"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="27"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorWhite"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="기압 0000hPa"
-                                android:textSize="24sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/colorWhite"
-                                android:textAlignment="center"/>
+                                android:paddingHorizontal="15dp"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left|center"
+                                    android:text="@string/humidity"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/colorWhite"/>
+                                <TextView
+                                    android:id="@+id/humidity"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="27"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorWhite"/>
+                            </LinearLayout>
                         </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="@color/colorWhite"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingHorizontal="15dp"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left|center"
+                                    android:text="@string/sunrise"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/colorWhite"/>
+                                <TextView
+                                    android:id="@+id/sunrise"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="27"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorWhite"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingHorizontal="15dp"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left|center"
+                                    android:text="@string/sunset"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/colorWhite"/>
+                                <TextView
+                                    android:id="@+id/sunset"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="27"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorWhite"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorWhite"/>
 
                     </LinearLayout>
 

@@ -23,7 +23,13 @@
     <string name="bodily_temprature">체감온도</string>
     <string name="precipitation">강수량</string>
     <string name="precipitation_unit">mm</string>
+    <string name="temperature_max">최고온도</string>
+    <string name="temperature_min">최저온도</string>
+    <string name="pressure">기압</string>
+    <string name="pressure_unit">hPa</string>
+    <string name="humidity">습도</string>
+    <string name="sunrise">일출</string>
+    <string name="sunset">일몰</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="percent_unit">%</string>
 </resources>

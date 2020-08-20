@@ -12,7 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
-        android:hardwareAccelerated="false"
         android:largeHeap="true">
         <activity android:name=".ClothesClickWebView"></activity>
         <activity android:name=".DustActivity" >

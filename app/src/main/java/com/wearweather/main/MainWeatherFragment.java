@@ -95,17 +95,21 @@ public class MainWeatherFragment extends Fragment {
     private RecyclerView recyclerView;
     private ImageView weathericon;
 
-
     private TextView region;                //도시
     private TextView current_temp;          //현재기온
     private TextView current_location;      //현재 위치
     private TextView current_bodily_temp;   //현재 위치
     private TextView current_rain;          //강우량
     private TextView current_desc;          //설명
+    private TextView current_temp_min;
+    private TextView current_temp_max;
+    private TextView current_pressure;
+    private TextView current_humidity;
+    private TextView current_sunrise;
+    private TextView current_sunset;
     private String temperature;
     private String bodily_temperature;
-    private TextView lowTempDaily;
-    private TextView highTempDaily;
+
     private ImageView imageDaily;
     private String dailyLow;
     private String dailyHigh;
@@ -113,6 +117,7 @@ public class MainWeatherFragment extends Fragment {
     private String temp_f;
 
     private String rain_3h;
+    private String address_text;
     private String level1;
     private String level2;
     private List<HourlyItem> hourlyItemList = new ArrayList<>();
@@ -138,8 +143,14 @@ public class MainWeatherFragment extends Fragment {
         current_rain=(TextView)rootView.findViewById(R.id.precipitation_text);
         current_desc=(TextView)rootView.findViewById(R.id.weather_description);
         weathericon = (ImageView)rootView.findViewById(R.id.image_weather);
-        lowTempDaily =(TextView)rootView.findViewById(R.id.daily_low_temp);
-        highTempDaily =(TextView)rootView.findViewById(R.id.daily_high_temp);
+        current_temp_max =(TextView)rootView.findViewById(R.id.temp_max);
+        current_temp_min =(TextView)rootView.findViewById(R.id.temp_min);
+        current_pressure =(TextView)rootView.findViewById(R.id.pressure);
+        current_humidity =(TextView)rootView.findViewById(R.id.humidity);
+        current_sunrise =(TextView)rootView.findViewById(R.id.sunrise);
+        current_sunset =(TextView)rootView.findViewById(R.id.sunset);
+
+
         imageDaily = (ImageView)rootView.findViewById(R.id.daily_image);
         future_temp = (TextView)rootView.findViewById(R.id.temp_hourly);
 
@@ -202,7 +213,8 @@ public class MainWeatherFragment extends Fragment {
 
                 switch (item.getItemId()){
                     case R.id.nav_dust:
-                        startActivity(new Intent(rootView.getContext(), DustActivity.class));
+                        startActivity(new Intent(rootView.getContext(), DustActivity.class)
+                        .putExtra("city",PreferenceManager.getString(rootView.getContext(),"CITY")));
                         break;
                     case R.id.nav_clothing:
                         startActivity(new Intent(rootView.getContext(), clothingClasses[index])
@@ -331,6 +343,7 @@ public class MainWeatherFragment extends Fragment {
                 try{
                     JSONObject main_object = response.getJSONObject("main");
                     JSONArray weather_object = response.getJSONArray("weather");
+                    JSONObject sys_object = response.getJSONObject("sys");
 
                     //기온
                     temperature = main_object.getString("temp");
@@ -343,14 +356,44 @@ public class MainWeatherFragment extends Fragment {
                     bodily_temperature = String.valueOf(Math.round(Double.valueOf(bodily_temperature)));
                     current_bodily_temp.setText(getString(R.string.bodily_temprature)+" "+bodily_temperature+getString(R.string.temperature_unit));
 
-//                    //Daily
-//                    dailyLow= main_object.getString("temp_min");
-//                    dailyLow = String.valueOf(Math.round(Double.valueOf(dailyLow)));
-//                    lowTempDaily.setText(dailyLow+getString(R.string.temperature_unit));
-//
-//                    dailyHigh= main_object.getString("temp_max");
-//                    dailyHigh = String.valueOf(Math.round(Double.valueOf(dailyHigh)));
-//                    highTempDaily.setText(dailyHigh+getString(R.string.temperature_unit));
+                    //최고온도
+                    String temp_max = main_object.getString("temp_min");
+                    temp_max = String.valueOf(Math.round(Double.valueOf(temp_max)));
+                    current_temp_max.setText(temp_max+getString(R.string.temperature_unit));
+
+                    //최저온도
+                    String temp_min = main_object.getString("temp_min");
+                    temp_min = String.valueOf(Math.round(Double.valueOf(temp_min)));
+                    current_temp_min.setText(temp_min+getString(R.string.temperature_unit));
+
+                    //기압
+                    String pressure = main_object.getString("pressure");
+                    current_pressure.setText(pressure+getString(R.string.pressure_unit));
+
+                    //습도
+                    String humidity = main_object.getString("humidity");
+                    current_humidity.setText(humidity+getString(R.string.percent_unit));
+
+                    //일출
+                    String sunrise = sys_object.getString("sunrise");
+                    long timestamp = Long.parseLong(sunrise);
+                    Date date = new java.util.Date(timestamp*1000L);
+                    SimpleDateFormat sdf = new java.text.SimpleDateFormat("a hh:mm");
+                    sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT+9"));
+                    sunrise = sdf.format(date);
+                    current_sunrise.setText(sunrise);
+
+                    //일몰
+                    String sunset = sys_object.getString("sunset");
+                    timestamp = Long.parseLong(sunset);
+                    date = new java.util.Date(timestamp*1000L);
+                    sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT+9"));
+                    sunset = sdf.format(date);
+                    current_sunset.setText(sunset);
+
+
+
+
 
                     //강우량
                     JSONObject weather= weather_object.getJSONObject(0);
@@ -376,8 +419,6 @@ public class MainWeatherFragment extends Fragment {
                         @Override
                         public void onResponse(Bitmap response) {
                             weathericon.setImageBitmap(response);
-//                            imageDaily.setImageBitmap(response);
-
                         }
                     }, 0, 0, null,
                             new Response.ErrorListener() {
@@ -483,7 +524,7 @@ public class MainWeatherFragment extends Fragment {
 
                     level1 = structure.getString("level1");
                     level2 = structure.getString("level2");
-                    Log.e("SEULGI ADDRESS API",level2);
+                    PreferenceManager.setString(getContext(),"CITY",address_text);
 
                     region.setText(level1+" "+level2);
 
@@ -536,34 +577,13 @@ public class MainWeatherFragment extends Fragment {
     }
 
     public void displayWeather(Context context) {
-        //String region_lat = "REGION"+String.valueOf(tabPosition+1)+"_LAT";
-        //String region_lon = "REGION"+String.valueOf(tabPosition+1)+"_LON";
-
         float lat = PreferenceManager.getFloat(context,"LATITUDE");
         float lon = PreferenceManager.getFloat(context,"LONGITUDE");
 
         find_weather(lat,lon);
         getKoreanAddressByPoint(lat,lon);
 
-
-        String address = getCurrentAddress(lat, lon);
-        int space_cnt=0,s_ind=0,e_ind=0;
-        for(int i = 0; i < address.length(); i++){
-            if(address.charAt(i) == ' '){
-                if(space_cnt==0)
-                    s_ind= i;
-                if(space_cnt==2)
-                    e_ind=i;
-                space_cnt++;
-            }
-            if(space_cnt==3)
-                break;
-        }
-        address = address.substring(s_ind,e_ind);
-
         find_future_weather(lat,lon);
-
-        region.setText(address);
     }
 
     public void setTabPosition(int position) { tabPosition=position; }
