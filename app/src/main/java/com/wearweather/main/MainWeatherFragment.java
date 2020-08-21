@@ -109,7 +109,8 @@ public class MainWeatherFragment extends Fragment {
     private TextView current_sunset;
     private String temperature;
     private String bodily_temperature;
-
+    private String hourlyTime;
+    private TextView time_hourly;
     private ImageView imageDaily;
     private String dailyLow;
     private String dailyHigh;
@@ -149,7 +150,7 @@ public class MainWeatherFragment extends Fragment {
         current_humidity =(TextView)rootView.findViewById(R.id.humidity);
         current_sunrise =(TextView)rootView.findViewById(R.id.sunrise);
         current_sunset =(TextView)rootView.findViewById(R.id.sunset);
-
+        time_hourly =(TextView)rootView.findViewById(R.id.temp_hourly);
 
         imageDaily = (ImageView)rootView.findViewById(R.id.daily_image);
         future_temp = (TextView)rootView.findViewById(R.id.temp_hourly);
@@ -241,33 +242,33 @@ public class MainWeatherFragment extends Fragment {
 
         /* Hourly recyclerview */
 
-        Calendar calendar_h = Calendar.getInstance();
-        int num_h = 6;
-        int i_h=0;
-
-        int isAMorPM = calendar_h.get(Calendar.AM_PM);
-
-        //Calling the time after the current time
-        while(i_h<num_h){
-            calendar_h.add(Calendar.HOUR_OF_DAY, 1);
-            Date day = calendar_h.getTime();
-            if(isAMorPM == Calendar.AM){
-                hourlyItemList.add(new HourlyItem(new SimpleDateFormat("hh", Locale.KOREAN).format(day.getTime()),1,"27"));
-            }
-            else if(isAMorPM == Calendar.PM){
-                hourlyItemList.add(new HourlyItem( new SimpleDateFormat("hh", Locale.KOREAN).format(day.getTime()),1,"27"));
-            }
-            i_h++;
-        }
-
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.hourly_recycler);
-        LinearLayoutManager layoutManager_h= new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
-        recyclerView.setLayoutManager(layoutManager_h);
-
-        HourlyItemAdapter adapter_h;
-        adapter_h = new HourlyItemAdapter(getActivity(),hourlyItemList);
-        recyclerView.setAdapter(adapter_h);
-        adapter_h.notifyDataSetChanged();
+//        Calendar calendar_h = Calendar.getInstance();
+//        int num_h = 6;
+//        int i_h=0;
+//
+//        int isAMorPM = calendar_h.get(Calendar.AM_PM);
+//
+//        //Calling the time after the current time
+//        while(i_h<num_h){
+//            calendar_h.add(Calendar.HOUR_OF_DAY, 1);
+//            Date day = calendar_h.getTime();
+//            if(isAMorPM == Calendar.AM){
+//                hourlyItemList.add(new HourlyItem(new SimpleDateFormat("hh", Locale.KOREAN).format(day.getTime()),1,"27"));
+//            }
+//            else if(isAMorPM == Calendar.PM){
+//                hourlyItemList.add(new HourlyItem( new SimpleDateFormat("hh", Locale.KOREAN).format(day.getTime()),1,"27"));
+//            }
+//            i_h++;
+//        }
+//
+//        recyclerView = (RecyclerView) rootView.findViewById(R.id.hourly_recycler);
+//        LinearLayoutManager layoutManager_h= new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+//        recyclerView.setLayoutManager(layoutManager_h);
+//
+//        HourlyItemAdapter adapter_h;
+//        adapter_h = new HourlyItemAdapter(getActivity(),hourlyItemList);
+//        recyclerView.setAdapter(adapter_h);
+//        adapter_h.notifyDataSetChanged();
 
 
         /* Daily recyclerview */
@@ -293,7 +294,7 @@ public class MainWeatherFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        adapter_h.notifyDataSetChanged();
+//        adapter_h.notifyDataSetChanged();
         return rootView;
     }
 
@@ -391,10 +392,6 @@ public class MainWeatherFragment extends Fragment {
                     sunset = sdf.format(date);
                     current_sunset.setText(sunset);
 
-
-
-
-
                     //강우량
                     JSONObject weather= weather_object.getJSONObject(0);
                     String main = weather.getString("main");
@@ -461,34 +458,61 @@ public class MainWeatherFragment extends Fragment {
                 try{
                     JSONArray weather_object = response.getJSONArray("hourly");
                     JSONObject weather= weather_object.getJSONObject(0);
-                    String object = response.getString("timezone");
-                    String dt = weather.getString("dt");
-                    if(dt.equals("1597816800")){
-                        temp_f = weather.getString("temp");
-                        temp_f = String.valueOf(Math.round(Double.valueOf(temp_f)));
-                        hourlyItemList.add(new HourlyItem("ss",1,temp_f+getString(R.string.temperature_unit)));
 
-                        Log.e("YUBIN", temp_f);
-                    }
-//                    String temp = null;
-//                    SimpleDateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//                    TimeZone tz = TimeZone.getTimeZone(object);
-//                    sourceFormat.setTimeZone(TimeZone.getTimeZone(object));
-//                    Date parsed = sourceFormat.parse(dt); // => Date is in UTC now
-//                    long milliseconds = parsed.getTime();
-//                    int offset = tz.getOffset(milliseconds);
-//                    temp = sourceFormat.format(milliseconds + offset);
-//                    temp = temp.replace("+0000", "");
-//                    String result = sourceFormat.format(parsed);
-//                    Log.e("YUBIN TIMEZONE"," "+dt);
-//                    int num=5;
-//                    int i=0;
+                    //hourly 시간
+                    int i=0;
+                    int num =6;
+
 //                    while(i<num){
-//                        if(temp == hourlyItemList.get(i).setDays()){
 //
-//                        }
 //                        i++;
 //                    }
+                    String dt = weather.getString("dt");
+                    long timestamp = Long.parseLong(dt);
+                    Date date = new java.util.Date(timestamp*1000L);
+                    SimpleDateFormat sdf = new java.text.SimpleDateFormat("a h" + "시");
+                    sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT+9"));
+                    dt = sdf.format(date);
+                    Log.e("YUBIN", dt);
+
+
+                    //temperature
+
+                    temp_f = weather.getString("temp");
+                    temp_f = String.valueOf(Math.round(Double.valueOf(temp_f)));
+
+//                    //icon
+//                    String icon = weather.getString("icon");
+//                    String iconurl = "http://openweathermap.org/img/wn/"+icon+"@2x.png";
+//                    Log.e("SEULGI ICON URL",iconurl);
+//                    ImageRequest iconjor = new ImageRequest(iconurl, new Response.Listener<Bitmap>() {
+//                        @Override
+//                        public void onResponse(Bitmap response) {
+//                            weathericon.setImageBitmap(response);
+//                        }
+//                    }, 0, 0, null,
+//                            new Response.ErrorListener() {
+//                                @Override
+//                                public void onErrorResponse(VolleyError error) {
+//                                    Log.e("SEULGI ICON API",error.toString());
+//                                }
+//                            });
+//
+//                    RequestQueue queue2 =  Volley.newRequestQueue(getActivity().getApplicationContext());
+//                    queue2.add(iconjor);
+//
+
+
+                    hourlyItemList.add(new HourlyItem(dt,1,temp_f+getString(R.string.temperature_unit)));
+
+                    recyclerView = (RecyclerView) rootView.findViewById(R.id.hourly_recycler);
+                    LinearLayoutManager layoutManager_h= new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+                    recyclerView.setLayoutManager(layoutManager_h);
+
+                    HourlyItemAdapter adapter_h;
+                    adapter_h = new HourlyItemAdapter(getActivity(),hourlyItemList);
+                    recyclerView.setAdapter(adapter_h);
+                    adapter_h.notifyDataSetChanged();
 
 
 
