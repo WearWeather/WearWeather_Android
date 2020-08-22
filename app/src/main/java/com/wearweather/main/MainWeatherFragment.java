@@ -12,6 +12,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
 import android.media.Image;
+import android.nfc.Tag;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -75,6 +76,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -93,6 +95,7 @@ public class MainWeatherFragment extends Fragment {
     private ViewPager viewPager;
     private ImageButton delButton;
     private RecyclerView recyclerView;
+    private RecyclerView recyclerView2;
     private ImageView weathericon;
 
     private TextView region;                //도시
@@ -109,12 +112,11 @@ public class MainWeatherFragment extends Fragment {
     private TextView current_sunset;
     private String temperature;
     private String bodily_temperature;
-    private String hourlyTime;
-    private TextView time_hourly;
-    private ImageView imageDaily;
+
+    private String Daily_image;
+    private ImageView i_daily;
     private String dailyLow;
     private String dailyHigh;
-    private TextView future_temp;
     private String temp_f;
 
     private String rain_3h;
@@ -124,7 +126,7 @@ public class MainWeatherFragment extends Fragment {
     private List<HourlyItem> hourlyItemList = new ArrayList<>();
     private List<DailyItem> dailyItemList = new ArrayList<>();
     private String temp_extra;
-    private String temp_f_extra;
+
     private final Class [] clothingClasses = {
             TemperatureClothingActivity.class,TemperatureClothingActivity2.class, TemperatureClothingActivity3.class,
             TemperatureClothingActivity4.class, TemperatureClothingActivity5.class, TemperatureClothingActivity6.class,
@@ -150,10 +152,7 @@ public class MainWeatherFragment extends Fragment {
         current_humidity =(TextView)rootView.findViewById(R.id.humidity);
         current_sunrise =(TextView)rootView.findViewById(R.id.sunrise);
         current_sunset =(TextView)rootView.findViewById(R.id.sunset);
-        time_hourly =(TextView)rootView.findViewById(R.id.temp_hourly);
-
-        imageDaily = (ImageView)rootView.findViewById(R.id.daily_image);
-        future_temp = (TextView)rootView.findViewById(R.id.temp_hourly);
+        i_daily = (ImageView)rootView.findViewById(R.id.daily_image);
 
 
         /* 날씨 보여주기 */
@@ -238,63 +237,6 @@ public class MainWeatherFragment extends Fragment {
         });
 
 
-
-
-        /* Hourly recyclerview */
-
-//        Calendar calendar_h = Calendar.getInstance();
-//        int num_h = 6;
-//        int i_h=0;
-//
-//        int isAMorPM = calendar_h.get(Calendar.AM_PM);
-//
-//        //Calling the time after the current time
-//        while(i_h<num_h){
-//            calendar_h.add(Calendar.HOUR_OF_DAY, 1);
-//            Date day = calendar_h.getTime();
-//            if(isAMorPM == Calendar.AM){
-//                hourlyItemList.add(new HourlyItem(new SimpleDateFormat("hh", Locale.KOREAN).format(day.getTime()),1,"27"));
-//            }
-//            else if(isAMorPM == Calendar.PM){
-//                hourlyItemList.add(new HourlyItem( new SimpleDateFormat("hh", Locale.KOREAN).format(day.getTime()),1,"27"));
-//            }
-//            i_h++;
-//        }
-//
-//        recyclerView = (RecyclerView) rootView.findViewById(R.id.hourly_recycler);
-//        LinearLayoutManager layoutManager_h= new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
-//        recyclerView.setLayoutManager(layoutManager_h);
-//
-//        HourlyItemAdapter adapter_h;
-//        adapter_h = new HourlyItemAdapter(getActivity(),hourlyItemList);
-//        recyclerView.setAdapter(adapter_h);
-//        adapter_h.notifyDataSetChanged();
-
-
-        /* Daily recyclerview */
-
-        Calendar calendar = Calendar.getInstance();
-        int num = 6;
-        int i=0;
-
-        //Calling the day of week after the current day
-        while(i<num){
-            calendar.add(Calendar.DAY_OF_YEAR, 1);
-            Date day = calendar.getTime();
-            dailyItemList.add(new DailyItem(new SimpleDateFormat("EEEE", Locale.KOREAN).format(day.getTime()),1,"27","27"));
-            i++;
-        }
-
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.daily_recycler);
-        LinearLayoutManager layoutManager= new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-
-        DailyItemAdapter adapter;
-        adapter = new DailyItemAdapter(getActivity(),dailyItemList);
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
-//        adapter_h.notifyDataSetChanged();
         return rootView;
     }
 
@@ -447,7 +389,7 @@ public class MainWeatherFragment extends Fragment {
 
     }
     public void find_future_weather(float latitude, float longitude) {
-        int i;
+
         String url="http://api.openweathermap.org/data/2.5/onecall?appid=944b4ec7c3a10a1bbb4a432d14e6f979&units=metric&id=1835848&lang=kr";
         //http://api.openweathermap.org/data/2.5/onecall?appid=944b4ec7c3a10a1bbb4a432d14e6f979&units=metric&id=1835848&lang=kr&lat=35&lon=127
         url += "&lat="+String.valueOf(latitude)+"&lon="+String.valueOf(longitude);
@@ -456,55 +398,86 @@ public class MainWeatherFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 try{
-                    JSONArray weather_object = response.getJSONArray("hourly");
-                    JSONObject weather= weather_object.getJSONObject(0);
+                    JSONArray hourly_object = response.getJSONArray("hourly");
+                    JSONArray daily_object = response.getJSONArray("daily");
 
-                    //hourly 시간
-                    int i=0;
-                    int num =6;
+                    for(int i=1;i<16; i=i+2){ //2시간 간격 | 7번만 나오게
+                        JSONObject rec= hourly_object.getJSONObject(i);
 
-//                    while(i<num){
+                        //시간
+                        String dt = rec.getString("dt");
+                        long timestamp = Long.parseLong(dt);
+                        Date date = new java.util.Date(timestamp*1000L);
+                        SimpleDateFormat sdf = new java.text.SimpleDateFormat("a h" + "시");
+                        sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT+9"));
+                        dt = sdf.format(date);
+
+                        //온도
+                        temp_f = rec.getString("temp");
+                        temp_f = String.valueOf(Math.round(Double.valueOf(temp_f)));
+
+                        hourlyItemList.add(new HourlyItem(dt,1,temp_f+getString(R.string.temperature_unit)));
+
+
+                    }
+                    for(int i=1; i<6; i++){
+                        JSONObject rec = daily_object.getJSONObject(i);
+                        JSONObject get_temp = rec.getJSONObject("temp");
+                        JSONArray weather_object = rec.getJSONArray("weather");
+                        JSONObject weather = weather_object.getJSONObject(0);
+
+                        Daily_image = weather.getString("icon");
+                        Daily_image = String.valueOf(Daily_image);
+
+                        //요일
+                        String dt = rec.getString("dt");
+                        long timestamp = Long.parseLong(dt);
+                        Date date = new java.util.Date(timestamp*1000L);
+                        SimpleDateFormat sdf = new java.text.SimpleDateFormat("EEEE", Locale.KOREAN);
+                        sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT+9"));
+                        dt = sdf.format(date);
+
+                        //최저기온
+                        dailyLow = get_temp.getString("min");
+                        dailyLow = String.valueOf(Math.round(Double.valueOf(dailyLow)));
+
+                        //최고기온
+                        dailyHigh = get_temp.getString("max");
+                        dailyHigh = String.valueOf(Math.round(Double.valueOf(dailyHigh)));
+
+
+                        Log.e("YUBIN DT for DAILY", dt);
+//                        Log.e("YUBIN ICON", "value " + Daily_image);
+//                        Log.e("YUBIN LOW TEMP", dailyLow+getString(R.string.temperature_unit));
+//                        Log.e("YUBIN HIGH TEMP", dailyHigh+getString(R.string.temperature_unit));
+
+                        dailyItemList.add(new DailyItem(dt,1,dailyLow+getString(R.string.temperature_unit),dailyHigh+getString(R.string.temperature_unit)));
+
+//                        String iconurl = "http://openweathermap.org/img/wn/"+Daily_image+"@2x.png";
+//                        Log.e("YUBIN ICON URL",iconurl);
+//                        ImageRequest iconjor = new ImageRequest(iconurl, new Response.Listener<Bitmap>() {
+//                            @Override
+//                            public void onResponse(Bitmap response) {
 //
-//                        i++;
-//                    }
-                    String dt = weather.getString("dt");
-                    long timestamp = Long.parseLong(dt);
-                    Date date = new java.util.Date(timestamp*1000L);
-                    SimpleDateFormat sdf = new java.text.SimpleDateFormat("a h" + "시");
-                    sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT+9"));
-                    dt = sdf.format(date);
-                    Log.e("YUBIN", dt);
-
-
-                    //temperature
-
-                    temp_f = weather.getString("temp");
-                    temp_f = String.valueOf(Math.round(Double.valueOf(temp_f)));
-
-//                    //icon
-//                    String icon = weather.getString("icon");
-//                    String iconurl = "http://openweathermap.org/img/wn/"+icon+"@2x.png";
-//                    Log.e("SEULGI ICON URL",iconurl);
-//                    ImageRequest iconjor = new ImageRequest(iconurl, new Response.Listener<Bitmap>() {
-//                        @Override
-//                        public void onResponse(Bitmap response) {
-//                            weathericon.setImageBitmap(response);
-//                        }
-//                    }, 0, 0, null,
-//                            new Response.ErrorListener() {
-//                                @Override
-//                                public void onErrorResponse(VolleyError error) {
-//                                    Log.e("SEULGI ICON API",error.toString());
-//                                }
-//                            });
+//                                i_daily.setImageBitmap(response);
+//                                dailyItemList.add(new DailyItem("이런",i_daily.,"27","27"));
+//                            }
+//                        }, 0, 0, null,
+//                                new Response.ErrorListener() {
+//                                    @Override
+//                                    public void onErrorResponse(VolleyError error) {
+//                                        Log.e("YUBIN ICON API",error.toString());
+//                                    }
+//                                });
 //
-//                    RequestQueue queue2 =  Volley.newRequestQueue(getActivity().getApplicationContext());
-//                    queue2.add(iconjor);
-//
+//                        RequestQueue queue2 =  Volley.newRequestQueue(getActivity().getApplicationContext());
+//                        queue2.add(iconjor);
+
+                    }
 
 
-                    hourlyItemList.add(new HourlyItem(dt,1,temp_f+getString(R.string.temperature_unit)));
 
+                    /* HOURLY RECYCLERVIEW */
                     recyclerView = (RecyclerView) rootView.findViewById(R.id.hourly_recycler);
                     LinearLayoutManager layoutManager_h= new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
                     recyclerView.setLayoutManager(layoutManager_h);
@@ -514,7 +487,15 @@ public class MainWeatherFragment extends Fragment {
                     recyclerView.setAdapter(adapter_h);
                     adapter_h.notifyDataSetChanged();
 
+                    /*DAILY RECYCLERVIEW */
+                    recyclerView2 = (RecyclerView) rootView.findViewById(R.id.daily_recycler);
+                    LinearLayoutManager layoutManager= new LinearLayoutManager(getActivity());
+                    recyclerView2.setLayoutManager(layoutManager);
 
+                    DailyItemAdapter adapter;
+                    adapter = new DailyItemAdapter(getActivity(),dailyItemList);
+                    recyclerView2.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
 
                 }catch(JSONException e)
                 {
@@ -533,6 +514,7 @@ public class MainWeatherFragment extends Fragment {
         RequestQueue queue =  Volley.newRequestQueue(getActivity().getApplicationContext());
         queue.add(jor);
     }
+
     private void getKoreanAddressByPoint(double latitude, double longitude){
         String url = "http://api.vworld.kr/req/address?service=address&request=getAddress&key=2566C643-E5EC-317E-BBAB-B6064E98ACC2&type=both";
         url += "&point="+String.valueOf(longitude)+","+String.valueOf(latitude);
