@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="매우 추운 날씨에요! 옷차림에 주의하세요~"
+            android:text="매우 추운 날씨! 옷차림에 주의하세요~"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -56,6 +56,12 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="오늘은 이런 옷 어때요?"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -213,18 +219,19 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout6"
+    <Button
+        android:id="@+id/button"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="260dp"
+        android:backgroundTint="#ffffff"
+        android:drawableTop="@drawable/home"
+        android:text="WearWeather"
+        android:textColor="#000000"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        tools:layout_editor_absoluteX="37dp" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="돌아가기 " />
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
