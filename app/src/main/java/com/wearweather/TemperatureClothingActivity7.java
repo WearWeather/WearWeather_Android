@@ -21,7 +21,7 @@ public class TemperatureClothingActivity7 extends AppCompatActivity {
 
         String name = intent.getStringExtra("temperature");
 
-        tx9.setText(name);
+        tx9.setText(name + "°C");
 
         LinearLayout layout1 = (LinearLayout) findViewById(R.id.layout1);
         layout1.setOnClickListener(new View.OnClickListener() {
