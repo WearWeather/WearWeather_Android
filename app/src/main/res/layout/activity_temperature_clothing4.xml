@@ -158,7 +158,7 @@
                 <ImageView
                     android:id="@+id/imageView4"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="wrap_content"
                     app:srcCompat="@drawable/kjh_hood" />
 
                 <TextView
@@ -181,7 +181,7 @@
                 <ImageView
                     android:id="@+id/imageView5"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="wrap_content"
                     app:srcCompat="@drawable/kjh_shoes" />
 
                 <TextView
@@ -204,7 +204,7 @@
                 <ImageView
                     android:id="@+id/imageView6"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="wrap_content"
                     app:srcCompat="@drawable/kjh_stockings" />
 
                 <TextView

@@ -81,7 +81,7 @@
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="wrap_content"
                     app:srcCompat="@drawable/kjh_padding" />
 
                 <TextView
@@ -104,7 +104,7 @@
                 <ImageView
                     android:id="@+id/imageView2"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="wrap_content"
                     app:srcCompat="@drawable/kjh_gimohood" />
 
                 <TextView
@@ -128,7 +128,7 @@
                 <ImageView
                     android:id="@+id/imageView3"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="wrap_content"
                     app:srcCompat="@drawable/kjh_thickcoat" />
 
                 <TextView
@@ -159,7 +159,7 @@
                 <ImageView
                     android:id="@+id/imageView4"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="wrap_content"
                     app:srcCompat="@drawable/kjh_neat" />
 
                 <TextView
@@ -182,7 +182,7 @@
                 <ImageView
                     android:id="@+id/imageView5"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="wrap_content"
                     app:srcCompat="@drawable/kjh_wintershoes" />
 
                 <TextView
@@ -205,7 +205,7 @@
                 <ImageView
                     android:id="@+id/imageView6"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="wrap_content"
                     app:srcCompat="@drawable/kjh_scarf" />
 
                 <TextView
