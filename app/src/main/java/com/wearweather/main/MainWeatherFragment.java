@@ -49,6 +49,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.squareup.picasso.Picasso;
 import com.wearweather.DustActivity;
 import com.wearweather.GpsTracker;
 import com.wearweather.NewsXMLActivity;
@@ -447,32 +448,32 @@ public class MainWeatherFragment extends Fragment {
 //                        Log.e("YUBIN LOW TEMP", dailyLow+getString(R.string.temperature_unit));
 //                        Log.e("YUBIN HIGH TEMP", dailyHigh+getString(R.string.temperature_unit));
 
-                        dailyItemList.add(new DailyItem(dt,dailyLow+getString(R.string.temperature_unit),dailyHigh+getString(R.string.temperature_unit)));
+                        dailyItemList.add(new DailyItem(dt,1,dailyLow+getString(R.string.temperature_unit),dailyHigh+getString(R.string.temperature_unit)));
 
 
 
                     }
-                    JSONObject weather_array = daily_object.getJSONObject(0);
-                    JSONArray weather_object = weather_array.getJSONArray("weather");
-                    JSONObject weather = weather_object.getJSONObject(0);
-
-
-                    String icon = weather.getString("icon");
-                    String iconurl = "http://openweathermap.org/img/wn/"+icon+"@2x.png";
-                    Log.e("YUBIN ICON URL",iconurl);
-                    ImageRequest iconjor2 = new ImageRequest(iconurl, new Response.Listener<Bitmap>() {
-                        @Override
-                        public void onResponse(Bitmap response) {
-                            i_daily.setImageBitmap(response);
-
-                        }
-                    }, 0, 0, null,
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.e("YUBIN ICON API",error.toString());
-                                }
-                            });
+//                    JSONObject weather_array = daily_object.getJSONObject(0);
+//                    JSONArray weather_object = weather_array.getJSONArray("weather");
+//                    JSONObject weather = weather_object.getJSONObject(0);
+//
+//
+//                    String icon = weather.getString("icon");
+//                    String iconurl = "http://openweathermap.org/img/wn/"+icon+"@2x.png";
+//                    Log.e("YUBIN ICON URL",iconurl);
+//                    ImageRequest iconjor2 = new ImageRequest(iconurl, new Response.Listener<Bitmap>() {
+//                        @Override
+//                        public void onResponse(Bitmap response) {
+//                            i_daily.setImageBitmap(response);
+//
+//                        }
+//                    }, 0, 0, null,
+//                            new Response.ErrorListener() {
+//                                @Override
+//                                public void onErrorResponse(VolleyError error) {
+//                                    Log.e("YUBIN ICON API",error.toString());
+//                                }
+//                            });
 
 
 
@@ -496,8 +497,8 @@ public class MainWeatherFragment extends Fragment {
                     recyclerView2.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
-                    RequestQueue queue2 =  Volley.newRequestQueue(getActivity().getApplicationContext());
-                    queue2.add(iconjor2);
+//                    RequestQueue queue2 =  Volley.newRequestQueue(getActivity().getApplicationContext());
+//                    queue2.add(iconjor2);
 
                 }catch(JSONException e)
                 {
@@ -691,6 +692,11 @@ public class MainWeatherFragment extends Fragment {
             holder.yoil.setText(item.getDays());
             holder.low.setText(item.getLow_temp());
             holder.high.setText(item.getHigh_temp());
+
+//            Picasso.get()
+//                .load(item)
+//                .fit()
+//                .into(holder.image);
 
         }
 
