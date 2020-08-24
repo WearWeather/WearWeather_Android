@@ -125,8 +125,8 @@ public class MainWeatherFragment extends Fragment {
     private String address_text;
     private String level1;
     private String level2;
-    private List<HourlyItem> hourlyItemList = new ArrayList<>();
-    private List<DailyItem> dailyItemList = new ArrayList<>();
+    private ArrayList<HourlyItem> hourlyItemList = new ArrayList<>();
+    private ArrayList<DailyItem> dailyItemList = new ArrayList<>();
     private String temp_extra;
 
     private final Class [] clothingClasses = {
@@ -299,17 +299,17 @@ public class MainWeatherFragment extends Fragment {
                     //체감온도
                     bodily_temperature = main_object.getString("feels_like");
                     bodily_temperature = String.valueOf(Math.round(Double.valueOf(bodily_temperature)));
-                    current_bodily_temp.setText(getString(R.string.bodily_temprature)+" "+bodily_temperature+getString(R.string.temperature_unit));
+                    current_bodily_temp.setText(bodily_temperature+getString(R.string.temperature_unit));
 
                     //최고온도
                     String temp_max = main_object.getString("temp_min");
                     temp_max = String.valueOf(Math.round(Double.valueOf(temp_max)));
-                    current_temp_max.setText(temp_max+getString(R.string.temperature_unit));
+                    current_temp_max.setText(getString(R.string.temperature_max)+" "+temp_max+getString(R.string.temperature_unit));
 
                     //최저온도
                     String temp_min = main_object.getString("temp_min");
                     temp_min = String.valueOf(Math.round(Double.valueOf(temp_min)));
-                    current_temp_min.setText(temp_min+getString(R.string.temperature_unit));
+                    current_temp_min.setText(getString(R.string.temperature_min)+" "+temp_min+getString(R.string.temperature_unit));
 
                     //기압
                     String pressure = main_object.getString("pressure");
@@ -343,10 +343,10 @@ public class MainWeatherFragment extends Fragment {
                         JSONObject rain_object = response.getJSONObject("rain");
                         rain_3h = rain_object.getString("3h");
                         rain_3h = String.valueOf(Math.round(Double.valueOf(rain_3h)*10));
-                        current_rain.setText(getString(R.string.precipitation)+" "+rain_3h+getString(R.string.precipitation_unit));
+                        current_rain.setText(rain_3h+getString(R.string.precipitation_unit));
                     }
                     else {
-                        current_rain.setText(getString(R.string.precipitation)+" "+"0"+getString(R.string.precipitation_unit));
+                        current_rain.setText("0"+getString(R.string.precipitation_unit));
                     }
 
                     String description = weather.getString("description");
@@ -380,6 +380,12 @@ public class MainWeatherFragment extends Fragment {
         //http://api.openweathermap.org/data/2.5/onecall?appid=944b4ec7c3a10a1bbb4a432d14e6f979&units=metric&id=1835848&lang=kr&lat=35&lon=127
         url += "&lat="+String.valueOf(latitude)+"&lon="+String.valueOf(longitude);
 
+        if(!hourlyItemList.isEmpty()) hourlyItemList.clear();
+        hourlyItemList = new ArrayList<>();
+
+        if(!dailyItemList.isEmpty()) dailyItemList.clear();
+        dailyItemList = new ArrayList<>();
+
         JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -389,6 +395,7 @@ public class MainWeatherFragment extends Fragment {
 
                     for(int i=1;i<16; i=i+2){ //2시간 간격 | 7번만 나오게
                         JSONObject rec= hourly_object.getJSONObject(i);
+                        Log.e("YUBIN",rec.toString());
 
                         //시간
                         String dt = rec.getString("dt");
@@ -402,8 +409,13 @@ public class MainWeatherFragment extends Fragment {
                         temp_f = rec.getString("temp");
                         temp_f = String.valueOf(Math.round(Double.valueOf(temp_f)));
 
-                        hourlyItemList.add(new HourlyItem(dt,1,temp_f+getString(R.string.temperature_unit)));
 
+                        JSONArray weather_object = rec.getJSONArray("weather");
+                        JSONObject weather = weather_object.getJSONObject(0);
+                        String icon = weather.getString("icon");
+                        int resID = getResId("icon_"+icon, R.drawable.class);
+
+                        hourlyItemList.add(new HourlyItem(dt,resID,temp_f+getString(R.string.temperature_unit)));
 
                     }
                     for(int i=1; i<6; i++){
@@ -446,21 +458,6 @@ public class MainWeatherFragment extends Fragment {
                     String icon = weather.getString("icon");
                     String iconurl = "http://openweathermap.org/img/wn/"+icon+"@2x.png";
                     Log.e("YUBIN ICON URL",iconurl);
-/*
-                    ImageRequest iconjor2 = new ImageRequest(iconurl, new Response.Listener<Bitmap>() {
-                        @Override
-                        public void onResponse(Bitmap response) {
-                            i_daily.setImageBitmap(response);
-
-                        }
-                    }, 0, 0, null,
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.e("YUBIN ICON API",error.toString());
-                                }
-                            });
-*/
 
 
 
@@ -632,6 +629,7 @@ public class MainWeatherFragment extends Fragment {
             HourlyItem item = hourlyItems.get(position);
             holder.time_h.setText(item.getDays());
             holder.temp_h.setText(item.getTemp_hourly());
+            holder.image.setImageResource(item.getWeather_photo());
 
         }
 
