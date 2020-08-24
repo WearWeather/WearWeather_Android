@@ -242,13 +242,6 @@ public class MainWeatherFragment extends Fragment {
         return rootView;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        displayWeather(rootView.getContext());
-
-    }
-
     private void setBackgroundByTime() {
         long currentTimeMillis = System.currentTimeMillis();
         Date date = new Date(currentTimeMillis);
@@ -393,9 +386,8 @@ public class MainWeatherFragment extends Fragment {
                     JSONArray hourly_object = response.getJSONArray("hourly");
                     JSONArray daily_object = response.getJSONArray("daily");
 
-                    for(int i=1;i<16; i=i+2){ //2시간 간격 | 7번만 나오게
+                    for(int i=0;i<hourly_object.length() && i<36; i+=2){ //2시간 간격 | 18번만 나오게
                         JSONObject rec= hourly_object.getJSONObject(i);
-                        Log.e("YUBIN",rec.toString());
 
                         //시간
                         String dt = rec.getString("dt");
@@ -409,19 +401,17 @@ public class MainWeatherFragment extends Fragment {
                         temp_f = rec.getString("temp");
                         temp_f = String.valueOf(Math.round(Double.valueOf(temp_f)));
 
-
                         JSONArray weather_object = rec.getJSONArray("weather");
                         JSONObject weather = weather_object.getJSONObject(0);
                         String icon = weather.getString("icon");
                         int resID = getResId("icon_"+icon, R.drawable.class);
 
                         hourlyItemList.add(new HourlyItem(dt,resID,temp_f+getString(R.string.temperature_unit)));
-
                     }
-                    for(int i=1; i<6; i++){
+
+                    for(int i=1; i<daily_object.length(); i++){
                         JSONObject rec = daily_object.getJSONObject(i);
                         JSONObject get_temp = rec.getJSONObject("temp");
-
 
                         //요일
                         String dt = rec.getString("dt");
@@ -439,27 +429,19 @@ public class MainWeatherFragment extends Fragment {
                         dailyHigh = get_temp.getString("max");
                         dailyHigh = String.valueOf(Math.round(Double.valueOf(dailyHigh)));
 
+                        //아이콘
+                        JSONArray weather_object = rec.getJSONArray("weather");
+                        JSONObject weather = weather_object.getJSONObject(0);
+                        String icon = weather.getString("icon");
+                        int resID = getResId("icon_"+icon, R.drawable.class);
 ;
-                        Log.e("YUBIN DT for DAILY", dt);
+                        //Log.e("YUBIN DT for DAILY", dt);
 //                        Log.e("YUBIN ICON", "value " + Daily_image);
 //                        Log.e("YUBIN LOW TEMP", dailyLow+getString(R.string.temperature_unit));
 //                        Log.e("YUBIN HIGH TEMP", dailyHigh+getString(R.string.temperature_unit));
 
-                        dailyItemList.add(new DailyItem(dt,dailyLow+getString(R.string.temperature_unit),dailyHigh+getString(R.string.temperature_unit)));
-
-
-
+                        dailyItemList.add(new DailyItem(dt,dailyLow+getString(R.string.temperature_unit),dailyHigh+getString(R.string.temperature_unit),resID));
                     }
-                    JSONObject weather_array = daily_object.getJSONObject(0);
-                    JSONArray weather_object = weather_array.getJSONArray("weather");
-                    JSONObject weather = weather_object.getJSONObject(0);
-
-
-                    String icon = weather.getString("icon");
-                    String iconurl = "http://openweathermap.org/img/wn/"+icon+"@2x.png";
-                    Log.e("YUBIN ICON URL",iconurl);
-
-
 
                     /* HOURLY RECYCLERVIEW */
                     recyclerView = (RecyclerView) rootView.findViewById(R.id.hourly_recycler);
@@ -481,13 +463,9 @@ public class MainWeatherFragment extends Fragment {
                     recyclerView2.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
-                    RequestQueue queue2 =  Volley.newRequestQueue(getActivity().getApplicationContext());
-                    //queue2.add(iconjor2);
-
                 }catch(JSONException e)
                 {
                     e.printStackTrace();
-
                 }
             }
         }, new Response.ErrorListener() {
@@ -678,6 +656,7 @@ public class MainWeatherFragment extends Fragment {
             holder.yoil.setText(item.getDays());
             holder.low.setText(item.getLow_temp());
             holder.high.setText(item.getHigh_temp());
+            holder.image.setImageResource(item.getWeather_photo());
 
         }
 

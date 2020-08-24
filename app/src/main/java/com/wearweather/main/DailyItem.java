@@ -2,16 +2,16 @@ package com.wearweather.main;
 
 public class DailyItem {
     private String Days;
-//    private int Weather_photo;
+    private int Weather_photo;
     private String Low_temp;
     private String High_temp;
 
     public DailyItem() {
     }
 
-    public DailyItem(String days, String low_temp, String high_temp) {
+    public DailyItem(String days, String low_temp, String high_temp, int weather_photo) {
         Days = days;
-//        Weather_photo = weather_photo;
+        Weather_photo = weather_photo;
         Low_temp = low_temp;
         High_temp = high_temp;
     }
@@ -21,9 +21,9 @@ public class DailyItem {
         return Days;
     }
 
-//    public int getWeather_photo() {
-//        return Weather_photo;
-//    }
+    public int getWeather_photo() {
+        return Weather_photo;
+    }
 
     public String getLow_temp() {
         return Low_temp;
@@ -39,9 +39,9 @@ public class DailyItem {
         Days = days;
     }
 
-//    public void setWeather_photo(int weather_photo) {
-//        Weather_photo= weather_photo;
-//    }
+    public void setWeather_photo(int weather_photo) {
+        Weather_photo= weather_photo;
+    }
 
     public void setLow_temp(String low_temp) {
         Low_temp = low_temp;
