@@ -393,7 +393,7 @@ public class MainWeatherFragment extends Fragment {
         String url="http://api.openweathermap.org/data/2.5/onecall?appid=944b4ec7c3a10a1bbb4a432d14e6f979&units=metric&id=1835848&lang=kr";
         //http://api.openweathermap.org/data/2.5/onecall?appid=944b4ec7c3a10a1bbb4a432d14e6f979&units=metric&id=1835848&lang=kr&lat=35&lon=127
         url += "&lat="+String.valueOf(latitude)+"&lon="+String.valueOf(longitude);
-        Log.e("YUBIN API URL", url);
+
         JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -423,11 +423,7 @@ public class MainWeatherFragment extends Fragment {
                     for(int i=1; i<6; i++){
                         JSONObject rec = daily_object.getJSONObject(i);
                         JSONObject get_temp = rec.getJSONObject("temp");
-                        JSONArray weather_object = rec.getJSONArray("weather");
-                        JSONObject weather = weather_object.getJSONObject(0);
 
-                        Daily_image = weather.getString("icon");
-                        Daily_image = String.valueOf(Daily_image);
 
                         //요일
                         String dt = rec.getString("dt");
@@ -445,35 +441,38 @@ public class MainWeatherFragment extends Fragment {
                         dailyHigh = get_temp.getString("max");
                         dailyHigh = String.valueOf(Math.round(Double.valueOf(dailyHigh)));
 
-
+;
                         Log.e("YUBIN DT for DAILY", dt);
 //                        Log.e("YUBIN ICON", "value " + Daily_image);
 //                        Log.e("YUBIN LOW TEMP", dailyLow+getString(R.string.temperature_unit));
 //                        Log.e("YUBIN HIGH TEMP", dailyHigh+getString(R.string.temperature_unit));
 
-                        dailyItemList.add(new DailyItem(dt,1,dailyLow+getString(R.string.temperature_unit),dailyHigh+getString(R.string.temperature_unit)));
+                        dailyItemList.add(new DailyItem(dt,dailyLow+getString(R.string.temperature_unit),dailyHigh+getString(R.string.temperature_unit)));
 
-//                        String iconurl = "http://openweathermap.org/img/wn/"+Daily_image+"@2x.png";
-//                        Log.e("YUBIN ICON URL",iconurl);
-//                        ImageRequest iconjor = new ImageRequest(iconurl, new Response.Listener<Bitmap>() {
-//                            @Override
-//                            public void onResponse(Bitmap response) {
-//
-//                                i_daily.setImageBitmap(response);
-//                                dailyItemList.add(new DailyItem("이런",i_daily.,"27","27"));
-//                            }
-//                        }, 0, 0, null,
-//                                new Response.ErrorListener() {
-//                                    @Override
-//                                    public void onErrorResponse(VolleyError error) {
-//                                        Log.e("YUBIN ICON API",error.toString());
-//                                    }
-//                                });
-//
-//                        RequestQueue queue2 =  Volley.newRequestQueue(getActivity().getApplicationContext());
-//                        queue2.add(iconjor);
+
 
                     }
+                    JSONObject weather_array = daily_object.getJSONObject(0);
+                    JSONArray weather_object = weather_array.getJSONArray("weather");
+                    JSONObject weather = weather_object.getJSONObject(0);
+
+
+                    String icon = weather.getString("icon");
+                    String iconurl = "http://openweathermap.org/img/wn/"+icon+"@2x.png";
+                    Log.e("YUBIN ICON URL",iconurl);
+                    ImageRequest iconjor2 = new ImageRequest(iconurl, new Response.Listener<Bitmap>() {
+                        @Override
+                        public void onResponse(Bitmap response) {
+                            i_daily.setImageBitmap(response);
+
+                        }
+                    }, 0, 0, null,
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.e("YUBIN ICON API",error.toString());
+                                }
+                            });
 
 
 
@@ -496,6 +495,9 @@ public class MainWeatherFragment extends Fragment {
                     adapter = new DailyItemAdapter(getActivity(),dailyItemList);
                     recyclerView2.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
+
+                    RequestQueue queue2 =  Volley.newRequestQueue(getActivity().getApplicationContext());
+                    queue2.add(iconjor2);
 
                 }catch(JSONException e)
                 {
