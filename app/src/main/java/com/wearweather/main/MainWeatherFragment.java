@@ -445,10 +445,7 @@ public class MainWeatherFragment extends Fragment {
                         String icon = weather.getString("icon");
                         int resID = getResId("icon_"+icon, R.drawable.class);
 ;
-                        //Log.e("YUBIN DT for DAILY", dt);
-//                        Log.e("YUBIN ICON", "value " + Daily_image);
-//                        Log.e("YUBIN LOW TEMP", dailyLow+getString(R.string.temperature_unit));
-//                        Log.e("YUBIN HIGH TEMP", dailyHigh+getString(R.string.temperature_unit));
+
 
                         dailyItemList.add(new DailyItem(dt,dailyLow+getString(R.string.temperature_unit),dailyHigh+getString(R.string.temperature_unit),resID));
                     }
