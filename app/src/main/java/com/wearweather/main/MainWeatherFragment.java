@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
@@ -70,6 +71,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -352,24 +354,8 @@ public class MainWeatherFragment extends Fragment {
 
                     //날씨 아이콘
                     String icon = weather.getString("icon");
-                    String iconurl = "http://openweathermap.org/img/wn/"+icon+"@2x.png";
-                    Log.e("SEULGI ICON URL",iconurl);
-                    ImageRequest iconjor = new ImageRequest(iconurl, new Response.Listener<Bitmap>() {
-                        @Override
-                        public void onResponse(Bitmap response) {
-                            weathericon.setImageBitmap(response);
-                        }
-                    }, 0, 0, null,
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.e("SEULGI ICON API",error.toString());
-                                }
-                            });
-
-                    RequestQueue queue2 =  Volley.newRequestQueue(getActivity().getApplicationContext());
-                    queue2.add(iconjor);
-
+                    int resID = getResId("icon_"+icon, R.drawable.class);
+                    weathericon.setImageResource(resID);
 
                 }catch(JSONException e)
                 {
@@ -460,6 +446,7 @@ public class MainWeatherFragment extends Fragment {
                     String icon = weather.getString("icon");
                     String iconurl = "http://openweathermap.org/img/wn/"+icon+"@2x.png";
                     Log.e("YUBIN ICON URL",iconurl);
+/*
                     ImageRequest iconjor2 = new ImageRequest(iconurl, new Response.Listener<Bitmap>() {
                         @Override
                         public void onResponse(Bitmap response) {
@@ -473,6 +460,7 @@ public class MainWeatherFragment extends Fragment {
                                     Log.e("YUBIN ICON API",error.toString());
                                 }
                             });
+*/
 
 
 
@@ -497,7 +485,7 @@ public class MainWeatherFragment extends Fragment {
                     adapter.notifyDataSetChanged();
 
                     RequestQueue queue2 =  Volley.newRequestQueue(getActivity().getApplicationContext());
-                    queue2.add(iconjor2);
+                    //queue2.add(iconjor2);
 
                 }catch(JSONException e)
                 {
@@ -590,6 +578,7 @@ public class MainWeatherFragment extends Fragment {
 
         find_weather(lat,lon);
         getKoreanAddressByPoint(lat,lon);
+        Log.e("SEULGI",getCurrentAddress(lat,lon));
 
         find_future_weather(lat,lon);
     }
@@ -715,5 +704,14 @@ public class MainWeatherFragment extends Fragment {
             }
         }
     }
+    public static int getResId(String resName, Class<?> c) {
 
+        try {
+            Field idField = c.getDeclaredField(resName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 }
