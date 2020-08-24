@@ -18,13 +18,17 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wearweather.main.MainActivity;
+
 import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity {
     private FrameLayout address_find;
+    private FrameLayout redirect;
     private String location_name;
 
     @Override
@@ -32,7 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        address_find= findViewById(R.id.redirect_layout);
+        address_find= findViewById(R.id.search_layout);
         address_find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +61,8 @@ public class SettingsActivity extends AppCompatActivity {
                                 Log.e("SEULGI GEOCODER",lat+" "+lon);
                                 PreferenceManager.setFloat(SettingsActivity.this,"LATITUDE",(float)lat);
                                 PreferenceManager.setFloat(SettingsActivity.this,"LONGITUDE",(float)lon);
+
+                                PreferenceManager.setBoolean(SettingsActivity.this,"IS_ADDRESS_CHANGED",true);
                             }
                             else {
                                 Toast.makeText(getApplicationContext(),"주소가 잘못되었습니다!",Toast.LENGTH_SHORT).show();
@@ -77,8 +83,77 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        redirect= findViewById(R.id.redirect_layout);
+        redirect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GpsTracker gpsTracker = new GpsTracker(SettingsActivity.this);
 
+                double latitude = gpsTracker.getLatitude();
+                double longitude = gpsTracker.getLongitude();
+
+                PreferenceManager.setFloat(SettingsActivity.this,"LATITUDE",(float)latitude);
+                PreferenceManager.setFloat(SettingsActivity.this,"LONGITUDE",(float)longitude);
+
+                String address = getCurrentAddress(latitude, longitude);
+                PreferenceManager.setString(SettingsActivity.this,"CITY",address);
+                Log.e("SEULGI",address);
+
+                int space_cnt=0,s_ind=0,e_ind=0;
+                for(int i = 0; i < address.length(); i++){
+                    if(address.charAt(i) == ' '){
+                        if(space_cnt==0)
+                            s_ind= i;
+                        if(space_cnt==2)
+                            e_ind=i;
+                        space_cnt++;
+                    }
+                    if(space_cnt==3)
+                        break;
+                }
+                address = address.substring(s_ind,e_ind);
+
+                Toast.makeText(SettingsActivity.this, "주소가 "+address+"로 설정되었습니다",Toast.LENGTH_SHORT).show();
+
+                PreferenceManager.setBoolean(SettingsActivity.this,"IS_ADDRESS_CHANGED",true);
+            }
+        });
     }
 
+    public String getCurrentAddress( double latitude, double longitude) {
+
+        //지오코더... GPS를 주소로 변환
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        List<Address> addresses;
+
+        try {
+
+            addresses = geocoder.getFromLocation(
+                    latitude,
+                    longitude,
+                    7);
+        } catch (IOException ioException) {
+            //네트워크 문제
+            Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
+            return "지오코더 서비스 사용불가";
+        } catch (IllegalArgumentException illegalArgumentException) {
+            Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
+            return "잘못된 GPS 좌표";
+
+        }
+
+
+
+        if (addresses == null || addresses.size() == 0) {
+            Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
+            return "주소 미발견";
+
+        }
+
+        Address address = addresses.get(0);
+        return address.getAddressLine(0).toString()+"\n";
+
+    }
 
 }

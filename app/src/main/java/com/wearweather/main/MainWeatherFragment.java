@@ -242,6 +242,16 @@ public class MainWeatherFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(PreferenceManager.getBoolean(getContext(),"IS_ADDRESS_CHANGED")==true){
+            PreferenceManager.setBoolean(getContext(),"IS_ADDRESS_CHANGED",false);
+            displayWeather(getContext());
+        }
+    }
+
     private void setBackgroundByTime() {
         long currentTimeMillis = System.currentTimeMillis();
         Date date = new Date(currentTimeMillis);
@@ -552,10 +562,29 @@ public class MainWeatherFragment extends Fragment {
         float lon = PreferenceManager.getFloat(context,"LONGITUDE");
 
         find_weather(lat,lon);
-        getKoreanAddressByPoint(lat,lon);
-        Log.e("SEULGI",getCurrentAddress(lat,lon));
-
         find_future_weather(lat,lon);
+
+        String address = getCurrentAddress(lat, lon);
+        PreferenceManager.setString(getContext(),"CITY",address);
+        Log.e("SEULGI",address);
+
+        int space_cnt=0,s_ind=0,e_ind=0;
+        for(int i = 0; i < address.length(); i++){
+            if(address.charAt(i) == ' '){
+                if(space_cnt==0)
+                    s_ind= i;
+                if(space_cnt==2)
+                    e_ind=i;
+                space_cnt++;
+            }
+            if(space_cnt==3)
+                break;
+        }
+        address = address.substring(s_ind,e_ind);
+
+        region.setText(address);
+
+        //getKoreanAddressByPoint(lat,lon);
     }
 
     public void setTabPosition(int position) { tabPosition=position; }
