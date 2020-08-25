@@ -32,4 +32,11 @@
     <string name="sunset">일몰</string>
 
     <string name="percent_unit">%</string>
+
+    <string name="address_setting">주소 설정</string>
+    <string name="address_find">주소 검색하기</string>
+    <string name="address_redirect">현재 위치로 주소 설정하기</string>
+    <string name="favorites_setting">즐겨찾기 설정</string>
+    <string name="favorites_manage">즐겨찾기 관리하기</string>
+
 </resources>
