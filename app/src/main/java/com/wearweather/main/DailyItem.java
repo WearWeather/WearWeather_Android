@@ -9,7 +9,7 @@ public class DailyItem {
     public DailyItem() {
     }
 
-    public DailyItem(String days, int weather_photo, String low_temp, String high_temp) {
+    public DailyItem(String days, String low_temp, String high_temp, int weather_photo) {
         Days = days;
         Weather_photo = weather_photo;
         Low_temp = low_temp;

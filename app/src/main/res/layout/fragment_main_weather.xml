@@ -138,10 +138,10 @@
                                 android:layout_marginTop="10dp">
 
                                 <TextView
-                                    android:id="@+id/bodily_temp"
+                                    android:id="@+id/temp_max"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/bodily_temprature"
+                                    android:text="@string/temperature_max"
                                     android:textColor="@color/colorWhite"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
@@ -150,19 +150,18 @@
                                     android:layout_width="2dp"
                                     android:layout_height="match_parent"
                                     android:layout_centerInParent="true"
-                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginLeft="14dp"
                                     android:background="@color/colorWhite" />
 
                                 <TextView
-                                    android:id="@+id/precipitation_text"
+                                    android:id="@+id/temp_min"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:text="@string/precipitation"
-                                    android:textColor="@color/colorWhite"
+                                    android:layout_marginLeft="14dp"
+                                    android:text="@string/temperature_min"
                                     android:textSize="14sp"
-                                    android:textStyle="bold" />
-
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorWhite"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -211,6 +210,36 @@
                             android:layout_height="wrap_content"
                             android:padding="5dp"
                             android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingHorizontal="15dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left|center"
+                                    android:text="@string/bodily_temprature"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/colorWhite"/>
+
+
+
+                                <TextView
+                                    android:id="@+id/bodily_temp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0"
+                                    android:textColor="@color/colorWhite"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
+
+
+                            </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -221,40 +250,20 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="left|center"
-                                    android:text="@string/temperature_max"
+                                    android:text="@string/precipitation"
                                     android:textSize="16sp"
                                     android:textColor="@color/colorWhite"/>
+
                                 <TextView
-                                    android:id="@+id/temp_max"
+                                    android:id="@+id/precipitation_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="27"
+                                    android:text="0"
+                                    android:textColor="@color/colorWhite"
                                     android:textSize="30sp"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/colorWhite"/>
+                                    android:textStyle="bold" />
                             </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:paddingHorizontal="15dp"
-                                android:orientation="vertical">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="left|center"
-                                    android:text="@string/temperature_min"
-                                    android:textSize="16sp"
-                                    android:textColor="@color/colorWhite"/>
-                                <TextView
-                                    android:id="@+id/temp_min"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="27"
-                                    android:textSize="30sp"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/colorWhite"/>
-                            </LinearLayout>
+
                         </LinearLayout>
 
                         <View
@@ -372,6 +381,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
+                            android:layout_marginBottom="20dp"
                             android:background="@color/colorWhite"/>
 
                     </LinearLayout>

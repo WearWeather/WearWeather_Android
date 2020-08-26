@@ -64,15 +64,6 @@ public class MainActivity extends AppCompatActivity {
             PreferenceManager.setFloat(this,"LONGITUDE",(float)longitude);
         }
 
-//        PreferenceManager.setFloat(this,"LATITUDE",(float)latitude);
-//        PreferenceManager.setFloat(this,"LONGITUDE",(float)longitude);
-
-        String address = getCurrentAddress(latitude, longitude);
-
-        Toast.makeText(MainActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
-
-
-
 
         /* tab layout */
         tabLayout = (TabLayout) findViewById(R.id.main_tab_layout);
@@ -112,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
     private void initSharedPreference(){
         PreferenceManager.setInt(this, "REGION_NUMBER",1);
         if(PreferenceManager.getInt(this, "REGION_NUMBER")==-1){

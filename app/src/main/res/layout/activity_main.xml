@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:layout_gravity="bottom"
-        app:tabBackground="@drawable/tab_indicator_dot"
+        app:tabBackground="@null"
         app:tabGravity="center"
         app:tabIndicator="@null"
         app:tabPaddingStart="8dp"
