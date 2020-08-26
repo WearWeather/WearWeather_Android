@@ -16,19 +16,18 @@ import com.wearweather.main.MainWeatherFragment;
 
 public class TemperatureClothingActivity8 extends AppCompatActivity {
     TextView tx9;
-    ImageButton btnToHome;
+    Button btnToHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature_clothing8);
 
-        btnToHome = (ImageButton) findViewById(R.id.btnToHome);
+        btnToHome = (Button) findViewById(R.id.btnToHome);
         btnToHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainWeatherFragment.class);
-                startActivity(intent);
+                finish();
             }
         });
 

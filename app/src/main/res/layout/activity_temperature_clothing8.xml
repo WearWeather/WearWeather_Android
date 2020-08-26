@@ -230,7 +230,7 @@
         android:layout_height="match_parent"
         >
 
-        <ImageButton
+        <Button
             android:id="@+id/btnToHome"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="match_parent"
