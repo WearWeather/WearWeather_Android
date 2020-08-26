@@ -6,17 +6,31 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class TemperatureClothingActivity7 extends AppCompatActivity {
+import com.wearweather.main.MainActivity;
+import com.wearweather.main.MainWeatherFragment;
 
+public class TemperatureClothingActivity7 extends AppCompatActivity {
+    TextView tx9;
+    Button btnToHome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature_clothing7);
 
-        TextView tx9 = (TextView)findViewById(R.id.textView9);
+        btnToHome = (Button) findViewById(R.id.btnToHome);
+        btnToHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        tx9 = (TextView)findViewById(R.id.textView9);
         Intent intent = getIntent(); /*데이터 수신*/
 
         String name = intent.getStringExtra("temperature");
