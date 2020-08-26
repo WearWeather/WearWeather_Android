@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.media.Image;
@@ -31,6 +32,7 @@ import java.util.Locale;
 public class SettingsActivity extends AppCompatActivity {
     private FrameLayout address_find;
     private FrameLayout redirect;
+    private FrameLayout favorites;
     private String location_name;
     private ImageView backBtn;
 
@@ -127,6 +129,15 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        favorites = (FrameLayout)findViewById(R.id.settings_favorites);
+        favorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), FavoritesActivity.class);
+                startActivity(intent);
             }
         });
     }
