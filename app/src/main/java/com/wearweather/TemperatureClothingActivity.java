@@ -6,11 +6,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.wearweather.main.MainActivity;
 
 public class TemperatureClothingActivity extends AppCompatActivity {
 
@@ -18,7 +21,6 @@ public class TemperatureClothingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature_clothing);
-
 
         TextView tx9 = (TextView)findViewById(R.id.textView9);
         Intent intent = getIntent(); /*데이터 수신*/
