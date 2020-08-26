@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/sunny_afternoon_background"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".NewsXMLActivity">
 
     <!-- 뉴스 페이지에 스와이프 기능 추가. 동작은 NewsXMLActivity에 구현 -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/swipeToRefreshNews"
+        tools:context=".NewsXMLActivity"
+        android:orientation="vertical"
         >
-
-        <!-- A RecyclerView with some commonly used attributes -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/my_recycler_view"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical" />
+            android:layout_height="30dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="30dp"
+                    android:text="일기예보"/>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/my_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="40dp"
+                android:scrollbars="vertical" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- A RecyclerView with some commonly used attributes -->
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
-
-</LinearLayout>

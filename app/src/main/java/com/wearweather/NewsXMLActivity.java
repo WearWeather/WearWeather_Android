@@ -42,7 +42,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -56,13 +58,25 @@ public class NewsXMLActivity extends AppCompatActivity {
     private ArrayList<NewsData> myDataset = new ArrayList<>();
     private ForecastAdapter adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         swipeToRefreshNews = (SwipeRefreshLayout) findViewById(R.id.swipeToRefreshNews);
+        setBackgroundByTime();
 
+        swipeToRefreshNews.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                /* 새로고침 시 수행될 코드 */
+                setBackgroundByTime();
+
+                /* 새로고침 완료 */
+                swipeToRefreshNews.setRefreshing(false);
+            }
+        });
         recyclerView.setHasFixedSize(true);
 
         adapter = new ForecastAdapter(myDataset, this);
@@ -180,6 +194,30 @@ public class NewsXMLActivity extends AppCompatActivity {
             //adapter.notifyDataSetChanged(); // 리사이클러 뷰의 아이템의 변경 여부를 어댑터에게 전달
 
             //Toast.makeText(NewsXMLActivity.this, s + myDataset.size(), Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void setBackgroundByTime() {
+        long currentTimeMillis = System.currentTimeMillis();
+        Date date = new Date(currentTimeMillis);
+        SimpleDateFormat sdfHour = new SimpleDateFormat("HH");
+        SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String hourText = sdfHour.format(date);
+
+        String nowText = sdfNow.format(date);
+        //dateNow.setText(nowText);
+
+        int time = Integer.parseInt(hourText);
+        if(time >= 0 && time < 6){
+            swipeToRefreshNews.setBackgroundResource(R.drawable.sunny_night_background);
+        }
+        else if(time >= 6 && time < 15){
+            swipeToRefreshNews.setBackgroundResource(R.drawable.sunny_afternoon_background);
+        }
+        else if(time >= 15 && time < 20){
+            swipeToRefreshNews.setBackgroundResource(R.drawable.sunny_sunset_background);
+        }
+        else if(time >= 20 && time < 24){
+            swipeToRefreshNews.setBackgroundResource(R.drawable.sunny_night_background);
         }
     }
 }
