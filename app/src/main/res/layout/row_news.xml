@@ -38,9 +38,6 @@
 
         </LinearLayout>
 
-
-
-
         <LinearLayout
             android:layout_gravity="right"
             android:layout_width="match_parent"

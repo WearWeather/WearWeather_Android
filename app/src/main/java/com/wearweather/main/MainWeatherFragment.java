@@ -116,7 +116,7 @@ public class MainWeatherFragment extends Fragment {
     private String bodily_temperature;
 
     private String Daily_image;
-    private ImageView i_daily;
+    private ImageButton search_button;
     private String dailyLow;
     private String dailyHigh;
     private String temp_f;
@@ -154,8 +154,7 @@ public class MainWeatherFragment extends Fragment {
         current_humidity =(TextView)rootView.findViewById(R.id.humidity);
         current_sunrise =(TextView)rootView.findViewById(R.id.sunrise);
         current_sunset =(TextView)rootView.findViewById(R.id.sunset);
-        i_daily = (ImageView)rootView.findViewById(R.id.daily_image);
-
+        search_button = (ImageButton)rootView.findViewById(R.id.main_search_btn);
 
         /* 날씨 보여주기 */
         displayWeather(rootView.getContext());
@@ -178,6 +177,15 @@ public class MainWeatherFragment extends Fragment {
             }
         });
 
+        search_button.setOnClickListener(new View.OnClickListener(){
+            // When the button is pressed/clicked, it will run the code below
+            @Override
+            public void onClick(View v){
+                // Intent is what you use to start another activity
+                Intent intent = new Intent(getActivity(), MainSearchActivity.class);
+                startActivity(intent);
+            }
+        });
 
         /* drawer layout */
         drawerLayout = (DrawerLayout)rootView.findViewById(R.id.main_drawer_layout);
@@ -266,16 +274,13 @@ public class MainWeatherFragment extends Fragment {
         if(time >= 0 && time < 6){
             swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_night_background);
         }
-        else if(time >= 6 && time < 12){
-            swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_morning_background);
-        }
-        else if(time >= 12 && time < 18){
+        else if(time >= 6 && time < 15){
             swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_afternoon_background);
         }
-        else if(time >= 18 && time < 20){
+        else if(time >= 15 && time < 20){
             swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_sunset_background);
         }
-        else if(time >= 18 && time < 24){
+        else if(time >= 20 && time < 24){
             swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_night_background);
         }
     }

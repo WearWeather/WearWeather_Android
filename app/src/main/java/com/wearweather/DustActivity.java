@@ -155,9 +155,8 @@ public class DustActivity extends AppCompatActivity {
         int time = Integer.parseInt(hour);
         if (time >= 0 && time < 6) {
             layout.setBackgroundResource(R.drawable.sunny_night_background);
-        } else if (time >= 6 && time < 12) {
-            layout.setBackgroundResource(R.drawable.sunny_morning_background);
-        } else if (time >= 12 && time < 18) {
+
+        } else if (time >= 6 && time < 18) {
             layout.setBackgroundResource(R.drawable.sunny_afternoon_background);
         } else if (time >= 18 && time < 20) {
             layout.setBackgroundResource(R.drawable.sunny_sunset_background);
