@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,7 +14,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class TemperatureClothingActivity2 extends AppCompatActivity {
-
+    TextView tx9;
+    Button btnToHome;
     ViewGroup tokboki, shoes, thickCoat, neat, scarf, leather;
     String url;
     Intent intent;
@@ -23,7 +25,15 @@ public class TemperatureClothingActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature_clothing2);
 
-        TextView tx9 = (TextView)findViewById(R.id.textView9);
+        btnToHome = (Button) findViewById(R.id.btnToHome);
+        btnToHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        tx9 = (TextView)findViewById(R.id.textView9);
         intent = getIntent(); /*데이터 수신*/
 
         String name = intent.getStringExtra("temperature");

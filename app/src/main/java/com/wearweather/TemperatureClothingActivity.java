@@ -16,13 +16,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.wearweather.main.MainActivity;
 
 public class TemperatureClothingActivity extends AppCompatActivity {
+    TextView tx9;
+    Button btnToHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature_clothing);
 
-        TextView tx9 = (TextView)findViewById(R.id.textView9);
+        btnToHome = (Button) findViewById(R.id.btnToHome);
+        btnToHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        tx9 = (TextView)findViewById(R.id.textView9);
         Intent intent = getIntent(); /*데이터 수신*/
 
         String name = intent.getStringExtra("temperature");
