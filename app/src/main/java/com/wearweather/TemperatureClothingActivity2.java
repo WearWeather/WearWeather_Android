@@ -38,7 +38,7 @@ public class TemperatureClothingActivity2 extends AppCompatActivity {
 
         String name = intent.getStringExtra("temperature");
 
-        tx9.setText(name);
+        tx9.setText(name + "°C");
 
         View.OnClickListener listener = new View.OnClickListener(){
             @Override

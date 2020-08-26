@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_weight="1"
-            tools:srcCompat="@drawable/toocold" />
+            tools:srcCompat="@drawable/too_cold" />
 
         <TextView
             android:id="@+id/textView9"
