@@ -6,16 +6,30 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.wearweather.main.MainActivity;
+import com.wearweather.main.MainWeatherFragment;
+
 public class TemperatureClothingActivity8 extends AppCompatActivity {
     TextView tx9;
+    Button btnToHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature_clothing8);
+
+        btnToHome = (Button) findViewById(R.id.btnToHome);
+        btnToHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         LinearLayout layout1 = (LinearLayout) findViewById(R.id.layout1);
         tx9 = (TextView)findViewById(R.id.textView9);

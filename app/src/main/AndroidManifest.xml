@@ -13,6 +13,7 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         android:largeHeap="true">
+        <activity android:name=".FavoritesActivity"></activity>
         <activity android:name=".ClothesClickWebView"></activity>
         <activity android:name=".DustActivity" >
 

@@ -44,6 +44,7 @@ dependencies {
     implementation 'com.android.support:cardview-v7:30.0.0'
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.google.android.material:material:1.1.0-alpha10'
+    implementation 'com.naver.maps.open:naver-map-ncp-api:2.1.7'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
