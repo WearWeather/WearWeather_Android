@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wearweather.main.MainActivity;
+import com.wearweather.main.MainSearchActivity;
 
 import org.w3c.dom.Text;
 
@@ -45,7 +46,11 @@ public class SettingsActivity extends AppCompatActivity {
         address_find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(SettingsActivity.this);
+                Intent intent = new Intent(getApplicationContext(), MainSearchActivity.class);
+                startActivity(intent);
+
+
+                /*AlertDialog.Builder alertDialog = new AlertDialog.Builder(SettingsActivity.this);
                 alertDialog.setTitle("주소 변경하기");
                 alertDialog.setMessage("동/읍/면을 입력하세요");
 
@@ -84,7 +89,7 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                 });
                 alertDialog.create();
-                alertDialog.show();
+                alertDialog.show();*/
             }
         });
 

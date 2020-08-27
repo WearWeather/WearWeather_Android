@@ -155,7 +155,7 @@ public class MainWeatherFragment extends Fragment {
         current_humidity =(TextView)rootView.findViewById(R.id.humidity);
         current_sunrise =(TextView)rootView.findViewById(R.id.sunrise);
         current_sunset =(TextView)rootView.findViewById(R.id.sunset);
-        search_button = (ImageButton)rootView.findViewById(R.id.main_search_btn);
+//        search_button = (ImageButton)rootView.findViewById(R.id.main_search_btn);
 
         /* 날씨 보여주기 */
         displayWeather(rootView.getContext());
@@ -178,7 +178,7 @@ public class MainWeatherFragment extends Fragment {
             }
         });
 
-        search_button.setOnClickListener(new View.OnClickListener(){
+        /*search_button.setOnClickListener(new View.OnClickListener(){
             // When the button is pressed/clicked, it will run the code below
             @Override
             public void onClick(View v){
@@ -186,7 +186,7 @@ public class MainWeatherFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), MainSearchActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
         /* drawer layout */
         drawerLayout = (DrawerLayout)rootView.findViewById(R.id.main_drawer_layout);
@@ -579,24 +579,27 @@ public class MainWeatherFragment extends Fragment {
         find_future_weather(lat,lon);
 
         String address = getCurrentAddress(lat, lon);
-        PreferenceManager.setString(getContext(),"CITY",address);
-        Log.e("SEULGI",address);
+        if(address!=null){
+            PreferenceManager.setString(getContext(),"CITY",address);
+            Log.e("SEULGI",address);
 
-        int space_cnt=0,s_ind=0,e_ind=0;
-        for(int i = 0; i < address.length(); i++){
-            if(address.charAt(i) == ' '){
-                if(space_cnt==0)
-                    s_ind= i;
-                if(space_cnt==2)
-                    e_ind=i;
-                space_cnt++;
+            int space_cnt=0,s_ind=0,e_ind=0;
+            for(int i = 0; i < address.length(); i++){
+                if(address.charAt(i) == ' '){
+                    if(space_cnt==0)
+                        s_ind= i;
+                    if(space_cnt==2)
+                        e_ind=i;
+                    space_cnt++;
+                }
+                if(space_cnt==3)
+                    break;
             }
-            if(space_cnt==3)
-                break;
-        }
-        address = address.substring(s_ind,e_ind);
+            address = address.substring(s_ind,e_ind);
 
-        region.setText(address);
+            region.setText(address);
+
+        }
 
         //getKoreanAddressByPoint(lat,lon);
     }

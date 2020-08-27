@@ -18,8 +18,7 @@
         <activity android:name=".DustActivity" >
 
         </activity>
-        <activity android:name=".main.MainSearchActivity"
-            android:theme="@style/AppTheme.YesActionBar">
+        <activity android:name=".main.MainSearchActivity">
         </activity>
         <activity android:name=".SettingsActivity" /> <!-- <activity android:name=".main.MainActivity"></activity> -->
         <activity android:name=".TemperatureClothingActivity8" />
