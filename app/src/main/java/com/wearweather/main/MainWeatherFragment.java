@@ -121,6 +121,7 @@ public class MainWeatherFragment extends Fragment {
     private String dailyHigh;
     private String temp_f;
 
+    private String rain_1h;
     private String rain_3h;
     private String address_text;
     private String level1;
@@ -347,11 +348,22 @@ public class MainWeatherFragment extends Fragment {
                     //강우량
                     JSONObject weather= weather_object.getJSONObject(0);
                     String main = weather.getString("main");
-                    if(main.equals("Rain")){
+                    if(response.has("rain")){
                         JSONObject rain_object = response.getJSONObject("rain");
-                        rain_3h = rain_object.getString("3h");
-                        rain_3h = String.valueOf(Math.round(Double.valueOf(rain_3h)*10));
-                        current_rain.setText(rain_3h+getString(R.string.precipitation_unit));
+                        if(rain_object.has("1h")){
+                            rain_1h = rain_object.getString("3h");
+                            rain_1h = String.valueOf(Math.round(Double.valueOf(rain_1h)*10));
+                            current_rain.setText(rain_1h+getString(R.string.precipitation_unit));
+
+                        }
+                        else if(rain_object.has("3h")){
+                            rain_3h = rain_object.getString("3h");
+                            rain_3h = String.valueOf(Math.round(Double.valueOf(rain_3h)*10));
+                            current_rain.setText(rain_3h+getString(R.string.precipitation_unit));
+                        }
+                        else {
+                            current_rain.setText("0"+getString(R.string.precipitation_unit));
+                        }
                     }
                     else {
                         current_rain.setText("0"+getString(R.string.precipitation_unit));

@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             PreferenceManager.setFloat(this,"LONGITUDE",(float)longitude);
         }
 
+        PreferenceManager.setInt(this, "REGION_NUMBER",1);
 
         /* tab layout */
         tabLayout = (TabLayout) findViewById(R.id.main_tab_layout);

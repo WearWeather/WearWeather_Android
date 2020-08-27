@@ -132,14 +132,14 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        favorites = (FrameLayout)findViewById(R.id.settings_favorites);
+        /*favorites = (FrameLayout)findViewById(R.id.settings_favorites);
         favorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), FavoritesActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
     public String getCurrentAddress( double latitude, double longitude) {
