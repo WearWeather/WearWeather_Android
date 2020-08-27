@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         assert connectivityManager != null;
         if(!(connectivityManager.getActiveNetworkInfo()!=null && connectivityManager.getActiveNetworkInfo().isConnected() )){
             new AlertDialog.Builder(this)
-                    .setMessage("인터넷 연결이 필요합니다.")
+                    .setMessage("WearWeather를 실행하려면 인터넷 연결이 필요합니다.")
                     .setCancelable(false)
                     .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                         @Override
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                             finishAffinity();
                         }
                     }).show();
+            return;
         }
 
         /*GPS Tracker*/
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         double latitude = gpsTracker.getLatitude();
         double longitude = gpsTracker.getLongitude();
+        Log.e("SEULGI GPSTRACKER","lat:"+latitude+" lon:"+longitude);
 
         if(PreferenceManager.getFloat(this, "LATITUDE")==-1F){
             if(latitude!=0.0 && longitude!=0.0){

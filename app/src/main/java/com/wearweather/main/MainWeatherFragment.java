@@ -144,12 +144,10 @@ public class MainWeatherFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main_weather, container, false);
 
-
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("로딩중입니다..");
         progressDialog.setCancelable(true);
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
-        progressDialog.show();
 
         /* OpenWeatherMap API */
         region=(TextView)rootView.findViewById(R.id.region_text);
@@ -588,6 +586,8 @@ public class MainWeatherFragment extends Fragment {
     }
 
     public void displayWeather(Context context) {
+        progressDialog.show();
+
         float lat = PreferenceManager.getFloat(context,"LATITUDE");
         float lon = PreferenceManager.getFloat(context,"LONGITUDE");
 
