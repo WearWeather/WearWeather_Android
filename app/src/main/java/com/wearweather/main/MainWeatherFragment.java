@@ -3,6 +3,7 @@ package com.wearweather.main;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -130,6 +131,8 @@ public class MainWeatherFragment extends Fragment {
     private ArrayList<DailyItem> dailyItemList = new ArrayList<>();
     private String temp_extra;
 
+    private ProgressDialog progressDialog;
+
     private final Class [] clothingClasses = {
             TemperatureClothingActivity.class,TemperatureClothingActivity2.class, TemperatureClothingActivity3.class,
             TemperatureClothingActivity4.class, TemperatureClothingActivity5.class, TemperatureClothingActivity6.class,
@@ -140,6 +143,13 @@ public class MainWeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main_weather, container, false);
+
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("로딩중입니다..");
+        progressDialog.setCancelable(true);
+        progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
+        progressDialog.show();
 
         /* OpenWeatherMap API */
         region=(TextView)rootView.findViewById(R.id.region_text);
@@ -246,7 +256,6 @@ public class MainWeatherFragment extends Fragment {
                 return false;
             }
         });
-
 
         return rootView;
     }
@@ -432,7 +441,12 @@ public class MainWeatherFragment extends Fragment {
                         String icon = weather.getString("icon");
                         int resID = getResId("icon_"+icon, R.drawable.class);
 
-                        hourlyItemList.add(new HourlyItem(dt,resID,temp_f+getString(R.string.temperature_unit)));
+                        if(i==0){
+                            hourlyItemList.add(new HourlyItem("지금",resID,temp_f+getString(R.string.temperature_unit)));
+                        }
+                        else {
+                            hourlyItemList.add(new HourlyItem(dt,resID,temp_f+getString(R.string.temperature_unit)));
+                        }
                     }
 
                     for(int i=1; i<daily_object.length(); i++){
@@ -486,6 +500,8 @@ public class MainWeatherFragment extends Fragment {
                     recyclerView2.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
+                    progressDialog.dismiss();
+
                 }catch(JSONException e)
                 {
                     e.printStackTrace();
@@ -501,6 +517,7 @@ public class MainWeatherFragment extends Fragment {
 
         RequestQueue queue =  Volley.newRequestQueue(getActivity().getApplicationContext());
         queue.add(jor);
+
     }
 
     private void getKoreanAddressByPoint(double latitude, double longitude){
@@ -555,14 +572,14 @@ public class MainWeatherFragment extends Fragment {
                     7);
         } catch (IOException ioException) {
             //네트워크 문제
-            Toast.makeText(getContext(), "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
             return "지오코더 서비스 사용불가";
         } catch (IllegalArgumentException illegalArgumentException) {
-            Toast.makeText(getContext(), "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
             return "잘못된 GPS 좌표";
         }
         if (addresses == null || addresses.size() == 0) {
-            Toast.makeText(getContext(), "주소 미발견", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "주소 미발견", Toast.LENGTH_LONG).show();
             return "주소 미발견";
         }
 
@@ -573,6 +590,7 @@ public class MainWeatherFragment extends Fragment {
     public void displayWeather(Context context) {
         float lat = PreferenceManager.getFloat(context,"LATITUDE");
         float lon = PreferenceManager.getFloat(context,"LONGITUDE");
+
 
         find_weather(lat,lon);
         find_future_weather(lat,lon);

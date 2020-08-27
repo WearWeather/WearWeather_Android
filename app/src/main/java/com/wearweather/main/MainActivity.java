@@ -8,12 +8,17 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -46,6 +51,21 @@ public class MainActivity extends AppCompatActivity {
         /* Initiate Shared Preference */
         //initSharedPreference();
 
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        assert connectivityManager != null;
+        if(!(connectivityManager.getActiveNetworkInfo()!=null && connectivityManager.getActiveNetworkInfo().isConnected() )){
+            new AlertDialog.Builder(this)
+                    .setMessage("인터넷 연결이 필요합니다.")
+                    .setCancelable(false)
+                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finishAffinity();
+                        }
+                    }).show();
+        }
+
         /*GPS Tracker*/
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
@@ -58,10 +78,20 @@ public class MainActivity extends AppCompatActivity {
         double longitude = gpsTracker.getLongitude();
 
         if(PreferenceManager.getFloat(this, "LATITUDE")==-1F){
-            PreferenceManager.setFloat(this,"LATITUDE",(float)latitude);
+            if(latitude!=0.0 && longitude!=0.0){
+                PreferenceManager.setFloat(this,"LATITUDE",(float)latitude);
+            }
+            else {
+                PreferenceManager.setFloat(this,"LATITUDE",37.5172f);
+            }
         }
         if(PreferenceManager.getFloat(this, "LONGITUDE")==-1F){
-            PreferenceManager.setFloat(this,"LONGITUDE",(float)longitude);
+            if(latitude!=0.0 && longitude!=0.0){
+                PreferenceManager.setFloat(this,"LONGITUDE",(float)longitude);
+            }
+            else {
+                PreferenceManager.setFloat(this,"LONGITUDE",127.0473f);
+            }
         }
 
         PreferenceManager.setInt(this, "REGION_NUMBER",1);
@@ -102,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        //progressDialog.dismiss();
 
     }
 

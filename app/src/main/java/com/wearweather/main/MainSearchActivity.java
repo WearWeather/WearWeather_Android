@@ -103,7 +103,8 @@ public class MainSearchActivity extends AppCompatActivity {
         Geocoder mGeoCoder = new Geocoder(getApplicationContext());
         try {
             List<Address> location = null;
-            location = mGeoCoder.getFromLocationName(query,20);
+            location = mGeoCoder.getFromLocationName(query,10);
+            Log.e("SEULGI SEARCH SIZE",String.valueOf(location.size()));
 
             if(!location.isEmpty()){
                 for(int i=0;i<location.size();i++){
@@ -141,9 +142,23 @@ public class MainSearchActivity extends AppCompatActivity {
 
             String address = getCurrentAddress(lat,lon);
             Log.e("SEULGI SEARCH RESULT",address+" lat:"+lat+" lon:"+lon);
-            address = address.substring(address.indexOf(" "));
+            int first=-1, second=-1, third=-1;
+            first = address.indexOf(' ');
+            if(first!=-1){
+                second=address.indexOf(' ',first+1);
+                if(second!=-1){
+                    third=address.indexOf(' ',second+1);
+                }
+            }
+            if(first!=-1 && third!=-1){
+                address = address.substring(first,third);
+            }
+            else {
+                address=address.substring(0,address.length()-1);
+            }
 
-            holder.address.setText(address.substring(0,address.length()-1));
+            holder.address.setText(address);
+            Log.e("SEULGI SEARCH",""+address);
             holder.lat = lat;
             holder.lon = lon;
         }
