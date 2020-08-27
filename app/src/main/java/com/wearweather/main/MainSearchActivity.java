@@ -43,7 +43,7 @@ public class MainSearchActivity extends AppCompatActivity {
     private SearchView searchView;
     private RecyclerView recyclerView;
     private SearchResultAdapter adapter;
-    private ArrayList<String> addressList;
+    private ArrayList<Address> addressList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,33 +61,28 @@ public class MainSearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
                 adapter.setFilter(filter(query));
-//
-//
-//                Geocoder mGeoCoder = new Geocoder(getApplicationContext());
-//                try {
-//                    List<Address> location = null;
-//                    location = mGeoCoder.getFromLocationName(query,50);
-//
-//                    if(!location.isEmpty()){
-//                        addressList = new ArrayList<>();
-//
-//                        for(int i=0;i<location.size();i++){
-//                            double lat = location.get(0).getLatitude();
-//                            double lon = location.get(0).getLongitude();
-//
-//                            String address = getCurrentAddress(lat,lon);
-//                            Log.e("SEULGI SEARCH RESULT",address);
-//                            addressList.add(address);
-//                        }
-//                    }
-//                    else {
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
 
+                /*addressList = new ArrayList<>();
+                Geocoder mGeoCoder = new Geocoder(getApplicationContext());
+                try {
+                    List<Address> location = null;
+                    location = mGeoCoder.getFromLocationName(query,20);
+
+                    Log.e("SEULGI LOCATION SIZE",""+location.size());
+
+                    if(!location.isEmpty()){
+                        addressList.clear();
+                        for(int i=0;i<location.size();i++){
+                            addressList.add(location.get(i));
+                        }
+                    }
+                    else { }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                adapter.setFilter(addressList);
+                adapter.notifyDataSetChanged();*/
 
                 return true;
             }
@@ -95,33 +90,27 @@ public class MainSearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                return false;
+                adapter.setFilter(filter(newText));
+                return true;
             }
         });
 
     }
 
-    private ArrayList<String> filter(String query) {
-        final ArrayList<String> filteredList = new ArrayList<>();
+    private ArrayList<Address> filter(String query) {
+        final ArrayList<Address> filteredList = new ArrayList<>();
 
         Geocoder mGeoCoder = new Geocoder(getApplicationContext());
         try {
             List<Address> location = null;
-            location = mGeoCoder.getFromLocationName(query,50);
+            location = mGeoCoder.getFromLocationName(query,20);
 
             if(!location.isEmpty()){
                 for(int i=0;i<location.size();i++){
-                    double lat = location.get(0).getLatitude();
-                    double lon = location.get(0).getLongitude();
-
-                    String address = getCurrentAddress(lat,lon);
-                    Log.e("SEULGI SEARCH RESULT",address);
-
-                    filteredList.add(address);
+                    filteredList.add(location.get(i));
                 }
             }
-            else {
-            }
+            else { }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -130,25 +119,33 @@ public class MainSearchActivity extends AppCompatActivity {
     }
 
     private class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder>{
-        ArrayList<String> mlist;
+        ArrayList<Address> mlist;
 
-        SearchResultAdapter(ArrayList<String> list){
+        SearchResultAdapter(ArrayList<Address> list){
             mlist = list;
         }
 
         @NonNull
         @Override
         public SearchResultAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cities, parent,false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search_result, parent,false);
 
             return new SearchResultAdapter.ViewHolder(v);
         }
 
         @Override
         public void onBindViewHolder(@NonNull SearchResultAdapter.ViewHolder holder, int position) {
-            String item = mlist.get(position);
+            Address item = mlist.get(position);
+            double lat = item.getLatitude();
+            double lon = item.getLongitude();
 
-            holder.address.setText(item);
+            String address = getCurrentAddress(lat,lon);
+            Log.e("SEULGI SEARCH RESULT",address+" lat:"+lat+" lon:"+lon);
+            address = address.substring(address.indexOf(" "));
+
+            holder.address.setText(address.substring(0,address.length()-1));
+            holder.lat = lat;
+            holder.lon = lon;
         }
 
         @Override
@@ -158,16 +155,34 @@ public class MainSearchActivity extends AppCompatActivity {
 
         private class ViewHolder extends RecyclerView.ViewHolder{
             TextView address;
-            TextView address_detail;
+            double lat;
+            double lon;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
 
                 address =(TextView) itemView.findViewById(R.id.address);
-                address_detail =(TextView) itemView.findViewById(R.id.address_detail);
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        PreferenceManager.setFloat(getApplicationContext(),"LATITUDE",(float)lat);
+                        PreferenceManager.setFloat(getApplicationContext(),"LONGITUDE",(float)lon);
+                        PreferenceManager.setBoolean(getApplicationContext(),"IS_ADDRESS_CHANGED",true);
+                        PreferenceManager.setString(getApplicationContext(),"CITY",(String)address.getText());
+
+
+                        Toast.makeText(getApplicationContext(), "주소가 "+address.getText()+"로 설정되었습니다",Toast.LENGTH_SHORT).show();
+
+                        finish();
+                    }
+                });
+            }
+            void setList(ArrayList<Address> mlist){
+                mlist = mlist;
             }
         }
-        public void setFilter(ArrayList<String> items) {
+        public void setFilter(ArrayList<Address> items) {
             mlist.clear();
             mlist.addAll(items);
             notifyDataSetChanged();

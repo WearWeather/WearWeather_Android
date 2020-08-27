@@ -346,12 +346,10 @@ public class MainWeatherFragment extends Fragment {
                     current_sunset.setText(sunset);
 
                     //강우량
-                    JSONObject weather= weather_object.getJSONObject(0);
-                    String main = weather.getString("main");
                     if(response.has("rain")){
                         JSONObject rain_object = response.getJSONObject("rain");
                         if(rain_object.has("1h")){
-                            rain_1h = rain_object.getString("3h");
+                            rain_1h = rain_object.getString("1h");
                             rain_1h = String.valueOf(Math.round(Double.valueOf(rain_1h)*10));
                             current_rain.setText(rain_1h+getString(R.string.precipitation_unit));
 
@@ -369,6 +367,7 @@ public class MainWeatherFragment extends Fragment {
                         current_rain.setText("0"+getString(R.string.precipitation_unit));
                     }
 
+                    JSONObject weather= weather_object.getJSONObject(0);
                     String description = weather.getString("description");
                     current_desc.setText(description);
 

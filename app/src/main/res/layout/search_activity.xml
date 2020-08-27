@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         app:iconifiedByDefault="false"
-        app:queryHint="주소를 입력하세요" />
+        app:queryHint="시/군/구를 입력하세요" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_recyclerview"
