@@ -46,6 +46,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -141,6 +142,7 @@ public class NewsXMLActivity extends AppCompatActivity {
                             if(tagName.equals("item")){
                                 item = new NewsData();
                             }else if(tagName.equals("title")){ // xml 파일의 제목 부분 파싱
+//                                Log.e("YUBIN NEWS Title", tagName);
                                 xpp.next();
                                 if(item != null) item.setTitle(xpp.getText());
                             }else if(tagName.equals("link")){ // xml 파일의 링크 부분 파싱
@@ -148,6 +150,7 @@ public class NewsXMLActivity extends AppCompatActivity {
                                 if(item != null) item.setLink(xpp.getText());
                             }else if(tagName.equals("pubDate")){ // xml 파일의 업데이트 날짜 부분 파싱
                                 xpp.next();
+//                                Log.e("YUBIN NEWS DATE", tagName);
                                 if(item != null) item.setPubDate(xpp.getText());
                             }else if(tagName.equals("description")){ // xml 파일의 설명 부분 파싱
                                 xpp.next();
