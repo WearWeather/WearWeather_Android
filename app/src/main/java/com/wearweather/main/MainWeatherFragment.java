@@ -255,6 +255,7 @@ public class MainWeatherFragment extends Fragment {
             }
         });
 
+
         return rootView;
     }
 

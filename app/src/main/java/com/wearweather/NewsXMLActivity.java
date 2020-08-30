@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -44,6 +45,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -58,7 +60,10 @@ public class NewsXMLActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<NewsData> myDataset = new ArrayList<>();
     private ForecastAdapter adapter;
-
+    private TextView dateDisplay;
+    private Calendar calendar;
+    private SimpleDateFormat date_format;
+    private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +71,13 @@ public class NewsXMLActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         swipeToRefreshNews = (SwipeRefreshLayout) findViewById(R.id.swipeToRefreshNews);
+        dateDisplay = (TextView) findViewById(R.id.news_date);
         setBackgroundByTime();
+
+        calendar = Calendar.getInstance();
+        date_format = new SimpleDateFormat("M"+"월 "+"d" +"일");
+        date = date_format.format(calendar.getTime());
+        dateDisplay.setText(date);
 
         swipeToRefreshNews.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
