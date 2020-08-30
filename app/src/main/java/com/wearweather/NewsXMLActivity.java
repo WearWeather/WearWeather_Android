@@ -12,10 +12,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.renderscript.ScriptGroup;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.wearweather.main.MainActivity;
+import com.wearweather.main.MainWeatherFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,7 +68,7 @@ public class NewsXMLActivity extends AppCompatActivity {
     private Calendar calendar;
     private SimpleDateFormat date_format;
     private String date;
-
+    private ImageView newsButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,10 +78,20 @@ public class NewsXMLActivity extends AppCompatActivity {
         dateDisplay = (TextView) findViewById(R.id.news_date);
         setBackgroundByTime();
 
+        //date
         calendar = Calendar.getInstance();
         date_format = new SimpleDateFormat("M"+"월 "+"d" +"일");
         date = date_format.format(calendar.getTime());
         dateDisplay.setText(date);
+
+        //back button
+        newsButton = (ImageView)findViewById(R.id.news_back);
+        newsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         swipeToRefreshNews.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

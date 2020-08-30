@@ -14,12 +14,19 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="vertical">
+            <ImageView
+                android:id="@+id/news_back"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="13dp"
+                android:src="@drawable/undo" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:layout_marginTop="40dp"
                 android:layout_marginBottom="20dp">
 
 
