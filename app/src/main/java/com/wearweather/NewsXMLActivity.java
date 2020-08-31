@@ -12,11 +12,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.renderscript.ScriptGroup;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -25,6 +28,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.wearweather.main.MainActivity;
+import com.wearweather.main.MainWeatherFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,8 +47,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -55,14 +64,45 @@ public class NewsXMLActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<NewsData> myDataset = new ArrayList<>();
     private ForecastAdapter adapter;
-
+    private TextView dateDisplay;
+    private Calendar calendar;
+    private SimpleDateFormat date_format;
+    private String date;
+    private ImageView newsButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         swipeToRefreshNews = (SwipeRefreshLayout) findViewById(R.id.swipeToRefreshNews);
+        dateDisplay = (TextView) findViewById(R.id.news_date);
+        setBackgroundByTime();
 
+        //date
+        calendar = Calendar.getInstance();
+        date_format = new SimpleDateFormat("M"+"월 "+"d" +"일");
+        date = date_format.format(calendar.getTime());
+        dateDisplay.setText(date);
+
+        //back button
+        newsButton = (ImageView)findViewById(R.id.news_back);
+        newsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        swipeToRefreshNews.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                /* 새로고침 시 수행될 코드 */
+                setBackgroundByTime();
+
+                /* 새로고침 완료 */
+                swipeToRefreshNews.setRefreshing(false);
+            }
+        });
         recyclerView.setHasFixedSize(true);
 
         adapter = new ForecastAdapter(myDataset, this);
@@ -127,6 +167,7 @@ public class NewsXMLActivity extends AppCompatActivity {
                             if(tagName.equals("item")){
                                 item = new NewsData();
                             }else if(tagName.equals("title")){ // xml 파일의 제목 부분 파싱
+//                                Log.e("YUBIN NEWS Title", tagName);
                                 xpp.next();
                                 if(item != null) item.setTitle(xpp.getText());
                             }else if(tagName.equals("link")){ // xml 파일의 링크 부분 파싱
@@ -134,6 +175,7 @@ public class NewsXMLActivity extends AppCompatActivity {
                                 if(item != null) item.setLink(xpp.getText());
                             }else if(tagName.equals("pubDate")){ // xml 파일의 업데이트 날짜 부분 파싱
                                 xpp.next();
+//                                Log.e("YUBIN NEWS DATE", tagName);
                                 if(item != null) item.setPubDate(xpp.getText());
                             }else if(tagName.equals("description")){ // xml 파일의 설명 부분 파싱
                                 xpp.next();
@@ -180,6 +222,30 @@ public class NewsXMLActivity extends AppCompatActivity {
             //adapter.notifyDataSetChanged(); // 리사이클러 뷰의 아이템의 변경 여부를 어댑터에게 전달
 
             //Toast.makeText(NewsXMLActivity.this, s + myDataset.size(), Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void setBackgroundByTime() {
+        long currentTimeMillis = System.currentTimeMillis();
+        Date date = new Date(currentTimeMillis);
+        SimpleDateFormat sdfHour = new SimpleDateFormat("HH");
+        SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String hourText = sdfHour.format(date);
+
+        String nowText = sdfNow.format(date);
+        //dateNow.setText(nowText);
+
+        int time = Integer.parseInt(hourText);
+        if(time >= 0 && time < 6){
+            swipeToRefreshNews.setBackgroundResource(R.drawable.sunny_night_background);
+        }
+        else if(time >= 6 && time < 15){
+            swipeToRefreshNews.setBackgroundResource(R.drawable.sunny_afternoon_background);
+        }
+        else if(time >= 15 && time < 20){
+            swipeToRefreshNews.setBackgroundResource(R.drawable.sunny_sunset_background);
+        }
+        else if(time >= 20 && time < 24){
+            swipeToRefreshNews.setBackgroundResource(R.drawable.sunny_night_background);
         }
     }
 }

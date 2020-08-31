@@ -48,7 +48,7 @@
                         android:textColor="@color/colorWhite"
                         android:textSize="18sp" />-->
 
-<!--                    <ImageButton
+                        <!--<ImageButton
                         android:id="@+id/main_search_btn"
                         android:layout_width="25dp"
                         android:layout_height="25dp"

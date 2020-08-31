@@ -3,6 +3,7 @@ package com.wearweather.main;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -116,11 +117,12 @@ public class MainWeatherFragment extends Fragment {
     private String bodily_temperature;
 
     private String Daily_image;
-    private ImageView i_daily;
+    private ImageButton search_button;
     private String dailyLow;
     private String dailyHigh;
     private String temp_f;
 
+    private String rain_1h;
     private String rain_3h;
     private String address_text;
     private String level1;
@@ -128,6 +130,8 @@ public class MainWeatherFragment extends Fragment {
     private ArrayList<HourlyItem> hourlyItemList = new ArrayList<>();
     private ArrayList<DailyItem> dailyItemList = new ArrayList<>();
     private String temp_extra;
+
+    private ProgressDialog progressDialog;
 
     private final Class [] clothingClasses = {
             TemperatureClothingActivity.class,TemperatureClothingActivity2.class, TemperatureClothingActivity3.class,
@@ -139,6 +143,11 @@ public class MainWeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main_weather, container, false);
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("로딩중입니다..");
+        progressDialog.setCancelable(true);
+        progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
 
         /* OpenWeatherMap API */
         region=(TextView)rootView.findViewById(R.id.region_text);
@@ -154,8 +163,7 @@ public class MainWeatherFragment extends Fragment {
         current_humidity =(TextView)rootView.findViewById(R.id.humidity);
         current_sunrise =(TextView)rootView.findViewById(R.id.sunrise);
         current_sunset =(TextView)rootView.findViewById(R.id.sunset);
-        i_daily = (ImageView)rootView.findViewById(R.id.daily_image);
-
+//        search_button = (ImageButton)rootView.findViewById(R.id.main_search_btn);
 
         /* 날씨 보여주기 */
         displayWeather(rootView.getContext());
@@ -178,6 +186,15 @@ public class MainWeatherFragment extends Fragment {
             }
         });
 
+        /*search_button.setOnClickListener(new View.OnClickListener(){
+            // When the button is pressed/clicked, it will run the code below
+            @Override
+            public void onClick(View v){
+                // Intent is what you use to start another activity
+                Intent intent = new Intent(getActivity(), MainSearchActivity.class);
+                startActivity(intent);
+            }
+        });*/
 
         /* drawer layout */
         drawerLayout = (DrawerLayout)rootView.findViewById(R.id.main_drawer_layout);
@@ -266,16 +283,13 @@ public class MainWeatherFragment extends Fragment {
         if(time >= 0 && time < 6){
             swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_night_background);
         }
-        else if(time >= 6 && time < 12){
-            swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_morning_background);
-        }
-        else if(time >= 12 && time < 18){
+        else if(time >= 6 && time < 15){
             swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_afternoon_background);
         }
-        else if(time >= 18 && time < 20){
+        else if(time >= 15 && time < 20){
             swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_sunset_background);
         }
-        else if(time >= 18 && time < 24){
+        else if(time >= 20 && time < 24){
             swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_night_background);
         }
     }
@@ -340,18 +354,28 @@ public class MainWeatherFragment extends Fragment {
                     current_sunset.setText(sunset);
 
                     //강우량
-                    JSONObject weather= weather_object.getJSONObject(0);
-                    String main = weather.getString("main");
-                    if(main.equals("Rain")){
+                    if(response.has("rain")){
                         JSONObject rain_object = response.getJSONObject("rain");
-                        rain_3h = rain_object.getString("3h");
-                        rain_3h = String.valueOf(Math.round(Double.valueOf(rain_3h)*10));
-                        current_rain.setText(rain_3h+getString(R.string.precipitation_unit));
+                        if(rain_object.has("1h")){
+                            rain_1h = rain_object.getString("1h");
+                            rain_1h = String.valueOf(Math.round(Double.valueOf(rain_1h)*10));
+                            current_rain.setText(rain_1h+getString(R.string.precipitation_unit));
+
+                        }
+                        else if(rain_object.has("3h")){
+                            rain_3h = rain_object.getString("3h");
+                            rain_3h = String.valueOf(Math.round(Double.valueOf(rain_3h)*10));
+                            current_rain.setText(rain_3h+getString(R.string.precipitation_unit));
+                        }
+                        else {
+                            current_rain.setText("0"+getString(R.string.precipitation_unit));
+                        }
                     }
                     else {
                         current_rain.setText("0"+getString(R.string.precipitation_unit));
                     }
 
+                    JSONObject weather= weather_object.getJSONObject(0);
                     String description = weather.getString("description");
                     current_desc.setText(description);
 
@@ -416,7 +440,12 @@ public class MainWeatherFragment extends Fragment {
                         String icon = weather.getString("icon");
                         int resID = getResId("icon_"+icon, R.drawable.class);
 
-                        hourlyItemList.add(new HourlyItem(dt,resID,temp_f+getString(R.string.temperature_unit)));
+                        if(i==0){
+                            hourlyItemList.add(new HourlyItem("지금",resID,temp_f+getString(R.string.temperature_unit)));
+                        }
+                        else {
+                            hourlyItemList.add(new HourlyItem(dt,resID,temp_f+getString(R.string.temperature_unit)));
+                        }
                     }
 
                     for(int i=1; i<daily_object.length(); i++){
@@ -470,6 +499,8 @@ public class MainWeatherFragment extends Fragment {
                     recyclerView2.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
+                    progressDialog.dismiss();
+
                 }catch(JSONException e)
                 {
                     e.printStackTrace();
@@ -485,6 +516,7 @@ public class MainWeatherFragment extends Fragment {
 
         RequestQueue queue =  Volley.newRequestQueue(getActivity().getApplicationContext());
         queue.add(jor);
+
     }
 
     private void getKoreanAddressByPoint(double latitude, double longitude){
@@ -539,14 +571,14 @@ public class MainWeatherFragment extends Fragment {
                     7);
         } catch (IOException ioException) {
             //네트워크 문제
-            Toast.makeText(getContext(), "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
             return "지오코더 서비스 사용불가";
         } catch (IllegalArgumentException illegalArgumentException) {
-            Toast.makeText(getContext(), "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
             return "잘못된 GPS 좌표";
         }
         if (addresses == null || addresses.size() == 0) {
-            Toast.makeText(getContext(), "주소 미발견", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "주소 미발견", Toast.LENGTH_LONG).show();
             return "주소 미발견";
         }
 
@@ -555,31 +587,37 @@ public class MainWeatherFragment extends Fragment {
     }
 
     public void displayWeather(Context context) {
+        progressDialog.show();
+
         float lat = PreferenceManager.getFloat(context,"LATITUDE");
         float lon = PreferenceManager.getFloat(context,"LONGITUDE");
+
 
         find_weather(lat,lon);
         find_future_weather(lat,lon);
 
         String address = getCurrentAddress(lat, lon);
-        PreferenceManager.setString(getContext(),"CITY",address);
-        Log.e("SEULGI",address);
+        if(address!=null){
+            PreferenceManager.setString(getContext(),"CITY",address);
+            Log.e("SEULGI",address);
 
-        int space_cnt=0,s_ind=0,e_ind=0;
-        for(int i = 0; i < address.length(); i++){
-            if(address.charAt(i) == ' '){
-                if(space_cnt==0)
-                    s_ind= i;
-                if(space_cnt==2)
-                    e_ind=i;
-                space_cnt++;
+            int space_cnt=0,s_ind=0,e_ind=0;
+            for(int i = 0; i < address.length(); i++){
+                if(address.charAt(i) == ' '){
+                    if(space_cnt==0)
+                        s_ind= i;
+                    if(space_cnt==2)
+                        e_ind=i;
+                    space_cnt++;
+                }
+                if(space_cnt==3)
+                    break;
             }
-            if(space_cnt==3)
-                break;
-        }
-        address = address.substring(s_ind,e_ind);
+            address = address.substring(s_ind,e_ind);
 
-        region.setText(address);
+            region.setText(address);
+
+        }
 
         //getKoreanAddressByPoint(lat,lon);
     }

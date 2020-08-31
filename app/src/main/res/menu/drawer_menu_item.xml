@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    >
     <group>
         <item
             android:id="@+id/nav_dust"
             android:icon="@drawable/dust"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:title="@string/fine_dust"/>
-
+            android:title="@string/fine_dust"
+            
+            />
         <item
             android:id="@+id/nav_clothing"
             android:icon="@drawable/outfit"
