@@ -238,8 +238,8 @@ public class MainWeatherFragment extends Fragment {
                     case R.id.nav_clothing:
                         startActivity(new Intent(rootView.getContext(), clothingClasses[index])
                         .putExtra("temperature",temp_extra)
-                        .putExtra("city",level1+" "+level2));
-                        Log.e("SEULGI INTENT",temp_extra);
+                        .putExtra("city",PreferenceManager.getString(rootView.getContext(),"CITY")));
+                        Log.e("SEULGI INTENT",PreferenceManager.getString(rootView.getContext(),"CITY"));
                         break;
                     case R.id.nav_news:
                         startActivity(new Intent(rootView.getContext(), NewsXMLActivity.class));
@@ -598,7 +598,6 @@ public class MainWeatherFragment extends Fragment {
 
         String address = getCurrentAddress(lat, lon);
         if(address!=null){
-            PreferenceManager.setString(getContext(),"CITY",address);
             Log.e("SEULGI",address);
 
             int space_cnt=0,s_ind=0,e_ind=0;
@@ -614,6 +613,7 @@ public class MainWeatherFragment extends Fragment {
                     break;
             }
             address = address.substring(s_ind,e_ind);
+            PreferenceManager.setString(getContext(),"CITY",address);
 
             region.setText(address);
 

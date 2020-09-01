@@ -84,14 +84,14 @@ public class MainSearchActivity extends AppCompatActivity {
                 adapter.setFilter(addressList);
                 adapter.notifyDataSetChanged();*/
 
-                return true;
+                return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                adapter.setFilter(filter(newText));
-                return true;
+                //adapter.setFilter(filter(newText));
+                return false;
             }
         });
 
