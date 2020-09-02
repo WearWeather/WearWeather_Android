@@ -126,7 +126,7 @@ public class DustActivity extends AppCompatActivity {
             else if (value > 35 && value <= 75) pm25Grade.setText("나쁨");
             else pm25Grade.setText("매우나쁨");
         } //초미세먼지
-    }
+    } //초미세먼지
 
     private void setO3(String s) {
 
@@ -139,7 +139,7 @@ public class DustActivity extends AppCompatActivity {
             else if (value > 0.090 && value <= 0.150) o3Grade.setText("나쁨");
             else o3Grade.setText("매우나쁨");
         } //오존
-    }
+    } //오존
 
     private void setCo(String s) {
         coValue.setText(s);
