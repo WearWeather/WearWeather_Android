@@ -72,14 +72,21 @@ public class DustActivity extends AppCompatActivity {
         city = intent.getStringExtra("city");
         Log.e("SEULGI DUST CHECK",city);
         tvLocation.setText(city);
-        city = city.substring(0, 2);
+
+        if(city.substring(0,3).equals("전라북")) city = "전북";
+        else if(city.substring(0,3).equals("전라남")) city = "전남";
+        else if(city.substring(0,3).equals("경상북")) city = "경북";
+        else if(city.substring(0,3).equals("경상남")) city = "경남";
+        else if(city.substring(0,3).equals("충청북")) city = "충북";
+        else if(city.substring(0,3).equals("충청남")) city = "충남";
+        else city = city.substring(0, 2);
         Log.e("SEULGI DUST CHECK",city);
 
         if (!city.equals("서울") && !city.equals("부산") && !city.equals("대구") && !city.equals("인천") &&
                 !city.equals("광주") && !city.equals("대전") && !city.equals("울산") && !city.equals("경기") &&
                 !city.equals("강원") && !city.equals("충북") && !city.equals("충남") && !city.equals("전북") &&
                 !city.equals("전남") && !city.equals("경북") && !city.equals("경남") && !city.equals("제주") &&
-                !city.equals("세종")&& !city.equals("경상")&& !city.equals("충청")&& !city.equals("전라")) {
+                !city.equals("세종")) {
             tvLocation.setText("서울시 중구");
             city = "서울";
             Toast.makeText(getApplicationContext(), "위치를 찾을 수 없음: set default:서울시", Toast.LENGTH_LONG).show();
