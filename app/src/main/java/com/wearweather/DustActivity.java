@@ -25,6 +25,7 @@ public class DustActivity extends AppCompatActivity {
     CircleProgressBar pm10ProgressBar;
     TextView tvLocation, tvDate, pm10Grade, pm25Value, pm25Grade, o3Value, o3Grade, coValue, coGrade;
 
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +34,21 @@ public class DustActivity extends AppCompatActivity {
 
         /*****현재 위치 설정*****/
         tvLocation = (TextView) findViewById(R.id.tvLocation);
-        setCity();
+        Intent intent = getIntent();
+        city = intent.getStringExtra("city");
+        tvLocation.setText(city);
+        city = city.substring(1, 3);
 
+        if (!city.equals("서울") && !city.equals("부산") && !city.equals("대구") && !city.equals("인천") &&
+                !city.equals("광주") && !city.equals("대전") && !city.equals("울산") && !city.equals("경기") &&
+                !city.equals("강원") && !city.equals("충북") && !city.equals("충남") && !city.equals("전북") &&
+                !city.equals("전남") && !city.equals("경북") && !city.equals("경남") && !city.equals("제주") &&
+                !city.equals("세종")) {
+            tvLocation.setText("서울시 중구");
+            city = "서울";
+
+            Toast.makeText(getApplicationContext(), "위치를 찾을 수 없음: set default:서울시", Toast.LENGTH_LONG).show();
+        }
 
         /*****배경이미지 설정****/
         layout = findViewById(R.id.layout);
@@ -54,7 +68,7 @@ public class DustActivity extends AppCompatActivity {
         coGrade = (TextView) findViewById(R.id.coGrade);
 
         try {
-            setAtmosphere(city);
+            setAtmosphere("서울");
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -63,28 +77,14 @@ public class DustActivity extends AppCompatActivity {
 
         /***** PROGRESSBAR displaying the concentration of fine dust *****/
         pm10ProgressBar = new CircleProgressBar(DustActivity.this);
+
     }
 
-    private void setCity() {
-        Intent intent = getIntent();
-        city = intent.getStringExtra("city");
-        tvLocation.setText(city);
-        city=city.substring(1, 3);
-        if (!city.equals("서울") && !city.equals("부산") && !city.equals("대구") && !city.equals("인천") &&
-                !city.equals("광주") && !city.equals("대전") && !city.equals("울산") && !city.equals("경기") &&
-                !city.equals("강원") && !city.equals("충북") && !city.equals("충남") && !city.equals("전북") &&
-                !city.equals("전남") && !city.equals("경북") && !city.equals("경남") && !city.equals("제주") &&
-                !city.equals("세종")) {
-            tvLocation.setText("서울시 중구");
-            city = "서울";
-            Toast.makeText(getApplicationContext(),"위치를 찾을 수 없음: set default:서울시 중구",Toast.LENGTH_LONG).show();
-        }
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setAtmosphere(String address) throws ExecutionException, InterruptedException {
         /*XML Parsing*/
-        String url = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=xhl67Y2J0Pgav3Pia7oYbh%2BBzg1EclA%2BOq4I%2BssvNRp8vFt55cRnMgSnD9t601fwh7QfbpU61dVcnr9RX5Jw6A%3D%3D&numOfRows=10&pageNo=1&sidoName=%EC%84%9C%EC%9A%B8&ver=1.3&";
+        String url = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=xhl67Y2J0Pgav3Pia7oYbh%2BBzg1EclA%2BOq4I%2BssvNRp8vFt55cRnMgSnD9t601fwh7QfbpU61dVcnr9RX5Jw6A%3D%3D&numOfRows=10&sidoName=%EC%84%9C%EC%9A%B8&ver=1.3&";
         String resultText = null;
         resultText = new XMLParsingTask(DustActivity.this, url).execute().get();
         String[] array = resultText.split("_");
@@ -96,36 +96,47 @@ public class DustActivity extends AppCompatActivity {
     }
 
     private void setPm10(String s) {
-        value = Integer.parseInt(s);
-        if (value >= 0 && value <= 30) {
-            pm10Grade.setText("좋음");
-        } else if (value > 30 && value <= 80) {
-            pm10Grade.setText("보통");
-        } else if (value > 80 && value <= 150) {
-            pm10Grade.setText("나쁨");
+        if (s.equals("-")) {
+            pm10Grade.setText("-");
         } else {
-            pm10Grade.setText("매우나쁨");
+            value = Integer.parseInt(s);
+            if (value >= 0 && value <= 30) {
+                pm10Grade.setText("좋음");
+            } else if (value > 30 && value <= 80) {
+                pm10Grade.setText("보통");
+            } else if (value > 80 && value <= 150) {
+                pm10Grade.setText("나쁨");
+            } else {
+                pm10Grade.setText("매우나쁨");
+            }
         }
-
     } //미세먼지
 
     private void setPm25(String s) {
         pm25Value.setText(s);
-        double value = Double.parseDouble(s);
-        if (value >= 0 && value <= 15) pm25Grade.setText("좋음");
-        else if (value > 15 && value <= 35) pm25Grade.setText("보통");
-        else if (value > 35 && value <= 75) pm25Grade.setText("나쁨");
-        else pm25Grade.setText("매우나쁨");
-    } //초미세먼지
+        if (s.equals("-")) {
+            pm25Grade.setText(s);
+        } else {
+            double value = Double.parseDouble(s);
+            if (value >= 0 && value <= 15) pm25Grade.setText("좋음");
+            else if (value > 15 && value <= 35) pm25Grade.setText("보통");
+            else if (value > 35 && value <= 75) pm25Grade.setText("나쁨");
+            else pm25Grade.setText("매우나쁨");
+        } //초미세먼지
+    }
 
     private void setO3(String s) {
+
         o3Value.setText(s);
-        double value = Double.parseDouble(s);
-        if (value >= 0 && value <= 0.030) o3Grade.setText("좋음");
-        else if (value > 0.030 && value <= 0.090) o3Grade.setText("보통");
-        else if (value > 0.090 && value <= 0.150) o3Grade.setText("나쁨");
-        else o3Grade.setText("매우나쁨");
-    } //오존
+        if (s.equals("-")) o3Grade.setText(s);
+        else {
+            double value = Double.parseDouble(s);
+            if (value >= 0 && value <= 0.030) o3Grade.setText("좋음");
+            else if (value > 0.030 && value <= 0.090) o3Grade.setText("보통");
+            else if (value > 0.090 && value <= 0.150) o3Grade.setText("나쁨");
+            else o3Grade.setText("매우나쁨");
+        } //오존
+    }
 
     private void setCo(String s) {
         coValue.setText(s);
