@@ -4,6 +4,7 @@ package com.wearweather;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +55,7 @@ public class DustActivity extends AppCompatActivity {
         coGrade = (TextView) findViewById(R.id.coGrade);
 
         try {
-            setAtmosphere("서울");
+            setAtmosphere(city);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -69,14 +70,16 @@ public class DustActivity extends AppCompatActivity {
     private void setLocation() {
         Intent intent = getIntent();
         city = intent.getStringExtra("city");
+        Log.e("SEULGI DUST CHECK",city);
         tvLocation.setText(city);
-        city = city.substring(1, 3);
+        city = city.substring(0, 2);
+        Log.e("SEULGI DUST CHECK",city);
 
         if (!city.equals("서울") && !city.equals("부산") && !city.equals("대구") && !city.equals("인천") &&
                 !city.equals("광주") && !city.equals("대전") && !city.equals("울산") && !city.equals("경기") &&
                 !city.equals("강원") && !city.equals("충북") && !city.equals("충남") && !city.equals("전북") &&
                 !city.equals("전남") && !city.equals("경북") && !city.equals("경남") && !city.equals("제주") &&
-                !city.equals("세종")) {
+                !city.equals("세종")&& !city.equals("경상")&& !city.equals("충청")&& !city.equals("전라")) {
             tvLocation.setText("서울시 중구");
             city = "서울";
             Toast.makeText(getApplicationContext(), "위치를 찾을 수 없음: set default:서울시", Toast.LENGTH_LONG).show();
@@ -87,7 +90,7 @@ public class DustActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setAtmosphere(String address) throws ExecutionException, InterruptedException {
         /*XML Parsing*/
-        String url = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=xhl67Y2J0Pgav3Pia7oYbh%2BBzg1EclA%2BOq4I%2BssvNRp8vFt55cRnMgSnD9t601fwh7QfbpU61dVcnr9RX5Jw6A%3D%3D&numOfRows=10&sidoName=%EC%84%9C%EC%9A%B8&ver=1.3&";
+        String url = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=xhl67Y2J0Pgav3Pia7oYbh%2BBzg1EclA%2BOq4I%2BssvNRp8vFt55cRnMgSnD9t601fwh7QfbpU61dVcnr9RX5Jw6A%3D%3D&numOfRows=10&sidoName="+city+"&ver=1.3&";
         String resultText = null;
         resultText = new XMLParsingTask(DustActivity.this, url).execute().get();
         String[] array = resultText.split("_");

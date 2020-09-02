@@ -121,11 +121,12 @@ public class SettingsActivity extends AppCompatActivity {
                     if(space_cnt==3)
                         break;
                 }
-                address = address.substring(s_ind,e_ind);
+                address = address.substring(s_ind+1,e_ind);
 
                 Toast.makeText(SettingsActivity.this, "주소가 "+address+"로 설정되었습니다",Toast.LENGTH_SHORT).show();
 
                 PreferenceManager.setBoolean(SettingsActivity.this,"IS_ADDRESS_CHANGED",true);
+                PreferenceManager.setString(getApplicationContext(),"CITY",address);
             }
         });
 

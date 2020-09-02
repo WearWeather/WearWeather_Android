@@ -234,6 +234,7 @@ public class MainWeatherFragment extends Fragment {
                     case R.id.nav_dust:
                         startActivity(new Intent(rootView.getContext(), DustActivity.class)
                         .putExtra("city",PreferenceManager.getString(rootView.getContext(),"CITY")));
+                        Log.e("SEULGI INTENT",PreferenceManager.getString(rootView.getContext(),"CITY"));
                         break;
                     case R.id.nav_clothing:
                         startActivity(new Intent(rootView.getContext(), clothingClasses[index])
@@ -557,33 +558,21 @@ public class MainWeatherFragment extends Fragment {
     }
 
     public String getCurrentAddress( double latitude, double longitude) {
-
-        //지오코더... GPS를 주소로 변환
         Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-
         List<Address> addresses;
-
         try {
-
-            addresses = geocoder.getFromLocation(
-                    latitude,
-                    longitude,
-                    7);
+            addresses = geocoder.getFromLocation(latitude,longitude,1);
         } catch (IOException ioException) {
-            //네트워크 문제
-            //Toast.makeText(getContext(), "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
-            return "지오코더 서비스 사용불가";
+            return null;
         } catch (IllegalArgumentException illegalArgumentException) {
-            //Toast.makeText(getContext(), "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
-            return "잘못된 GPS 좌표";
+            return null;
         }
         if (addresses == null || addresses.size() == 0) {
-            //Toast.makeText(getContext(), "주소 미발견", Toast.LENGTH_LONG).show();
-            return "주소 미발견";
+            return null;
         }
 
         Address address = addresses.get(0);
-        return address.getAddressLine(0).toString()+"\n";
+        return address.getAddressLine(0);
     }
 
     public void displayWeather(Context context) {
@@ -598,7 +587,7 @@ public class MainWeatherFragment extends Fragment {
 
         String address = getCurrentAddress(lat, lon);
         if(address!=null){
-            Log.e("SEULGI",address);
+            /*Log.e("SEULGI",address);
 
             int space_cnt=0,s_ind=0,e_ind=0;
             for(int i = 0; i < address.length(); i++){
@@ -613,12 +602,19 @@ public class MainWeatherFragment extends Fragment {
                     break;
             }
             address = address.substring(s_ind,e_ind);
-            PreferenceManager.setString(getContext(),"CITY",address);
+            PreferenceManager.setString(getContext(),"CITY",address);*/
 
-            region.setText(address);
+            region.setText(PreferenceManager.getString(getContext(),"CITY"));
 
         }
 
+        else {
+            PreferenceManager.setFloat(getContext(),"LATITUDE",35F);
+            PreferenceManager.setFloat(getContext(),"LONGITUDE",(float)127F);
+            displayWeather(getContext());
+
+            Toast.makeText(getContext(),"주소가 잘못되었습니다.",Toast.LENGTH_SHORT);
+        }
         //getKoreanAddressByPoint(lat,lon);
     }
 

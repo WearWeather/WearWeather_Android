@@ -1,8 +1,6 @@
 package com.wearweather.main;
 
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -13,23 +11,27 @@ import androidx.appcompat.widget.SearchView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.wearweather.PreferenceManager;
 import com.wearweather.R;
-import com.wearweather.SettingsActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,7 +45,7 @@ public class MainSearchActivity extends AppCompatActivity {
     private SearchView searchView;
     private RecyclerView recyclerView;
     private SearchResultAdapter adapter;
-    private ArrayList<Address> addressList;
+    private ArrayList<MyAddress> addressList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,28 +63,8 @@ public class MainSearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                adapter.setFilter(filter(query));
-
-                /*addressList = new ArrayList<>();
-                Geocoder mGeoCoder = new Geocoder(getApplicationContext());
-                try {
-                    List<Address> location = null;
-                    location = mGeoCoder.getFromLocationName(query,20);
-
-                    Log.e("SEULGI LOCATION SIZE",""+location.size());
-
-                    if(!location.isEmpty()){
-                        addressList.clear();
-                        for(int i=0;i<location.size();i++){
-                            addressList.add(location.get(i));
-                        }
-                    }
-                    else { }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                adapter.setFilter(addressList);
-                adapter.notifyDataSetChanged();*/
+                //adapter.setFilter(filter(query));
+                adapter.setFilter(query);
 
                 return false;
             }
@@ -97,32 +79,52 @@ public class MainSearchActivity extends AppCompatActivity {
 
     }
 
-    private ArrayList<Address> filter(String query) {
-        final ArrayList<Address> filteredList = new ArrayList<>();
+    private ArrayList<MyAddress> filter(String query) {
+        final ArrayList<MyAddress> filteredList = new ArrayList<>();
 
-        Geocoder mGeoCoder = new Geocoder(getApplicationContext());
-        try {
-            List<Address> location = null;
-            location = mGeoCoder.getFromLocationName(query,10);
-            Log.e("SEULGI SEARCH SIZE",String.valueOf(location.size()));
+        String url="http://api.vworld.kr/req/search?key=2566C643-E5EC-317E-BBAB-B6064E98ACC2&service=search&request=search&type=address&query=";
+        url += query+"&category=road&size=100";
+        Log.e("SEULGI SEARCH API URL", url);
 
-            if(!location.isEmpty()){
-                for(int i=0;i<location.size();i++){
-                    filteredList.add(location.get(i));
+        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONObject res = response.getJSONObject("response");
+                    Log.e("SEULGI SEARCH STATUS",res.getString("status"));
+                    JSONObject result = res.getJSONObject("result");
+                    JSONArray items = result.getJSONArray("items");
+                    for(int i=0;i< items.length();i++){
+                        String address = items.getJSONObject(0).getJSONObject("address").getString("road");
+                        double lat = items.getJSONObject(0).getJSONObject("point").getDouble("x");
+                        double lon = items.getJSONObject(0).getJSONObject("point").getDouble("y");
+                        addressList.add(new MyAddress(address,lat,lon));
+                        filteredList.add(new MyAddress(address,lat,lon));
+                        Log.e("SEULGI addressList",String.valueOf(addressList.size()));
+                        Log.e("SEULGI FILTERED",String.valueOf(filteredList.size()));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
-            else { }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e("SEULGI SEARCH API ERROR",error.toString());
+            }
+        });
+
+        RequestQueue queue =  Volley.newRequestQueue(getApplicationContext());
+        queue.add(jor);
 
         return filteredList;
     }
 
     private class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder>{
-        ArrayList<Address> mlist;
+        ArrayList<MyAddress> mlist;
 
-        SearchResultAdapter(ArrayList<Address> list){
+        SearchResultAdapter(ArrayList<MyAddress> list){
             mlist = list;
         }
 
@@ -136,29 +138,12 @@ public class MainSearchActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull SearchResultAdapter.ViewHolder holder, int position) {
-            Address item = mlist.get(position);
-            double lat = item.getLatitude();
-            double lon = item.getLongitude();
+            MyAddress item = mlist.get(position);
+            double lat = item.getLat();
+            double lon = item.getLon();
 
-            String address = getCurrentAddress(lat,lon);
-            Log.e("SEULGI SEARCH RESULT",address+" lat:"+lat+" lon:"+lon);
-            int first=-1, second=-1, third=-1;
-            first = address.indexOf(' ');
-            if(first!=-1){
-                second=address.indexOf(' ',first+1);
-                if(second!=-1){
-                    third=address.indexOf(' ',second+1);
-                }
-            }
-            if(first!=-1 && third!=-1){
-                address = address.substring(first,third);
-            }
-            else {
-                address=address.substring(0,address.length()-1);
-            }
 
-            holder.address.setText(address);
-            Log.e("SEULGI SEARCH",""+address);
+            holder.address.setText(item.getAddress());
             holder.lat = lat;
             holder.lon = lon;
         }
@@ -181,26 +166,78 @@ public class MainSearchActivity extends AppCompatActivity {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        String temp = (String)address.getText();
+                        int first=-1, second=-1;
+                        first = temp.indexOf(' ');
+                        if(first!=-1){
+                            second=temp.indexOf(' ',first+1);
+                        }
+
+                        temp = temp.substring(0,second);
+
                         PreferenceManager.setFloat(getApplicationContext(),"LATITUDE",(float)lat);
                         PreferenceManager.setFloat(getApplicationContext(),"LONGITUDE",(float)lon);
                         PreferenceManager.setBoolean(getApplicationContext(),"IS_ADDRESS_CHANGED",true);
-                        PreferenceManager.setString(getApplicationContext(),"CITY",(String)address.getText());
+                        PreferenceManager.setString(getApplicationContext(),"CITY",temp);
+                        Log.e("SEULGI CHECK",temp+" lat:"+lat+" lon:"+lon);
 
 
-                        Toast.makeText(getApplicationContext(), "주소가 "+address.getText()+"로 설정되었습니다",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "주소가 "+temp+"로 설정되었습니다",Toast.LENGTH_SHORT).show();
 
                         finish();
                     }
                 });
             }
-            void setList(ArrayList<Address> mlist){
+            void setList(ArrayList<MyAddress> mlist){
                 mlist = mlist;
             }
         }
-        public void setFilter(ArrayList<Address> items) {
+        public void setFilter(ArrayList<MyAddress> items) {
             mlist.clear();
             mlist.addAll(items);
             notifyDataSetChanged();
+        }
+
+        public void setFilter(String query){
+            mlist.clear();
+            String url="http://api.vworld.kr/req/search?key=2566C643-E5EC-317E-BBAB-B6064E98ACC2&service=search&request=search&type=address&query=";
+            url += query+"&category=road&size=100";
+            Log.e("SEULGI SEARCH API URL", url);
+
+            JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        JSONObject res = response.getJSONObject("response");
+                        Log.e("SEULGI SEARCH STATUS",res.getString("status"));
+                        if(res.getString("status").equals("OK")){
+                            JSONObject result = res.getJSONObject("result");
+                            JSONArray items = result.getJSONArray("items");
+                            for(int i=0;i< items.length();i++){
+                                String address = items.getJSONObject(i).getJSONObject("address").getString("road");
+                                double lat = items.getJSONObject(i).getJSONObject("point").getDouble("y");
+                                double lon = items.getJSONObject(i).getJSONObject("point").getDouble("x");
+                                mlist.add(new MyAddress(address,lat,lon));
+                            }
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(),"주소가 잘못되었습니다.",Toast.LENGTH_SHORT).show();
+                        }
+
+                        notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("SEULGI SEARCH API ERROR",error.toString());
+                }
+            });
+
+            RequestQueue queue =  Volley.newRequestQueue(getApplicationContext());
+            queue.add(jor);
         }
 
     }
@@ -241,22 +278,39 @@ public class MainSearchActivity extends AppCompatActivity {
 
     }
 
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) item.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-        return super.onCreateOptionsMenu(menu);
-    }*/
+    private class MyAddress {
+        String address;
+        double lat;
+        double lon;
+        public MyAddress(String address,double lat,double lon) {
+            this.address=address;
+            this.lat=lat;
+            this.lon=lon;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public void setLat(double lat) {
+            this.lat = lat;
+        }
+
+        public void setLon(double lon) {
+            this.lon = lon;
+        }
+
+        public double getLat() {
+            return lat;
+        }
+
+        public double getLon() {
+            return lon;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+    }
 }
