@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.text.SimpleDateFormat;
@@ -19,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class DustActivity extends AppCompatActivity {
     public static int value;
+    String city;
     LinearLayout layout;
     CircleProgressBar pm10ProgressBar;
     TextView tvLocation, tvDate, pm10Grade, pm25Value, pm25Grade, o3Value, o3Grade, coValue, coGrade;
@@ -31,9 +33,8 @@ public class DustActivity extends AppCompatActivity {
 
         /*****현재 위치 설정*****/
         tvLocation = (TextView) findViewById(R.id.tvLocation);
-        Intent intent = getIntent();
-        String city = intent.getStringExtra("city");
-        tvLocation.setText(city);
+        setCity();
+
 
         /*****배경이미지 설정****/
         layout = findViewById(R.id.layout);
@@ -53,7 +54,7 @@ public class DustActivity extends AppCompatActivity {
         coGrade = (TextView) findViewById(R.id.coGrade);
 
         try {
-            setAtmosphere(city.substring(1, 3));
+            setAtmosphere(city);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -63,6 +64,23 @@ public class DustActivity extends AppCompatActivity {
         /***** PROGRESSBAR displaying the concentration of fine dust *****/
         pm10ProgressBar = new CircleProgressBar(DustActivity.this);
     }
+
+    private void setCity() {
+        Intent intent = getIntent();
+        city = intent.getStringExtra("city");
+        tvLocation.setText(city);
+        city=city.substring(1, 3);
+        if (!city.equals("서울") && !city.equals("부산") && !city.equals("대구") && !city.equals("인천") &&
+                !city.equals("광주") && !city.equals("대전") && !city.equals("울산") && !city.equals("경기") &&
+                !city.equals("강원") && !city.equals("충북") && !city.equals("충남") && !city.equals("전북") &&
+                !city.equals("전남") && !city.equals("경북") && !city.equals("경남") && !city.equals("제주") &&
+                !city.equals("세종")) {
+            tvLocation.setText("서울시 중구");
+            city = "서울";
+            Toast.makeText(getApplicationContext(),"위치를 찾을 수 없음: set default:서울시 중구",Toast.LENGTH_LONG).show();
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setAtmosphere(String address) throws ExecutionException, InterruptedException {
         /*XML Parsing*/
