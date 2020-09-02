@@ -35,7 +35,6 @@ public class DustActivity extends AppCompatActivity {
         tvLocation = (TextView) findViewById(R.id.tvLocation);
         setCity();
 
-
         /*****배경이미지 설정****/
         layout = findViewById(R.id.layout);
         setBackground();
