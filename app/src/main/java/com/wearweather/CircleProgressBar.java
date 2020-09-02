@@ -1,5 +1,4 @@
 package com.wearweather;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,44 +8,51 @@ import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.wearweather.DustActivity.*;
 
 public class CircleProgressBar extends ProgressBar {
-
+    public int ProgressValue=14;
     private float mScale = 1;
     private final int BASE_RADIUS = 180;
     private final int BASE_PROGRESS_HALF_WIDTH = 10;
     private final int BASE_TEXT_SIZE = 90;
     private final int MIN_ANGLE = 5;
 
-    private String txtProgress;
+    private String txtProgress = "";
     private Paint mPaintText, mPaintProgress, mPaintBackColor;
     private Rect txtRect;
-    private final int COLOR = Color.parseColor("#51B902");
+    public static int COLOR;
+
+//    public static int BLUE =Color.parseColor("#0502b9");
+//    public static int GREEN = Color.parseColor("#51B902");
+//    public static int YELLOW = Color.parseColor("#FF9436");
+//    public static int RED = Color.parseColor("#FF2424");
+
     private int mRadius;
     private int centerX, centerY;
 
     private RectF mRectF;
     private float startAngle = 0;
     private float mAngle = MIN_ANGLE;
-    private int mOldProgress = 0;
-    private int mProgress = 0;
+    public int mOldProgress = 0;
+    public int mProgress = 0;
     private boolean stopAnimation = false;
     private boolean animStated = false;
 
-    private Runnable mRefreshThread = new Runnable(){
-
+    public Runnable mRefreshThread = new Runnable() {
         @Override
         public void run() {
             startAngle += 1.5;
-
-            if (startAngle>=360) {
+            if (startAngle >= 360) {
                 startAngle = 0;
             }
-
-            if (mOldProgress<=mProgress) {
-                float percent = ((float) mOldProgress) / ((float)getMax());
+            if (mOldProgress <= mProgress) {
+                float percent = ((float) mOldProgress) / ((float) getMax());
                 int i = (int) (percent * 100);
 
                 if (i >= 100) {
@@ -55,7 +61,7 @@ public class CircleProgressBar extends ProgressBar {
                     txtProgress = String.valueOf(i) + "%";
                 }
 
-                if (mOldProgress<MIN_ANGLE) {
+                if (mOldProgress < MIN_ANGLE) {
                     mAngle = MIN_ANGLE;
                 } else {
                     mAngle = 360.0f * percent;
@@ -63,18 +69,16 @@ public class CircleProgressBar extends ProgressBar {
 
                 mOldProgress++;
             }
-
             if (!stopAnimation) {
                 postDelayed(mRefreshThread, 10);
             }
-
-            if (getVisibility()==View.VISIBLE && mOldProgress-1<=getMax()) {
+            if (getVisibility() == View.VISIBLE && mOldProgress - 1 <= getMax()) {
                 invalidate();
             }
         }
     };
 
-    private void startAnimation(){
+    public void startAnimation() {
         if (!animStated) {
             stopAnimation = false;
             post(mRefreshThread);
@@ -82,16 +86,29 @@ public class CircleProgressBar extends ProgressBar {
         }
     }
 
-    private void stopAnimation(){
+    private void stopAnimation() {
         removeCallbacks(mRefreshThread);
         stopAnimation = true;
         animStated = false;
     }
 
-    private void init(){
+    public void init() {
+
+        /**progressbar 색상 설정**/
+        if (ProgressValue >= 0 && ProgressValue <= 30) {
+            COLOR = Color.parseColor("#0502b9");
+        } else if (ProgressValue > 30 && ProgressValue <= 80) {
+            COLOR = Color.parseColor("#51B902");
+        } else if (ProgressValue > 80 && ProgressValue <= 150) {
+            COLOR = Color.parseColor("#FF9436");
+        } else {
+            COLOR = Color.parseColor("#FF2424");
+        }
+
+
         txtRect = new Rect();
         mRectF = new RectF();
-        mPaintText=new Paint();
+        mPaintText = new Paint();
         mPaintText.setAntiAlias(true);
         mPaintText.setColor(COLOR);
         mPaintText.setTextAlign(Align.CENTER);
@@ -103,12 +120,15 @@ public class CircleProgressBar extends ProgressBar {
         mPaintBackColor.setStyle(Style.STROKE);
         mPaintBackColor.setAntiAlias(true);
         mPaintBackColor.setColor(COLOR);
-        setProgress(50);
+
+        setProgress(ProgressValue);
+
     }
 
     public CircleProgressBar(Context context) {
         super(context);
         init();
+
     }
 
     public CircleProgressBar(Context context, AttributeSet attrs) {
@@ -123,7 +143,7 @@ public class CircleProgressBar extends ProgressBar {
 
     @Override
     public synchronized void setProgress(int progress) {
-        if (progress>getMax()) {
+        if (progress > getMax()) {
             progress = getMax();
         }
         mProgress = progress;
@@ -136,7 +156,7 @@ public class CircleProgressBar extends ProgressBar {
     @Override
     protected synchronized void onDraw(Canvas canvas) {
         this.mPaintText.getTextBounds(this.txtProgress, 0, this.txtProgress.length(), txtRect);
-        canvas.drawText(this.txtProgress, centerX, centerY + txtRect.height()/2, this.mPaintText);
+        canvas.drawText(this.txtProgress, centerX, centerY + txtRect.height() / 2, this.mPaintText);
         canvas.drawArc(mRectF, startAngle, mAngle, false, mPaintProgress);
         canvas.drawArc(mRectF, 0, 360, false, mPaintBackColor);
     }
@@ -144,17 +164,17 @@ public class CircleProgressBar extends ProgressBar {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        centerX = w/2;
-        centerY = h/2;
-        mRadius = centerX<=centerY ? centerX : centerY -30;
-        mScale = ((float)mRadius) / ((float)BASE_RADIUS);
-        mPaintText.setTextSize(BASE_TEXT_SIZE*mScale);
-        mPaintProgress.setStrokeWidth(DensityUtil.dip2px(this.getContext(), BASE_PROGRESS_HALF_WIDTH*2*mScale));
-        mPaintBackColor.setStrokeWidth(DensityUtil.dip2px(this.getContext(), BASE_PROGRESS_HALF_WIDTH*mScale/5));
-        mRectF.top = centerY - mRadius + BASE_PROGRESS_HALF_WIDTH*mScale+20;
-        mRectF.bottom = centerY + mRadius - BASE_PROGRESS_HALF_WIDTH*mScale+30;
-        mRectF.left = centerX - mRadius + BASE_PROGRESS_HALF_WIDTH*mScale-20;
-        mRectF.right = centerX + mRadius - BASE_PROGRESS_HALF_WIDTH*mScale-20;
+        centerX = w / 2;
+        centerY = h / 2;
+        mRadius = centerX <= centerY ? centerX : centerY - 30;
+        mScale = ((float) mRadius) / ((float) BASE_RADIUS);
+        mPaintText.setTextSize(BASE_TEXT_SIZE * mScale);
+        mPaintProgress.setStrokeWidth(DensityUtil.dip2px(this.getContext(), BASE_PROGRESS_HALF_WIDTH * 2 * mScale));
+        mPaintBackColor.setStrokeWidth(DensityUtil.dip2px(this.getContext(), BASE_PROGRESS_HALF_WIDTH * mScale / 5));
+        mRectF.top = centerY - mRadius + BASE_PROGRESS_HALF_WIDTH * mScale + 20;
+        mRectF.bottom = centerY + mRadius - BASE_PROGRESS_HALF_WIDTH * mScale - 5;
+        mRectF.left = centerX - mRadius + BASE_PROGRESS_HALF_WIDTH * mScale - 17;
+        mRectF.right = centerX + mRadius - BASE_PROGRESS_HALF_WIDTH * mScale - 17;
         startAnimation();
     }
 
