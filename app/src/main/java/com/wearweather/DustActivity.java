@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ public class DustActivity extends AppCompatActivity {
     LinearLayout layout;
     CircleProgressBar pm10ProgressBar;
     TextView tvLocation, tvDate, pm10Grade, pm25Value, pm25Grade, o3Value, o3Grade, coValue, coGrade;
+    ImageView back;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -44,6 +47,15 @@ public class DustActivity extends AppCompatActivity {
         /*****날짜 설정****/
         tvDate = (TextView) findViewById(R.id.tvDate);
         setDate();
+
+        //back button
+        back = (ImageView)findViewById(R.id.dust_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         /*****미세먼지, 초미세먼지, 일산화탄소 농도, 오존 농도 설정*****/
         pm10Grade = (TextView) findViewById(R.id.pm10Grade);
