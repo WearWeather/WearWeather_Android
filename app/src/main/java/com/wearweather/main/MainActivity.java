@@ -27,6 +27,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.wearweather.GpsTracker;
 import com.wearweather.PreferenceManager;
 import com.wearweather.R;
+import com.wearweather.SettingsActivity;
 
 import java.io.IOException;
 import java.util.List;
@@ -95,8 +96,10 @@ public class MainActivity extends AppCompatActivity {
                 PreferenceManager.setFloat(this,"LONGITUDE",127.0473f);
             }
         }
+        PreferenceManager.setString(getApplicationContext(),"CITY","서울특별시 강남구");
 
         PreferenceManager.setInt(this, "REGION_NUMBER",1);
+
 
         /* tab layout */
         tabLayout = (TabLayout) findViewById(R.id.main_tab_layout);

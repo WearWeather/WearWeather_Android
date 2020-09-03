@@ -4,6 +4,9 @@ package com.wearweather;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +27,7 @@ public class DustActivity extends AppCompatActivity {
     LinearLayout layout;
     CircleProgressBar pm10ProgressBar;
     TextView tvLocation, tvDate, pm10Grade, pm25Value, pm25Grade, o3Value, o3Grade, coValue, coGrade;
+    ImageView back;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -44,6 +48,15 @@ public class DustActivity extends AppCompatActivity {
         tvDate = (TextView) findViewById(R.id.tvDate);
         setDate();
 
+        //back button
+        back = (ImageView)findViewById(R.id.dust_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         /*****미세먼지, 초미세먼지, 일산화탄소 농도, 오존 농도 설정*****/
         pm10Grade = (TextView) findViewById(R.id.pm10Grade);
         pm25Value = (TextView) findViewById(R.id.pm25Value);
@@ -54,7 +67,7 @@ public class DustActivity extends AppCompatActivity {
         coGrade = (TextView) findViewById(R.id.coGrade);
 
         try {
-            setAtmosphere("서울");
+            setAtmosphere(city);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -69,8 +82,17 @@ public class DustActivity extends AppCompatActivity {
     private void setLocation() {
         Intent intent = getIntent();
         city = intent.getStringExtra("city");
+        Log.e("SEULGI DUST CHECK",city);
         tvLocation.setText(city);
-        city = city.substring(1, 3);
+
+        if(city.substring(0,3).equals("전라북")) city = "전북";
+        else if(city.substring(0,3).equals("전라남")) city = "전남";
+        else if(city.substring(0,3).equals("경상북")) city = "경북";
+        else if(city.substring(0,3).equals("경상남")) city = "경남";
+        else if(city.substring(0,3).equals("충청북")) city = "충북";
+        else if(city.substring(0,3).equals("충청남")) city = "충남";
+        else city = city.substring(0, 2);
+        Log.e("SEULGI DUST CHECK",city);
 
         if (!city.equals("서울") && !city.equals("부산") && !city.equals("대구") && !city.equals("인천") &&
                 !city.equals("광주") && !city.equals("대전") && !city.equals("울산") && !city.equals("경기") &&
@@ -87,7 +109,7 @@ public class DustActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setAtmosphere(String address) throws ExecutionException, InterruptedException {
         /*XML Parsing*/
-        String url = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=xhl67Y2J0Pgav3Pia7oYbh%2BBzg1EclA%2BOq4I%2BssvNRp8vFt55cRnMgSnD9t601fwh7QfbpU61dVcnr9RX5Jw6A%3D%3D&numOfRows=10&sidoName=%EC%84%9C%EC%9A%B8&ver=1.3&";
+        String url = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=xhl67Y2J0Pgav3Pia7oYbh%2BBzg1EclA%2BOq4I%2BssvNRp8vFt55cRnMgSnD9t601fwh7QfbpU61dVcnr9RX5Jw6A%3D%3D&numOfRows=10&sidoName="+city+"&ver=1.3&";
         String resultText = null;
         resultText = new XMLParsingTask(DustActivity.this, url).execute().get();
         String[] array = resultText.split("_");

@@ -38,5 +38,6 @@
     <string name="address_redirect">현재 위치로 주소 설정하기</string>
     <string name="favorites_setting">즐겨찾기 설정</string>
     <string name="favorites_manage">즐겨찾기 관리하기</string>
+    <string name="plz_enter_address">주소를 입력하세요</string>
 
 </resources>
