@@ -146,7 +146,7 @@ public class MainWeatherFragment extends Fragment {
 
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("로딩중입니다..");
-        progressDialog.setCancelable(true);
+        progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
 
         /* OpenWeatherMap API */
