@@ -1,6 +1,7 @@
 package com.wearweather.main;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -19,6 +20,7 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -140,6 +142,13 @@ public class MainActivity extends AppCompatActivity {
 
         //progressDialog.dismiss();
 
+        //PreferenceManager.setBoolean(getApplicationContext(), "MAIN_NOTICE_DIALOG",false);
+
+        //공지
+        if(PreferenceManager.getBoolean(this, "MAIN_NOTICE_DIALOG")!=true){
+            showMainNoticeDialog();
+        }
+
     }
 
     private void initSharedPreference(){
@@ -159,6 +168,25 @@ public class MainActivity extends AppCompatActivity {
         if(PreferenceManager.getFloat(this, "REGION2_LON")==-1F){
             PreferenceManager.setFloat(this,"REGION2_LON",(float)128.5935);
         }
+    }
+
+    private void showMainNoticeDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle("앱 처음 실행 시 공지")
+                .setMessage("설정창에 들어가서 날씨 정보를 받을 위치를 설정하세요!")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .setNegativeButton("다시 보지 않기", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        PreferenceManager.setBoolean(getApplicationContext(), "MAIN_NOTICE_DIALOG",true);
+                    }
+                })
+                .show();
     }
 
     /*
