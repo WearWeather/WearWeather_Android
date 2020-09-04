@@ -133,7 +133,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp"
-                android:textStyle="bold"
                 android:id="@+id/o3Value" />
 
             <TextView
@@ -141,7 +140,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
-                android:textStyle="bold"
                 android:id="@+id/o3Grade" />
         </LinearLayout>
 
@@ -171,7 +169,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp"
-                android:textStyle="bold"
                 android:id="@+id/coValue" />
 
             <TextView
@@ -179,7 +176,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
-                android:textStyle="bold"
                 android:id="@+id/coGrade" />
         </LinearLayout>
     </LinearLayout>
