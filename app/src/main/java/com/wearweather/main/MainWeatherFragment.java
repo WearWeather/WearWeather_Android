@@ -281,18 +281,18 @@ public class MainWeatherFragment extends Fragment {
         //dateNow.setText(nowText);
 
         int time = Integer.parseInt(hourText);
-        if(time >= 0 && time < 24){
+        if(time >= 0 && time < 6){
             swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_night_background);
         }
-//        else if(time >= 6 && time < 15){
-//            swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_afternoon_background);
-//        }
-//        else if(time >= 15 && time < 20){
-//            swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_sunset_background);
-//        }
-//        else if(time >= 20 && time < 24){
-//            swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_night_background);
-//        }
+        else if(time >= 6 && time < 15){
+            swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_afternoon_background);
+        }
+        else if(time >= 15 && time < 20){
+            swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_sunset_background);
+        }
+        else if(time >= 20 && time < 24){
+            swipeRefreshLayout.setBackgroundResource(R.drawable.sunny_night_background);
+        }
     }
 
     public void find_weather(float latitude, float longitude){

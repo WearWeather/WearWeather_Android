@@ -173,18 +173,18 @@ public class DustActivity extends AppCompatActivity {
         SimpleDateFormat hourFormat = new SimpleDateFormat("HH");
         String hour = hourFormat.format(date);
         int time = Integer.parseInt(hour);
-        if(time >= 0 && time < 24){
+        if(time >= 0 && time < 6){
             layout.setBackgroundResource(R.drawable.sunny_night_background);
         }
-//        else if(time >= 6 && time < 15){
-//            layout.setBackgroundResource(R.drawable.sunny_afternoon_background);
-//        }
-//        else if(time >= 15 && time < 20){
-//            layout.setBackgroundResource(R.drawable.sunny_sunset_background);
-//        }
-//        else if(time >= 20 && time < 24){
-//            layout.setBackgroundResource(R.drawable.sunny_night_background);
-//        }
+        else if(time >= 6 && time < 15){
+            layout.setBackgroundResource(R.drawable.sunny_afternoon_background);
+        }
+        else if(time >= 15 && time < 20){
+            layout.setBackgroundResource(R.drawable.sunny_sunset_background);
+        }
+        else if(time >= 20 && time < 24){
+            layout.setBackgroundResource(R.drawable.sunny_night_background);
+        }
     }
 
     private void setDate() {

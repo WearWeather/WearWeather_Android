@@ -95,6 +95,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="5dp"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp"
                 android:id="@+id/pm25Value" />
@@ -132,6 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
+                android:paddingTop="5dp"
                 android:textSize="22sp"
                 android:id="@+id/o3Value" />
 
@@ -167,6 +169,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="5dp"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp"
                 android:id="@+id/coValue" />
