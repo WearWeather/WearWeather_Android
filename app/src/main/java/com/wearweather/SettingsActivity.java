@@ -37,6 +37,9 @@ public class SettingsActivity extends AppCompatActivity {
     private String location_name;
     private ImageView backBtn;
 
+
+    private FrameLayout opensource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,6 +149,15 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });*/
+
+        opensource = (FrameLayout)findViewById(R.id.opensource_layout);
+        opensource.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), OpenSourceActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public String getCurrentAddress( double latitude, double longitude) {
