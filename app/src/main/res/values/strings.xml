@@ -39,5 +39,18 @@
     <string name="favorites_setting">즐겨찾기 설정</string>
     <string name="favorites_manage">즐겨찾기 관리하기</string>
     <string name="plz_enter_address">주소를 입력하세요</string>
+    <string name="open_source">오픈 소스 라이선스</string>
+    <string name="information">정보</string>
+
+    <string name="license_information">
+        COPYRIGHT © 머시따. ALL RIGHTS RESERVED.\n
+        머시따(https://meosidda.com/index.html)\n\n
+
+        COPYRIGHT © Look at Min ALL RIGHTS RESERVED.\n
+        룩앳민(http://lookatmin.com/)\n
+
+        \n\n*위 쇼핑몰들로부터 이미지 사용 허락을 받아 제작하였습니다
+
+    </string>
 
 </resources>
