@@ -37,7 +37,7 @@ public class TemperatureClothingActivity6 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getApplicationContext(), ClothesClickWebView.class);
-                intent.putExtra("link", "https://store.musinsa.com/app/product/detail/1396653/0");
+                intent.putExtra("link", "https://www.meosidda.com/product/%EB%A0%9B%EC%B8%A0-%EC%9E%90%EC%88%98-%EC%98%A4%EB%B2%84%ED%95%8F-%EB%B0%98%ED%8C%94-%ED%8B%B0%EC%85%94%EC%B8%A0/36991/category/437/display/2/");
                 startActivity(intent);
             }
         });
@@ -47,7 +47,7 @@ public class TemperatureClothingActivity6 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getApplicationContext(), ClothesClickWebView.class);
-                intent.putExtra("link", "https://store.musinsa.com/app/product/detail/1484796/0");
+                intent.putExtra("link", "https://www.meosidda.com/product/8%EC%BB%AC%EB%9F%AC-%EB%B0%94%EC%9D%B4%EC%98%A4-%EC%9B%8C%EC%8B%B1-%ED%97%A8%EB%A6%AC%EB%84%A5-%EC%85%94%EC%B8%A0/37300/category/97/display/2/");
                 startActivity(intent);
             }
         });
@@ -57,7 +57,7 @@ public class TemperatureClothingActivity6 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getApplicationContext(), ClothesClickWebView.class);
-                intent.putExtra("link", "https://store.musinsa.com/app/product/detail/1492645/0");
+                intent.putExtra("link", "https://www.meosidda.com/product/%EC%9A%B0%EB%B8%94%EB%A6%AC%EB%8F%84%EB%B0%98%ED%95%9C-%EB%8C%80%EB%B0%95%ED%95%8F-%EC%9D%B8%EC%83%9D%EC%8A%AC%EB%9E%99%EC%8A%A4/29534/category/585/display/2/");
                 startActivity(intent);
             }
         });
@@ -67,7 +67,7 @@ public class TemperatureClothingActivity6 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getApplicationContext(), ClothesClickWebView.class);
-                intent.putExtra("link", "https://store.musinsa.com/app/product/detail/1344487/0");
+                intent.putExtra("link", "https://www.meosidda.com/product/%ED%8F%AC%EC%BC%93-%EB%B0%B4%EB%94%A9-%EC%8A%A4%ED%8C%90-%EC%8A%AC%EB%9E%99%EC%8A%A4-%EB%B0%98%EB%B0%94%EC%A7%80/37160/category/88/display/1/");
                 startActivity(intent);
             }
         });
@@ -77,7 +77,7 @@ public class TemperatureClothingActivity6 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getApplicationContext(), ClothesClickWebView.class);
-                intent.putExtra("link", "https://store.musinsa.com/app/product/detail/1386223/0");
+                intent.putExtra("link", "https://www.meosidda.com/product/%EC%9E%AD%EC%8A%A8-%EC%8A%A4%EB%8B%88%EC%BB%A4%EC%A6%88/21683/category/86/display/2/");
                 startActivity(intent);
             }
         });
@@ -87,7 +87,7 @@ public class TemperatureClothingActivity6 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent  = new Intent(getApplicationContext(), ClothesClickWebView.class);
-                intent.putExtra("link", "https://store.musinsa.com/app/product/detail/1524888/0");
+                intent.putExtra("link", "https://www.meosidda.com/product/16011-%EC%84%A0%EA%B8%80%EB%9D%BC%EC%8A%A4/28591/category/110/display/1/");
                 startActivity(intent);
             }
         });
