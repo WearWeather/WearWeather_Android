@@ -45,32 +45,32 @@ public class TemperatureClothingActivity2 extends AppCompatActivity {
             public void onClick(View view) {
                 switch (view.getId()){
                     case R.id.layout_tokboki:
-                        url = "https://store.musinsa.com/app/product/detail/1196926/0";
+                        url = "https://www.meosidda.com/product/%EC%9D%B4%EC%A4%91%EC%A7%80-%EB%A1%B1%ED%9B%84%EB%93%9C-%EB%96%A1%EB%B3%B6%EC%9D%B4%EC%BD%94%ED%8A%B8/36431/category/29/display/1/";
                         intent = new Intent(getApplicationContext(), ClothesClickWebView.class);
                         intent.putExtra("link", url);
                         startActivity(intent);
                     case R.id.layout_winterShoes:
-                        url = "https://store.musinsa.com/app/product/detail/1269289/0";
+                        url = "https://www.meosidda.com/product/4cm-%EB%A0%88%EC%9D%B4%EC%8A%A4%EC%97%85-%EC%9B%8C%EC%BB%A4/36109/category/87/display/1/";
                         intent = new Intent(getApplicationContext(), ClothesClickWebView.class);
                         intent.putExtra("link", url);
                         startActivity(intent);
                     case R.id.layout_thickCoat:
-                        url = "https://store.musinsa.com/app/product/detail/1180105/0";
+                        url = "https://www.meosidda.com/product/%EC%98%86-%EB%B0%91%EB%8B%A8%ED%8A%B8%EC%9E%84-%EC%98%A4%EB%B2%84%ED%95%8F-%EB%A1%B1-%EC%BD%94%ED%8A%B8/36754/category/78/display/1/";
                         intent = new Intent(getApplicationContext(), ClothesClickWebView.class);
                         intent.putExtra("link", url);
                         startActivity(intent);
                     case R.id.layout_neat:
-                        url = "https://store.musinsa.com/app/product/detail/1435001/0";
+                        url = "https://www.meosidda.com/product/%EB%A0%88%EC%9D%B4-%EB%B0%98%ED%8F%B4%EB%9D%BC-%ED%8B%B0%EC%85%94%EC%B8%A0/36378/category/90/display/1/";
                         intent = new Intent(getApplicationContext(), ClothesClickWebView.class);
                         intent.putExtra("link", url);
                         startActivity(intent);
                     case R.id.layout_scarf:
-                        url = "https://store.musinsa.com/app/product/detail/897557/0";
+                        url = "https://www.meosidda.com/product/%EA%B3%A8%EC%A7%80-%EC%9A%B8-%EB%AA%A9%EB%8F%84%EB%A6%AC/34342/category/1560/display/1/";
                         intent = new Intent(getApplicationContext(), ClothesClickWebView.class);
                         intent.putExtra("link", url);
                         startActivity(intent);
                     case R.id.layout_leather:
-                        url = "https://store.musinsa.com/app/product/detail/475009/0";
+                        url = "https://www.meosidda.com/product/%EB%A7%8C%EC%A1%B1%EB%8F%84-good-%EA%B0%80%EC%A3%BD%EC%9E%90%EC%BC%93/30616/category/29/display/1/";
                         intent = new Intent(getApplicationContext(), ClothesClickWebView.class);
                         intent.putExtra("link", url);
                         startActivity(intent);
