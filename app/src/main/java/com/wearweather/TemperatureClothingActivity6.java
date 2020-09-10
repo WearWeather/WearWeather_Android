@@ -6,18 +6,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class TemperatureClothingActivity6 extends AppCompatActivity {
     TextView tx9;
-    Button btnToHome;
+    ImageView btnToHome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature_clothing6);
 
-        btnToHome = (Button) findViewById(R.id.btnToHome);
+        btnToHome = (ImageView) findViewById(R.id.btnToHome);
         btnToHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
