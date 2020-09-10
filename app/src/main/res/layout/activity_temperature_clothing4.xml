@@ -11,8 +11,6 @@
         android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="15dp"
         android:orientation="vertical">
 
         <ImageView
@@ -138,7 +136,7 @@
                     android:id="@+id/imageView3"
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
-                    app:srcCompat="@drawable/kjh_neat" />
+                    app:srcCompat="@drawable/kjh_neat2" />
 
                 <TextView
                     android:id="@+id/textView5"

@@ -11,8 +11,6 @@
         android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="15dp"
         android:orientation="vertical">
 
         <ImageView
@@ -171,7 +169,7 @@
                     android:id="@+id/imageView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_neat" />
+                    app:srcCompat="@drawable/kjh_neat2" />
 
                 <TextView
                     android:id="@+id/textView6"
@@ -194,7 +192,7 @@
                     android:id="@+id/imageView5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_wintershoes" />
+                    app:srcCompat="@drawable/kjh_wintershoes2" />
 
                 <TextView
                     android:id="@+id/textView7"
