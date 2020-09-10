@@ -20,11 +20,12 @@ import java.util.concurrent.ExecutionException;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class DustActivity extends AppCompatActivity {
     public static int value;
     String city;
-    LinearLayout layout;
+    ConstraintLayout layout;
     CircleProgressBar pm10ProgressBar;
     TextView tvLocation, tvDate, pm10Grade, pm25Value, pm25Grade, o3Value, o3Grade, coValue, coGrade;
     ImageView back;
