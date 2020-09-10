@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="초봄의 날씨에요! 그래도 감기 조심하세요~"
+            android:text="쌀쌀한 날씨예요! 감기 조심하세요~!"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />

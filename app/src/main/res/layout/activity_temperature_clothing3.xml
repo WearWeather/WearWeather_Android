@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="차카운 바람과 강한 추위에 조심하세요!"
+            android:text="차카운 바람과 강한 추위를 조심하세요!"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
