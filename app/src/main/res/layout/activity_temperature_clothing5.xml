@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="완전한 봄의 날씨는 아니에요! 조금만 기다려주세요!"
+            android:text="선선한 날씨지만 밤에는 쌀쌀할 수 있어요  "
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginTop="20dp"
-            android:text="오늘은 이런 옷 어때요?"/>
+            android:text="오늘은 이런 옷 어떠세요?"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,8 +80,8 @@
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_mantoman" />
+                    android:layout_height="160dp"
+                    app:srcCompat="@drawable/a5_1" />
 
                 <TextView
                     android:id="@+id/textView2"
@@ -103,8 +103,8 @@
                 <ImageView
                     android:id="@+id/imageView2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_gadigun" />
+                    android:layout_height="160dp"
+                    app:srcCompat="@drawable/a5_2" />
 
                 <TextView
                     android:id="@+id/textView4"
@@ -127,8 +127,8 @@
                 <ImageView
                     android:id="@+id/imageView3"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_thinneat" />
+                    android:layout_height="160dp"
+                    app:srcCompat="@drawable/a5_3" />
 
                 <TextView
                     android:id="@+id/textView5"
@@ -158,8 +158,8 @@
                 <ImageView
                     android:id="@+id/imageView4"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_jeans" />
+                    android:layout_height="160dp"
+                    app:srcCompat="@drawable/a5_4" />
 
                 <TextView
                     android:id="@+id/textView6"
@@ -181,15 +181,15 @@
                 <ImageView
                     android:id="@+id/imageView5"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_springshoes" />
+                    android:layout_height="160dp"
+                    app:srcCompat="@drawable/a5_5" />
 
                 <TextView
                     android:id="@+id/textView7"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="신발"
+                    android:text="로퍼"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -204,15 +204,15 @@
                 <ImageView
                     android:id="@+id/imageView6"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_onepiece" />
+                    android:layout_height="160dp"
+                    app:srcCompat="@drawable/a5_6" />
 
                 <TextView
                     android:id="@+id/textView8"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="원피스"
+                    android:text="점퍼"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
             </LinearLayout>
