@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#86A2CA"
+    android:background="#ddf0ff"
     android:orientation="vertical">
 
     <LinearLayout
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="TextView"
-            android:textColor="#FFFFFF"
+            android:textColor="#0c3f69"
             android:textSize="40sp" />
     </LinearLayout>
 
@@ -47,8 +47,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="이젠 더워지기 시작해요! 얇게 입고 다니셔도 돼요~"
-            android:textColor="#FFFFFF"
+            android:text="선선해요! 시원한 바람을 느껴보세요~"
+            android:textColor="#0c3f69"
             android:textSize="17sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -83,15 +83,16 @@
                     android:id="@+id/imageView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_minsomae" />
+                    android:scaleY="0.8"
+                    app:srcCompat="@drawable/banpal" />
 
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="민소매"
-                    android:textColor="#FFFFFF"
+                    android:text="반팔티"
+                    android:textColor="#0c3f69"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -106,15 +107,16 @@
                     android:id="@+id/imageView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_shortdown" />
+                    android:scaleY="0.8"
+                    app:srcCompat="@drawable/linenshirts" />
 
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="반바지"
-                    android:textColor="#FFFFFF"
+                    android:text="린넨 셔츠"
+                    android:textColor="#0c3f69"
                     android:textSize="20sp" />
 
             </LinearLayout>
@@ -130,15 +132,16 @@
                     android:id="@+id/imageView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_springfit" />
+                    android:scaleY="0.8"
+                    app:srcCompat="@drawable/checkonepiece" />
 
                 <TextView
                     android:id="@+id/textView5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="가벼운 옷"
-                    android:textColor="#FFFFFF"
+                    android:text="원피스"
+                    android:textColor="#0c3f69"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -160,15 +163,16 @@
                     android:id="@+id/imageView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_tshirts" />
+                    android:scaleY="0.8"
+                    app:srcCompat="@drawable/banbazi" />
 
                 <TextView
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="티셔츠"
-                    android:textColor="#FFFFFF"
+                    android:text="반바지"
+                    android:textColor="#0c3f69"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -183,15 +187,16 @@
                     android:id="@+id/imageView5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_onepiece3" />
+                    android:scaleY="0.8"
+                    app:srcCompat="@drawable/myunbazi" />
 
                 <TextView
                     android:id="@+id/textView7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="원피스"
-                    android:textColor="#FFFFFF"
+                    android:text="면바지"
+                    android:textColor="#0c3f69"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -207,15 +212,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/kjh_springshoes2" />
+                    android:scaleY="0.8"
+                    app:srcCompat="@drawable/blopper" />
 
                 <TextView
                     android:id="@+id/textView8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="신발"
-                    android:textColor="#FFFFFF"
+                    android:text="블로퍼"
+                    android:textColor="#0c3f69"
                     android:textSize="20sp" />
             </LinearLayout>
         </LinearLayout>
