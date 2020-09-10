@@ -107,34 +107,12 @@
 
     </FrameLayout>
 
-<!--    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center_vertical">
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/icon_star"
-            android:tint="@color/colorDarkGray"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="@string/favorites_setting"
-            android:textSize="16sp"
-            android:textColor="@color/colorDarkGray"/>
-
-    </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/settings_favorites"
+        android:id="@+id/opensource_layout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_marginTop="70dp"
         android:background="@drawable/item_settings_background"
         android:paddingHorizontal="20dp">
 
@@ -142,9 +120,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="@string/favorites_manage"
-            android:textSize="18sp"
-            android:textColor="@color/colorBlack"/>
+            android:text="@string/open_source"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp" />
 
         <ImageView
             android:layout_width="20dp"
@@ -154,6 +132,6 @@
             android:src="@drawable/icon_back"
             android:tint="#aaa"/>
 
-    </FrameLayout>-->
+    </FrameLayout>
 
 </LinearLayout>
