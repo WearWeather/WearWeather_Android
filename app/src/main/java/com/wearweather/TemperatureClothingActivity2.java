@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,7 +16,7 @@ import java.net.URL;
 
 public class TemperatureClothingActivity2 extends AppCompatActivity {
     TextView tx9;
-    Button btnToHome;
+    ImageView btnToHome;
     ViewGroup tokboki, shoes, thickCoat, neat, scarf, leather;
     String url;
     Intent intent;
@@ -25,7 +26,7 @@ public class TemperatureClothingActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature_clothing2);
 
-        btnToHome = (Button) findViewById(R.id.btnToHome);
+        btnToHome = (ImageView) findViewById(R.id.btnToHome);
         btnToHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
