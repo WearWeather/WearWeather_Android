@@ -85,14 +85,14 @@
                     android:id="@+id/imageView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_minsomae" />
+                    app:srcCompat="@drawable/c8_1" />
 
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="민소매"
+                    android:text="린넨셔츠"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -108,7 +108,7 @@
                     android:id="@+id/imageView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_shortdown" />
+                    app:srcCompat="@drawable/c8_2" />
 
                 <TextView
                     android:id="@+id/textView4"
@@ -132,14 +132,14 @@
                     android:id="@+id/imageView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_tshirts" />
+                    app:srcCompat="@drawable/c8_3" />
 
                 <TextView
                     android:id="@+id/textView5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="티셔츠"
+                    android:text="샌들"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -163,14 +163,14 @@
                     android:id="@+id/imageView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_springbazi" />
+                    app:srcCompat="@drawable/c8_4" />
 
                 <TextView
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="얇은 긴바지"
+                    android:text="반팔 크롭 니트"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -186,14 +186,14 @@
                     android:id="@+id/imageView5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_onepiece3" />
+                    app:srcCompat="@drawable/c8_5" />
 
                 <TextView
                     android:id="@+id/textView7"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="원피스"
+                    android:text="스커트"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -209,14 +209,14 @@
                     android:id="@+id/imageView6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/kjh_sandle" />
+                    app:srcCompat="@drawable/c8_6" />
 
                 <TextView
                     android:id="@+id/textView8"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="샌들"
+                    android:text="원피스"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
             </LinearLayout>
