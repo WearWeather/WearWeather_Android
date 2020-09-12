@@ -90,7 +90,7 @@
                     android:id="@+id/imageView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleY="0.8"
+                    android:scaleX="1.4"
                     app:srcCompat="@drawable/banpal" />
 
                 <TextView
@@ -114,7 +114,7 @@
                     android:id="@+id/imageView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleY="0.8"
+                    android:scaleX="1.4"
                     app:srcCompat="@drawable/linenshirts" />
 
                 <TextView
@@ -139,7 +139,7 @@
                     android:id="@+id/imageView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleY="0.8"
+                    android:scaleX="1.4"
                     app:srcCompat="@drawable/checkonepiece" />
 
                 <TextView
@@ -170,7 +170,7 @@
                     android:id="@+id/imageView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleY="0.8"
+                    android:scaleX="1.4"
                     app:srcCompat="@drawable/banbazi" />
 
                 <TextView
@@ -194,7 +194,7 @@
                     android:id="@+id/imageView5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleY="0.8"
+                    android:scaleX="1.4"
                     app:srcCompat="@drawable/myunbazi" />
 
                 <TextView
@@ -219,7 +219,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:scaleY="0.8"
+                    android:scaleX="1.4"
                     app:srcCompat="@drawable/blopper" />
 
                 <TextView
