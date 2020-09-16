@@ -50,7 +50,7 @@
             android:text="날짜"
             android:textColor="#FFFFFF" />
 
-        <com.wearweatherapp.CircleProgressBar
+        <com.wearweatherapp.ui.custom.CircleProgressBar
 
             android:id="@+id/pm10ProgressBar"
             android:layout_width="match_parent"

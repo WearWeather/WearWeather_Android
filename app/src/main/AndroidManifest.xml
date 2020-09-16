@@ -15,24 +15,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.wearweatherapp.OpenSourceActivity"></activity>
-        <activity android:name="com.wearweatherapp.FavoritesActivity" />
-        <activity android:name="com.wearweatherapp.ClothesClickWebView" />
-        <activity android:name="com.wearweatherapp.DustActivity"></activity>
-        <activity android:name="com.wearweatherapp.main.MainSearchActivity"></activity>
-        <activity android:name="com.wearweatherapp.SettingsActivity" /> <!-- <activity android:name=".main.MainActivity"></activity> -->
-        <activity android:name="com.wearweatherapp.TemperatureClothingActivity8" />
-        <activity android:name="com.wearweatherapp.TemperatureClothingActivity7" />
-        <activity android:name="com.wearweatherapp.TemperatureClothingActivity6" />
-        <activity android:name="com.wearweatherapp.TemperatureClothingActivity5" />
-        <activity android:name="com.wearweatherapp.TemperatureClothingActivity4" />
-        <activity android:name="com.wearweatherapp.TemperatureClothingActivity3"></activity>
-        <activity android:name="com.wearweatherapp.TemperatureClothingActivity2"></activity>
-        <activity android:name="com.wearweatherapp.TemperatureClothingActivity"></activity>
-        <activity android:name="com.wearweatherapp.NewsClickViewActivity" />
-        <activity android:name="com.wearweatherapp.NewsXMLActivity"></activity>
+        <activity android:name="com.wearweatherapp.ui.settings.OpenSourceActivity"></activity>
+        <activity android:name="com.wearweatherapp.ui.settings.FavoritesActivity" />
+        <activity android:name="com.wearweatherapp.ui.news.ClothesClickWebView" />
+        <activity android:name="com.wearweatherapp.ui.dust.DustActivity"></activity>
+        <activity android:name="com.wearweatherapp.ui.settings.SearchActivity"></activity>
+        <activity android:name="com.wearweatherapp.ui.settings.SettingsActivity" /> <!-- <activity android:name=".main.MainActivity"></activity> -->
+        <activity android:name="com.wearweatherapp.ui.clothing.TemperatureClothingActivity8" />
+        <activity android:name="com.wearweatherapp.ui.clothing.TemperatureClothingActivity7" />
+        <activity android:name="com.wearweatherapp.ui.clothing.TemperatureClothingActivity6" />
+        <activity android:name="com.wearweatherapp.ui.clothing.TemperatureClothingActivity5" />
+        <activity android:name="com.wearweatherapp.ui.clothing.TemperatureClothingActivity4" />
+        <activity android:name="com.wearweatherapp.ui.clothing.TemperatureClothingActivity3"></activity>
+        <activity android:name="com.wearweatherapp.ui.clothing.TemperatureClothingActivity2"></activity>
+        <activity android:name="com.wearweatherapp.ui.clothing.TemperatureClothingActivity"></activity>
+        <activity android:name="com.wearweatherapp.ui.news.NewsClickViewActivity" />
+        <activity android:name="com.wearweatherapp.ui.news.NewsXMLActivity"></activity>
         <activity
-            android:name="com.wearweatherapp.main.MainActivity"
+            android:name="com.wearweatherapp.ui.main.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
