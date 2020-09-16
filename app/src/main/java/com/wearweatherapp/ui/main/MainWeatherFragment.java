@@ -505,7 +505,6 @@ public class MainWeatherFragment extends Fragment {
     }
 
     public void displayWeather(Context context) {
-
         openProgressDialog();
 
         float lat = PreferenceManager.getFloat(context,"LATITUDE");
@@ -518,7 +517,6 @@ public class MainWeatherFragment extends Fragment {
         if(address!=null){
             region.setText(PreferenceManager.getString(getContext(),"CITY"));
         }
-
         else {
             PreferenceManager.setFloat(getContext(),"LATITUDE",35F);
             PreferenceManager.setFloat(getContext(),"LONGITUDE",(float)127F);

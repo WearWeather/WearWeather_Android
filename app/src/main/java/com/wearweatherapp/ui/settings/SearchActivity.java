@@ -27,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.wearweatherapp.data.AddressData;
+import com.wearweatherapp.util.AddressParsingUtil;
 import com.wearweatherapp.util.PreferenceManager;
 import com.wearweatherapp.R;
 
@@ -120,19 +121,12 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         String temp = (String)address.getText();
-                        int first=-1, second=-1;
-                        first = temp.indexOf(' ');
-                        if(first!=-1){
-                            second=temp.indexOf(' ',first+1);
-                        }
-
-                        temp = temp.substring(0,second);
+                        temp = AddressParsingUtil.getSigunguFromVWorldAddress(temp);
 
                         PreferenceManager.setFloat(getApplicationContext(),"LATITUDE",(float)lat);
                         PreferenceManager.setFloat(getApplicationContext(),"LONGITUDE",(float)lon);
                         PreferenceManager.setBoolean(getApplicationContext(),"IS_ADDRESS_CHANGED",true);
                         PreferenceManager.setString(getApplicationContext(),"CITY",temp);
-                        Log.e("SEULGI CHECK",temp+" lat:"+lat+" lon:"+lon);
 
                         Toast.makeText(getApplicationContext(), "주소가 "+temp+"로 설정되었습니다",Toast.LENGTH_SHORT).show();
 
