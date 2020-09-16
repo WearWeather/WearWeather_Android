@@ -20,6 +20,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+import com.wearweatherapp.ui.main.adapter.MainTabPagerAdapter;
 import com.wearweatherapp.util.GpsTracker;
 import com.wearweatherapp.util.PreferenceManager;
 import com.wearweatherapp.R;
@@ -39,15 +40,36 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
+    private double latitude;
+    private double longitude;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /* Initiate Shared Preference */
-        //initSharedPreference();
+        checkInternetConnectivity();
 
+        if (!checkLocationServicesStatus()) {
+            showDialogForLocationServiceSetting();
+        }else {
+            checkRunTimePermission();
+        }
+        gpsTracker = new GpsTracker(MainActivity.this);
 
+        latitude = gpsTracker.getLatitude();
+        longitude = gpsTracker.getLongitude();
+
+        initSharedPreference();
+
+        initView();
+
+        if(PreferenceManager.getBoolean(this, "MAIN_NOTICE_DIALOG")!=true){
+            showMainNoticeDialog();
+        }
+    }
+
+    private void checkInternetConnectivity() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         assert connectivityManager != null;
         if(!(connectivityManager.getActiveNetworkInfo()!=null && connectivityManager.getActiveNetworkInfo().isConnected() )){
@@ -62,19 +84,11 @@ public class MainActivity extends AppCompatActivity {
                     }).show();
             return;
         }
+    }
 
-        /*GPS Tracker*/
-        if (!checkLocationServicesStatus()) {
-            showDialogForLocationServiceSetting();
-        }else {
-            checkRunTimePermission();
-        }
-        gpsTracker = new GpsTracker(MainActivity.this);
-
-        double latitude = gpsTracker.getLatitude();
-        double longitude = gpsTracker.getLongitude();
-        Log.e("SEULGI GPSTRACKER","lat:"+latitude+" lon:"+longitude);
-
+    private void initSharedPreference(){
+        Log.e("SEULGI SP", ""+PreferenceManager.getFloat(this, "LATITUDE"));
+        Log.e("SEULGI SP", ""+PreferenceManager.getFloat(this, "LONGITUDE"));
         if(PreferenceManager.getFloat(this, "LATITUDE")==-1F){
             if(latitude!=0.0 && longitude!=0.0){
                 PreferenceManager.setFloat(this,"LATITUDE",(float)latitude);
@@ -91,17 +105,20 @@ public class MainActivity extends AppCompatActivity {
                 PreferenceManager.setFloat(this,"LONGITUDE",127.0473f);
             }
         }
-        PreferenceManager.setString(getApplicationContext(),"CITY","서울특별시 강남구");
+        if(PreferenceManager.getString(this, "CITY").equals("")){
+            PreferenceManager.setString(getApplicationContext(),"CITY","서울특별시 강남구");
+        }
 
         PreferenceManager.setInt(this, "REGION_NUMBER",1);
+    }
 
-
+    private void initView() {
         /* tab layout */
         tabLayout = (TabLayout) findViewById(R.id.main_tab_layout);
         pagerAdpater = new MainTabPagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
 
         int region_number=PreferenceManager.getInt(this,"REGION_NUMBER");
-        Log.e("SEULGI NUMBER OF REGION",String.valueOf(region_number));
+
         pagerAdpater.initFragment(region_number);
         for(int i=0;i<region_number;i++){
             tabLayout.addTab(tabLayout.newTab());
@@ -116,31 +133,15 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 pagerAdpater.notifyDataSetChanged();
                 viewPager.setCurrentItem(tab.getPosition());
-                //Log.e("SEULGI TAB SELECTED",String.valueOf(tab.getPosition()));
-                //Log.e("SEULGI FRAG POSITION",String.valueOf(pagerAdpater.getWeatherFragment(tab.getPosition()).getTabPosition()));
                 pagerAdpater.getWeatherFragment(tab.getPosition()).displayWeather(getApplicationContext());
-
             }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) { }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) { }
         });
-
-
-        //공지
-        if(PreferenceManager.getBoolean(this, "MAIN_NOTICE_DIALOG")!=true){
-            showMainNoticeDialog();
-        }
-
     }
-
 
     private void showMainNoticeDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(this)
@@ -165,10 +166,7 @@ public class MainActivity extends AppCompatActivity {
      * ActivityCompat.requestPermissions를 사용한 퍼미션 요청의 결과를 리턴받는 메소드입니다.
      */
     @Override
-    public void onRequestPermissionsResult(int permsRequestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grandResults) {
-
+    public void onRequestPermissionsResult(int permsRequestCode, @NonNull String[] permissions, @NonNull int[] grandResults) {
         if ( permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
 
             // 요청 코드가 PERMISSIONS_REQUEST_CODE 이고, 요청한 퍼미션 개수만큼 수신되었다면
@@ -233,25 +231,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     public String getCurrentAddress( double latitude, double longitude) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addresses;
         try {
-            addresses = geocoder.getFromLocation(
-                    latitude,
-                    longitude,
-                    7);
+            addresses = geocoder.getFromLocation(latitude,longitude,7);
         } catch (IOException ioException) {
-            //네트워크 문제
             Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
             return "지오코더 서비스 사용불가";
         } catch (IllegalArgumentException illegalArgumentException) {
             Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
             return "잘못된 GPS 좌표";
         }
-
-
 
         if (addresses == null || addresses.size() == 0) {
             Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
@@ -261,13 +252,9 @@ public class MainActivity extends AppCompatActivity {
 
         Address address = addresses.get(0);
         return address.getAddressLine(0).toString()+"\n";
-
     }
 
-
-    //여기부터는 GPS 활성화를 위한 메소드들
     private void showDialogForLocationServiceSetting() {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("위치 서비스 비활성화");
         builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"
@@ -290,25 +277,19 @@ public class MainActivity extends AppCompatActivity {
         builder.create().show();
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         switch (requestCode) {
-
             case GPS_ENABLE_REQUEST_CODE:
-
                 //사용자가 GPS 활성 시켰는지 검사
                 if (checkLocationServicesStatus()) {
                     if (checkLocationServicesStatus()) {
-
                         Log.d("@@@", "onActivityResult : GPS 활성화 되있음");
                         checkRunTimePermission();
                         return;
                     }
                 }
-
                 break;
         }
     }

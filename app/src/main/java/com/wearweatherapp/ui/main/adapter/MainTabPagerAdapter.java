@@ -1,4 +1,4 @@
-package com.wearweatherapp.ui.main;
+package com.wearweatherapp.ui.main.adapter;
 
 import android.util.Log;
 
@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+
+import com.wearweatherapp.ui.main.MainWeatherFragment;
 
 import java.util.ArrayList;
 
