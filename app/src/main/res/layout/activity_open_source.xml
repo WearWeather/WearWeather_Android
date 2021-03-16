@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:text="@string/license_information"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
 
     </LinearLayout>

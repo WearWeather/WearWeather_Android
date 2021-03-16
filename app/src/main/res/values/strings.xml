@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">WearWeather</string>
-    <string name="app_version">Version 1.0.0</string>
+    <string name="app_version">Version 1.0.3</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -49,8 +49,17 @@
         COPYRIGHT © Look at Min ALL RIGHTS RESERVED.\n
         룩앳민(http://lookatmin.com/)\n
 
-        \n\n*위 쇼핑몰들로부터 이미지 사용 허락을 받아 제작하였습니다
+        \n\n*위 쇼핑몰들로부터 이미지 사용 허락을 받아 제작하였습니다.\n\n
+
+        COPYRIGHT 2019 © 연합뉴스TV::대한민국 뉴스의 시작. 채널 23 ALL RIGHTS RESERVED.\n
+
+        연합뉴스 RSS(https://www.yonhapnewstv.co.kr/add/rss)\n
+        연합뉴스 날씨 Feed(https://www.yonhapnewstv.co.kr/category/news/weather/feed/)\n
+        (주)연합뉴스TV 서울특별시 종로구 율곡로 2길(수송동)\n
+        대표자 : 조성부\n
+        대표전화 : 02-398-7800\n
+
+        \n\n*날씨 뉴스 출처는 위 사이트로 부터 받아 제작하였습니다.
 
     </string>
-
 </resources>
